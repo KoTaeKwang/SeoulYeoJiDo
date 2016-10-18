@@ -152,25 +152,26 @@ router.get('/xmlapi',function(req,res,next){
 
 function get(obj){
 
-	  	var getPositionUrl = "https://maps.googleapis.com/maps/api/geocode/json?address="+urlencode(obj.address);
+	  	var getPositionUrl = "https://maps.googleapis.com/maps/api/geocode/json?address="+urlencode(obj.address);//이게 핵심!
 
 	  	var options = {
-	  		uri : getPositionUrl,
-	  		encoding : 'binary'//이게 핵심!
+	  		uri : getPositionUrl
+	  		// encoding : 'binary'
 	  	};
 
 	  	request(options, function(err,response,body){
 	  		if(err){
 	  		   return console.error('err',err);
 	  		}else{
-	  			if(JSON.parse(body).results[0] == null){//구글 api가 1초에 요청 개수 제한이 있다함...그래서 실패할 경우 무한 반복!
-	  				get(obj);
+	  			if(JSON.parse(body).results[0] == null){
+	  				get(obj);//구글 api가 1초에 요청 개수 제한이 있다함...그래서 실패할 경우 무한 반복!
 	  			}else{
 
 	  				obj.lat = JSON.parse(body).results[0].geometry.location.lat; //위도
 	  				obj.lng = JSON.parse(body).results[0].geometry.location.lng; //경도
 
 	  				console.log(obj);
+	  				//몽고디비 save
 
 	  			}
 	  		}
