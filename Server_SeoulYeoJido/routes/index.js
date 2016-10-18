@@ -4,7 +4,9 @@ var xml2js = require('xml2js');
 var xml2js_parser = new xml2js.Parser();
 var striptags = require('striptags');
 var fs = require('fs');
-var parser = require('xml2json');
+// var parser = require('xml2json');
+var urlencode = require('urlencode');//위도, 경도 뽑기 위해 새로 추가한 모듈
+
 
 var router = express.Router();
 
@@ -83,7 +85,7 @@ router.get('/xmlapi',function(req,res,next){
 			var size = result.rss.channel[0].item.length ;
 			for(var index =0;index<size;index++)
 			{
-				console.log(index + '번째 ##########' + result.rss.channel[0].item[index].title);
+				// console.log(index + '번째 ##########' + result.rss.channel[0].item[index].title);
 
 			var obj = {};
 			var description = result.rss.channel[0].item[index].description;
@@ -132,8 +134,14 @@ router.get('/xmlapi',function(req,res,next){
 			obj.url = real_homepage;
 
 
+			//위도,경도 구하기 - 비동기라서 명소 한개씩 몽고 디비에 저장해야 할듯...
+	   	get(obj);
+
+
 			/* 주소, 전화, url 뽑아내기 */
+
 			locationarray.push(obj);
+
 			}
 			res.json(locationarray);
 
@@ -141,6 +149,33 @@ router.get('/xmlapi',function(req,res,next){
 	});
 });
 
+
+function get(obj){
+
+	  	var getPositionUrl = "https://maps.googleapis.com/maps/api/geocode/json?address="+urlencode(obj.address);
+
+	  	var options = {
+	  		uri : getPositionUrl,
+	  		encoding : 'binary'//이게 핵심!
+	  	};
+
+	  	request(options, function(err,response,body){
+	  		if(err){
+	  		   return console.error('err',err);
+	  		}else{
+	  			if(JSON.parse(body).results[0] == null){//구글 api가 1초에 요청 개수 제한이 있다함...그래서 실패할 경우 무한 반복!
+	  				get(obj);
+	  			}else{
+
+	  				obj.lat = JSON.parse(body).results[0].geometry.location.lat; //위도
+	  				obj.lng = JSON.parse(body).results[0].geometry.location.lng; //경도
+
+	  				console.log(obj);
+
+	  			}
+	  		}
+	  	});
+}
 
 
 module.exports = router;
