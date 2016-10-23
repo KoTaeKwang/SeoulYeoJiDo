@@ -65,8 +65,15 @@ router.get('/', function(req, res, next) {
         "URL": "http://contents.visitseoul.net/file_save/rss/0003001005012kr.xml"
       },
 */
-
 //http://contents.visitseoul.net/file_save/rss/0004003002005kr.xml
+
+router.get('/makeGu',function(req,res,next){
+	console.log("왔니");
+	mongodb.saveGu(function(success){
+		res.json(success);
+	})
+
+})
 
 router.get('/xmlapi',function(req,res,next){
 
