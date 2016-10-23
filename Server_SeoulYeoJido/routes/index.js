@@ -67,6 +67,14 @@ router.get('/', function(req, res, next) {
 */
 //http://contents.visitseoul.net/file_save/rss/0004003002005kr.xml
 
+router.get('/makeUser',function(req,res,next){
+		mongodb.saveUser(function(success){
+				res.json(success);
+		})
+})
+
+
+
 router.get('/makeGu',function(req,res,next){
 	console.log("왔니");
 	mongodb.saveGu(function(success){
@@ -175,8 +183,6 @@ function get(obj){
 	  		}
 	  	});
 }
-
-
 
 
 module.exports = router;

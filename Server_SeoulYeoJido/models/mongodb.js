@@ -27,10 +27,23 @@ var Gu_mongoSchema = require('../models/Gu_mongo'); //구
 var GuMongo = mongodb.model('GuMongo',Gu_mongoSchema);
 
 
+exports.saveUser = function(callback){
+	var id = ['bake','han','hey','kim','kk','ko','lee','na','sam','so','yo'];
+
+	id.forEach(function(val){
+
+		var UserMongos = new UserMongo({
+			us_id:val
+		});
+		UserMongos.save(function(err,conn){
+			if(err){console.log(err);return;}
+		})
+	})
+	callback(0);  //user 저장
+}
 
 
-
-exports.saveGu = function(callback){
+exports.saveGu = function(callback){   //gu 저장
 
 	/*var GuMongos = new GuMongo({
 		id : 1
@@ -134,5 +147,5 @@ exports.saveLoca = function(data,callback){
 		],function(err,result){
 			if(err){console.log(err); return;}
 			callback(result);
-	})
+	})  //loca 저장
 }
