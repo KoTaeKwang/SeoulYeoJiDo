@@ -7,6 +7,9 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var ko = require('./routes/ko');  // 태광이꺼
+var han = require('./routes/han'); // 유진이꺼
+var so = require('./routes/so');  //병윤이꺼
 
 var app = express();
 
@@ -24,6 +27,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/ko', ko);
+app.use('/han', han);
+app.use('/so', so);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

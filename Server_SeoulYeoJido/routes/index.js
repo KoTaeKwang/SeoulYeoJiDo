@@ -73,8 +73,6 @@ router.get('/makeUser',function(req,res,next){
 		})
 })
 
-
-
 router.get('/makeGu',function(req,res,next){
 	console.log("왔니");
 	mongodb.saveGu(function(success){
