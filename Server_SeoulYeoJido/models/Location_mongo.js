@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Location_mongoSchema = Schema({
-	_id : String,
 	loca_guNum : Number,
 	loca_review :[{user_id:String, user_name:String, review_content : String, date:String}],
 	loca_category : [{loca_guNum:Number,loca_categorynum:String}],

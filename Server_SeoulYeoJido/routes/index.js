@@ -4,14 +4,12 @@ var xml2js = require('xml2js');
 var xml2js_parser = new xml2js.Parser();
 var striptags = require('striptags');
 var fs = require('fs');
+var async = require('async');
 // var parser = require('xml2json');
 var urlencode = require('urlencode');//위도, 경도 뽑기 위해 새로 추가한 모듈
-
+var mongodb = require('../models/mongodb');
 
 var router = express.Router();
-
-var arr;
-
 
 router.get('/', function(req, res, next) {
   res.json("ddddd");
@@ -72,7 +70,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/xmlapi',function(req,res,next){
 
-	request({uri:"http://contents.visitseoul.net/file_save/rss/0004003002002kr.xml"},function(err,response,body){
+	request({uri:"http://contents.visitseoul.net/file_save/rss/0003001005012kr.xml"},function(err,response,body){
 		if(err){
 		   return console.error('err',err);
 		}
@@ -94,7 +92,7 @@ router.get('/xmlapi',function(req,res,next){
 			var img = striptags(description[0],'<img>');
 
 
-
+			obj.description = qwert;
 			obj.title = result.rss.channel[0].item[index].title;
 			obj.category = result.rss.channel[0].item[index].category;
 
@@ -113,7 +111,7 @@ router.get('/xmlapi',function(req,res,next){
 			var tel_yes = qwert.includes("Tel");
 			var url_yes = qwert.includes("HomePage URL");
 
-			var real_ad = obj.title;
+			var real_ad = obj.title.toString();
 			var real_tel, real_homepage;
 
 			if(ad_yes){
@@ -133,27 +131,19 @@ router.get('/xmlapi',function(req,res,next){
 			obj.tel = real_tel;
 			obj.url = real_homepage;
 
-
 			//위도,경도 구하기 - 비동기라서 명소 한개씩 몽고 디비에 저장해야 할듯...
 	   	get(obj);
-
-
 			/* 주소, 전화, url 뽑아내기 */
-
 			locationarray.push(obj);
-
 			}
 			res.json(locationarray);
-
 		});
 	});
 });
 
 
 function get(obj){
-
 	  	var getPositionUrl = "https://maps.googleapis.com/maps/api/geocode/json?address="+urlencode(obj.address);//이게 핵심!
-
 	  	var options = {
 	  		uri : getPositionUrl
 	  		// encoding : 'binary'
@@ -169,14 +159,17 @@ function get(obj){
 
 	  				obj.lat = JSON.parse(body).results[0].geometry.location.lat; //위도
 	  				obj.lng = JSON.parse(body).results[0].geometry.location.lng; //경도
+	  				//console.log(obj);
 
-	  				console.log(obj);
+	  				//console.log(obj);
 	  				//몽고디비 save
-
+	  				mongodb.saveLoca(obj,function(success){})
 	  			}
 	  		}
 	  	});
 }
+
+
 
 
 module.exports = router;
