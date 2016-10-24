@@ -20,7 +20,18 @@ import android.widget.Toast;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class home extends AppCompatActivity {
     ListviewAdapter adapter; //listview adapter
@@ -32,15 +43,67 @@ public class home extends AppCompatActivity {
     ListView lv; //리스트
     ArrayList<Searchitem> searchdatas; //서치 데이터들
     ListView listView1; //서치 리스트뷰들
+    OkHttpClient client;
     private static final String TAG = "DemoActivity";
     private SlidingUpPanelLayout mLayout;
+    JSONObject jsonobject;
+    JSONArray jsonarray;
+    Response response;
+    Request request;
+
+
+    String run(String url) throws IOException{ // get방식 리턴  string
+        Log.d("ans",url);
+        request = new Request.Builder()
+                .url(url)
+                .build();
+        String ans="";
+
+        new Thread(){
+            String ansresponse;
+            public void run(){
+                try{
+                    //response = client.newCall(request).execute();
+                    client.newCall(request).enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {Log.d("ans","실패");}
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {  //데이터올때
+                           try {
+                                ansresponse = response.body().string();
+                               jsonobject = new JSONObject(ansresponse);
+                                jsonarray = jsonobject.getJSONArray("location");
+                                //listInit(jsonarray);
+                                Log.d("ans","ansresponse : "+jsonarray.length());
+                            }catch(JSONException e){
+                               e.printStackTrace();
+                            }
+                        }
+                    });
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+        return ans;
+    }
+
+    public void button2clicked(View v){
+        String ans="";
+        try {
+             ans=run("http://211.189.20.136:4389/ko/showloca");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        Log.d("ans","aaasdasd"+ans);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-
-
+        client = new OkHttpClient();
 
         map=(LinearLayout)findViewById(R.id.map);
         searchlistview=(LinearLayout)findViewById(R.id.searchlistview);
@@ -88,10 +151,26 @@ public class home extends AppCompatActivity {
 
     }
 
+
     public void listInit(){
         lv =(ListView) findViewById(R.id.list);
 
         ArrayList<Listviewitem> data = new ArrayList<>();
+        String title;
+
+       /* for(int i=0;i<jsonarray.length();i++){
+            try {
+                JSONObject jsonObject = jsonarray.getJSONObject(i);
+                title=jsonObject.getString("loca_name");
+                Log.d("ans","title : "+title);
+                Listviewitem data1 = new Listviewitem(R.drawable.ic_launcher,title,"temps","tempss",R.drawable.heart1);
+                data.add(data1);
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+        }*/
+
+
         Listviewitem data1 = new Listviewitem(R.drawable.ic_launcher,"one","ones","oness",R.drawable.heart1);
         Listviewitem data2 = new Listviewitem(R.drawable.ic_launcher,"two","twos","twoss",R.drawable.heart1);
         Listviewitem data3 = new Listviewitem(R.drawable.ic_launcher,"three","threes","thress",R.drawable.heart1);

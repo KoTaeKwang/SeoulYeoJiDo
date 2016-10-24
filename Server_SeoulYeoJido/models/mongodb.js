@@ -42,7 +42,6 @@ exports.saveUser = function(callback){
 	callback(0);  //user 저장
 }
 
-
 exports.saveGu = function(callback){   //gu 저장
 
 	/*var GuMongos = new GuMongo({
@@ -148,4 +147,13 @@ exports.saveLoca = function(data,callback){
 			if(err){console.log(err); return;}
 			callback(result);
 	})  //loca 저장
+}
+
+
+exports.showLoca = function(callback){
+	var obj ={};
+	LocationMongo.find({},{_id:0,loca_name:1},function(err,result){
+		obj.location=result;
+		callback(obj);
+	})
 }
