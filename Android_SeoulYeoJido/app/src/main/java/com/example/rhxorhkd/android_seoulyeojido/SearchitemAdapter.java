@@ -1,11 +1,11 @@
 package com.example.rhxorhkd.android_seoulyeojido;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -38,7 +38,9 @@ public class SearchitemAdapter extends BaseAdapter{
 
     @Override
     public Object getItem(int position) {
-        return searchlist.get(position).getName();
+        String str;
+        str=searchlist.get(position).getName()+" "+searchlist.get(position).getState();
+        return str;
     }
 
     @Override
@@ -56,24 +58,45 @@ public class SearchitemAdapter extends BaseAdapter{
         TextView textview = (TextView)convertView.findViewById(R.id.searchname);
         textview.setText(searchitem.getName());
 
+        ImageView icon = (ImageView)convertView.findViewById(R.id.searchicon);
+        icon.setImageResource(searchitem.getIcon());
+
         return convertView;
     }
 
     public void filter(String charText){
-        Log.d("text",""+charText.length());
+       // Log.d("text",""+charText.length());
 
         searchlist.clear();
         if(charText.length()==0){
-            searchlist.addAll(data);
+            adddata();
         }else{
             for(Searchitem wp : data){
-                Log.d("text","-->"+wp.getName().contains(charText));
+               // Log.d("text","-->"+wp.getName().contains(charText));
                 if(wp.getName().contains(charText)){
-                    Log.d("text","------>"+wp.getName());
+                   // Log.d("text","------>"+wp.getName());
                     searchlist.add(wp);
                 }
             }
         }
         notifyDataSetChanged();
+    }
+
+    public void adddata(){
+        Searchitem searchitem1 = new Searchitem("",R.drawable.white,0);
+        Searchitem searchitem2 = new Searchitem("",R.drawable.white,0);
+        Searchitem searchitem3 = new Searchitem("",R.drawable.white,0);
+        Searchitem searchitem4 = new Searchitem("",R.drawable.white,0);
+        Searchitem searchitem5 = new Searchitem("",R.drawable.white,0);
+        Searchitem searchitem6 = new Searchitem("",R.drawable.white,0);
+        Searchitem searchitem7 = new Searchitem("",R.drawable.white,0);
+
+        searchlist.add(searchitem1);
+        searchlist.add(searchitem2);
+        searchlist.add(searchitem3);
+        searchlist.add(searchitem4);
+        searchlist.add(searchitem5);
+        searchlist.add(searchitem6);
+        searchlist.add(searchitem7);
     }
 }

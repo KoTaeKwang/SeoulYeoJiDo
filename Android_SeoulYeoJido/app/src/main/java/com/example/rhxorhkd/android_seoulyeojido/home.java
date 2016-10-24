@@ -23,11 +23,15 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import java.util.ArrayList;
 
 public class home extends AppCompatActivity {
+    ListviewAdapter adapter; //listview adapter
     SearchitemAdapter sadapter; //search adapter
     LinearLayout map; //지도
     LinearLayout searchlistview; //검색창누르면 나오는 리스트뷰
     Button button; // 지도 안의 버튼
     SearchView searchView; //서치뷰
+    ListView lv; //리스트
+    ArrayList<Searchitem> searchdatas; //서치 데이터들
+    ListView listView1; //서치 리스트뷰들
     private static final String TAG = "DemoActivity";
     private SlidingUpPanelLayout mLayout;
     @Override
@@ -36,20 +40,112 @@ public class home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
 
-        ListView listView1 = (ListView)findViewById(R.id.listview1);
-        ArrayList<Searchitem> searchdatas = new ArrayList<>();
-        Searchitem searchdata1 = new Searchitem("dog");
-        Searchitem searchdata2 = new Searchitem("eagle");
-        Searchitem searchdata3 = new Searchitem("pig");
-        Searchitem searchdata4 = new Searchitem("tiger");
-        Searchitem searchdata5 = new Searchitem("lion");
-        Searchitem searchdata6 = new Searchitem("bird");
-        Searchitem searchdata7 = new Searchitem("human");
-        Searchitem searchdata8 = new Searchitem("ant");
-        Searchitem searchdata9 = new Searchitem("kotaekwang");
-        Searchitem searchdata10 = new Searchitem("baek");
-        Searchitem searchdata11 = new Searchitem("seo");
-        Searchitem searchdata12 = new Searchitem("han");
+
+
+        map=(LinearLayout)findViewById(R.id.map);
+        searchlistview=(LinearLayout)findViewById(R.id.searchlistview);
+        button =(Button) findViewById(R.id.button);
+
+
+        ImageView imageView6 =(ImageView)findViewById(R.id.imageView6);
+
+        searchInit(); //서치리스트 초기화
+        listInit(); //리스트 초기화
+
+        mLayout = (SlidingUpPanelLayout)findViewById(R.id.sliding_layout);
+
+        mLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View panel, float slideOffset) {
+                Log.i(TAG,"onPanelSlide, offset "+slideOffset);
+            }
+
+            @Override
+            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+                Log.i(TAG,"onPanelStateChanged" + newState);
+            }
+        });
+        mLayout.setFadeOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+            }
+        });
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            }
+        });
+
+        imageView6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            }
+        });
+
+    }
+
+    public void listInit(){
+        lv =(ListView) findViewById(R.id.list);
+
+        ArrayList<Listviewitem> data = new ArrayList<>();
+        Listviewitem data1 = new Listviewitem(R.drawable.ic_launcher,"one","ones","oness",R.drawable.heart1);
+        Listviewitem data2 = new Listviewitem(R.drawable.ic_launcher,"two","twos","twoss",R.drawable.heart1);
+        Listviewitem data3 = new Listviewitem(R.drawable.ic_launcher,"three","threes","thress",R.drawable.heart1);
+        Listviewitem data4 = new Listviewitem(R.drawable.ic_launcher,"four","fours","fourss",R.drawable.heart1);
+        Listviewitem data5 = new Listviewitem(R.drawable.ic_launcher,"five","fives","fivess",R.drawable.heart1);
+        Listviewitem data6 = new Listviewitem(R.drawable.ic_launcher,"six","sixs","sixss",R.drawable.heart1);
+        Listviewitem data7 = new Listviewitem(R.drawable.ic_launcher,"seven","sevens","sevenss",R.drawable.heart1);
+        Listviewitem data8 = new Listviewitem(R.drawable.ic_launcher,"eight","eights","eightss",R.drawable.heart1);
+        Listviewitem data9 = new Listviewitem(R.drawable.ic_launcher,"nine","nines","niness",R.drawable.heart1);
+        Listviewitem data10 = new Listviewitem(R.drawable.ic_launcher,"ten","tens","tenss",R.drawable.heart1);
+        Listviewitem data11 = new Listviewitem(R.drawable.ic_launcher,"eleven","elevens","envenss",R.drawable.heart1);
+
+        data.add(data1);
+        data.add(data2);
+        data.add(data3);
+        data.add(data4);
+        data.add(data5);
+        data.add(data6);
+        data.add(data7);
+        data.add(data8);
+        data.add(data9);
+        data.add(data10);
+        data.add(data11);
+
+         adapter = new ListviewAdapter(this,R.layout.item,data);
+        lv.setAdapter(adapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String str = (String)adapter.getItem(position);
+                //Toast.makeText(getBaseContext(),str,Toast.LENGTH_LONG).show(); //옮기고 이거써
+                Toast.makeText(home.this,str,Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+    }
+
+    public void searchInit(){
+        listView1 = (ListView)findViewById(R.id.listview1);
+        searchdatas = new ArrayList<>(); //장소일때 주소일때 0,1 구별해서 state 넣기
+        Searchitem searchdata1 = new Searchitem("dog",R.drawable.heart2,0);
+        Searchitem searchdata2 = new Searchitem("eagle",R.drawable.heart2,0);
+        Searchitem searchdata3 = new Searchitem("pig",R.drawable.heart2,1);
+        Searchitem searchdata4 = new Searchitem("tiger",R.drawable.heart2,1);
+        Searchitem searchdata5 = new Searchitem("lion",R.drawable.heart2,0);
+        Searchitem searchdata6 = new Searchitem("bird",R.drawable.heart2,1);
+        Searchitem searchdata7 = new Searchitem("human",R.drawable.heart2,0);
+        Searchitem searchdata8 = new Searchitem("ant",R.drawable.heart2,1);
+        Searchitem searchdata9 = new Searchitem("kotaekwang",R.drawable.heart2,0);
+        Searchitem searchdata10 = new Searchitem("baek",R.drawable.heart2,1);
+        Searchitem searchdata11 = new Searchitem("seo",R.drawable.heart2,0);
+        Searchitem searchdata12 = new Searchitem("han",R.drawable.heart2,1);
 
         searchdatas.add(searchdata1);
         searchdatas.add(searchdata2);
@@ -76,90 +172,7 @@ public class home extends AppCompatActivity {
                 Toast.makeText(home.this,str,Toast.LENGTH_LONG).show();
             }
         });
-
-
-
-        map=(LinearLayout)findViewById(R.id.map);
-        searchlistview=(LinearLayout)findViewById(R.id.searchlistview);
-        button =(Button) findViewById(R.id.button);
-
-        ListView lv =(ListView) findViewById(R.id.list);
-        ImageView imageView6 =(ImageView)findViewById(R.id.imageView6);
-
-        ArrayList<Listviewitem> data = new ArrayList<>();
-        Listviewitem data1 = new Listviewitem(R.drawable.ic_launcher,"one");
-        Listviewitem data2 = new Listviewitem(R.drawable.ic_launcher,"two");
-        Listviewitem data3 = new Listviewitem(R.drawable.ic_launcher,"three");
-        Listviewitem data4 = new Listviewitem(R.drawable.ic_launcher,"four");
-        Listviewitem data5 = new Listviewitem(R.drawable.ic_launcher,"five");
-        Listviewitem data6 = new Listviewitem(R.drawable.ic_launcher,"six");
-        Listviewitem data7 = new Listviewitem(R.drawable.ic_launcher,"seven");
-        Listviewitem data8 = new Listviewitem(R.drawable.ic_launcher,"eight");
-        Listviewitem data9 = new Listviewitem(R.drawable.ic_launcher,"nine");
-        Listviewitem data10 = new Listviewitem(R.drawable.ic_launcher,"tem");
-        Listviewitem data11 = new Listviewitem(R.drawable.ic_launcher,"eleven");
-
-        data.add(data1);
-        data.add(data2);
-        data.add(data3);
-        data.add(data4);
-        data.add(data5);
-        data.add(data6);
-        data.add(data7);
-        data.add(data8);
-        data.add(data9);
-        data.add(data10);
-        data.add(data11);
-
-        final ListviewAdapter adapter = new ListviewAdapter(this,R.layout.item,data);
-        lv.setAdapter(adapter);
-
-        mLayout = (SlidingUpPanelLayout)findViewById(R.id.sliding_layout);
-
-        mLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
-            @Override
-            public void onPanelSlide(View panel, float slideOffset) {
-                Log.i(TAG,"onPanelSlide, offset "+slideOffset);
-            }
-
-            @Override
-            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-                Log.i(TAG,"onPanelStateChanged" + newState);
-            }
-        });
-        mLayout.setFadeOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-            }
-        });
-
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String str = (String)adapter.getItem(position);
-                //Toast.makeText(getBaseContext(),str,Toast.LENGTH_LONG).show(); //옮기고 이거써
-                Toast.makeText(home.this,str,Toast.LENGTH_LONG).show();
-
-            }
-        });
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-            }
-        });
-
-        imageView6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-            }
-        });
-
     }
-
     @Override
     public void onBackPressed() {
         if (mLayout != null &&
@@ -183,6 +196,8 @@ public class home extends AppCompatActivity {
                 Log.d("text","open");
                 map.setVisibility(View.INVISIBLE); // map화면 가려짐
                 searchlistview.setVisibility(View.VISIBLE); //searchlist 화면 켜짐
+                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+
                 return true;
             }
 
@@ -191,6 +206,7 @@ public class home extends AppCompatActivity {
                 Log.d("text","close");
                 searchlistview.setVisibility(View.INVISIBLE);
                 map.setVisibility(View.VISIBLE);
+                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                 return true;
             }
         });

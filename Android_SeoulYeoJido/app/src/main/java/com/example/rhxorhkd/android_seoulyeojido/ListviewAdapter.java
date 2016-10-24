@@ -54,6 +54,22 @@ public class ListviewAdapter extends BaseAdapter {
         TextView name = (TextView)convertView.findViewById(R.id.lay_textview);
         name.setText(listviewitem.getName());
 
+        TextView name2 = (TextView)convertView.findViewById(R.id.lay_textview2);
+        name2.setText(listviewitem.getSubname());
+
+        TextView name3 = (TextView)convertView.findViewById(R.id.lay_textview3);
+        name3.setText(listviewitem.getThirdname());
+
+        ImageView hearticon = (ImageView)convertView.findViewById(R.id.heartimage);
+        hearticon.setImageResource(listviewitem.getHearticon());
+
+        hearticon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("null","clicked");
+            }
+        });
+
         Log.d("layout","position : "+position);
         Log.d("layout",""+listviewitem.getName());
         return convertView;
