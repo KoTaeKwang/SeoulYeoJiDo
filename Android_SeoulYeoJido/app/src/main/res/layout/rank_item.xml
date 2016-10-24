@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rank_list"
+        android:layout_marginTop="13dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:id="@+id/rank_order"
+            android:text="1"
+            android:textAlignment="center"
+            android:textSize="35sp"
+            android:layout_centerVertical="true"
+            android:layout_width="100dp"
+            android:layout_height="50dp" />
+
+        <ImageView
+            android:id="@+id/profile_img"
+            android:layout_toRightOf="@+id/rank_order"
+            android:layout_centerVertical="true"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+
+        <LinearLayout
+            android:layout_toRightOf="@+id/profile_img"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:layout_width="240dp"
+            android:layout_height="100dp">
+
+            <TextView
+                android:id="@+id/nickname"
+                android:text="이름"
+                android:textAlignment="center"
+                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_height="33dp" />
+            <TextView
+                android:id="@+id/chk_cnt"
+                android:text="체크인수"
+                android:textAlignment="center"
+                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_height="33dp" />
+            <TextView
+                android:id="@+id/ect"
+                android:text="뭘적지?"
+                android:textAlignment="center"
+                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_height="33dp" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
