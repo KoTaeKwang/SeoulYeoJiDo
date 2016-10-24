@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_marginBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/visit_background"
+            android:background="#e38686"
+            android:layout_width="match_parent"
+            android:layout_height="120dp" />
+        <TextView
+            android:id="@+id/visit_name"
+            android:text="좌"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginLeft="16dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_width="100dp"
+            android:layout_height="40dp" />
+        <TextView
+            android:layout_toLeftOf="@+id/visit_mark"
+            android:id="@+id/visit_cnt"
+            android:text="우"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:layout_centerVertical="true"
+            android:layout_width="50dp"
+            android:layout_height="40dp" />
+        <ImageView
+            android:src="@drawable/pin"
+            android:layout_marginRight="16dp"
+            android:id="@+id/visit_mark"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>
