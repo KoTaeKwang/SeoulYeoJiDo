@@ -1,24 +1,37 @@
 package com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
 import com.example.rhxorhkd.android_seoulyeojido.R;
 
+import java.io.BufferedInputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +44,7 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE); //타이틀바 삭제
+        //requestWindowFeature(Window.FEATURE_NO_TITLE); //타이틀바 삭제
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
@@ -40,19 +53,34 @@ public class DetailActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.text1);
         textView.setText(locationTitle);
 
+
+        loadBackdrop();     //이미지 로드
+
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+//        ActionBar ab = getSupportActionBar();
+//        ab.hide();
+
+
 
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle(locationTitle);
 
 
-        loadBackdrop();     //이미지 로드
 
         initLayout();       //댓글 초기화
         initData();         //댓글
+
+
+        /**
+         * 댓글 입력
+         */
+        Button btnReview = (Button)findViewById(R.id.btn_review);
+
+
 
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -63,6 +91,23 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    /**
+     * 액션바 뒤로가기
+     * @param item
+     * @return
+     */
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // NavUtils.navigateUpFromSameTask(this);
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 
     private void initLayout(){
@@ -104,7 +149,8 @@ public class DetailActivity extends AppCompatActivity {
         //setContentView(imageview);
         //Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
 
-        Glide.with(this).load("http://goo.gl/gEgYUd").into(imageview);
+        Glide.with(this).load("http://kinimage.naver.net/20161005_33/1475666020537jIagj_JPEG/1475666020386.jpg?type=w620").into(imageview);
+        //Glide.with(this).load("hhttp://cfile26.uf.tistory.com/image/270BE841572B57BF2305D8").centerCrop().into(imageview);
 
     }
 

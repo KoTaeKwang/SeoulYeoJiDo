@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,7 +18,9 @@ import android.os.Bundle;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +44,11 @@ public class set extends AppCompatActivity implements View.OnClickListener{
 
         ActionBar ab = getSupportActionBar();
         ab.hide();
+
+
+//        CollapsingToolbarLayout collapsingToolbar =
+//                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+//        collapsingToolbar.setTitle("아이린");
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tl_tab);
         ViewPager viewPager = (ViewPager)findViewById(R.id.vp_pager);
@@ -70,7 +78,7 @@ public class set extends AppCompatActivity implements View.OnClickListener{
         }else{
             findViewById(R.id.back_btn).setOnClickListener(this);
         }
-//        tv.setText(i.getStringExtra("name"));
+        tv.setText(i.getStringExtra("name"));
         tv.setText("아이린");
 
 
@@ -86,7 +94,7 @@ public class set extends AppCompatActivity implements View.OnClickListener{
         });
     }
 
-    public static int REQ_CODE_SELECT_IMAGE = 100;
+
 
     @Override
     public void onClick(View view) {
@@ -98,34 +106,17 @@ public class set extends AppCompatActivity implements View.OnClickListener{
                 startActivity(new Intent(this, MapsActivity.class));
                 break;
             case R.id.my_profile_img :
-                Intent i = new Intent(Intent.ACTION_PICK);
-                i.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-                i.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, REQ_CODE_SELECT_IMAGE);
+//                Intent i = new Intent(this, ChangeInfo.class);
+//                i.putExtra("nickname", tv.getText());
+//                startActivity(i);
+                startActivity(new Intent(this, StartActivity.class));
                 break;
             default: break;
         }
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQ_CODE_SELECT_IMAGE) {
-            if (resultCode == Activity.RESULT_OK) {
-                Glide.with(this).load(data.getData()).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv) {
-                    @Override
-                    protected void setResource(Bitmap resource) {
-                        super.setResource(resource);
-                        RoundedBitmapDrawable circularBitmapDrawable =
-                                RoundedBitmapDrawableFactory.create(this.getView().getResources(), resource);
-                        circularBitmapDrawable.setCircular(true);
-                        iv.setImageDrawable(circularBitmapDrawable);
-                    }
-                });
-            }
-        }
-    }
+
 
 
     private class MyPagerAdapter extends FragmentPagerAdapter {

@@ -67,8 +67,26 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="220dp"
                 ></android.support.v7.widget.RecyclerView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="20dp">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/btn_review"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/btn_more"/>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -80,6 +98,20 @@
                 android:id="@+id/text1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+
+
+
+            <!--<EditText-->
+                <!--android:id="@+id/edit_review"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:inputType="textMultiLine"-->
+                <!--android:textSize="16sp"-->
+                <!--android:layout_height="80dp"-->
+                <!--android:paddingTop="20dp"-->
+                <!--android:paddingLeft="30dp"-->
+                <!--android:hint="댓글 입력해주세요"/>-->
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
