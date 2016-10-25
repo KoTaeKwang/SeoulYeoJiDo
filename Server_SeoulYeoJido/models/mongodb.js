@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var async = require('async');
-
+var geolib = require('geolib');
+//var geolocation = require('node-geolocation');
 var url = 'mongodb://localhost/test';
 var options = {
 	server : {poolSize:200},
@@ -150,10 +151,332 @@ exports.saveLoca = function(data,callback){
 }
 
 
-exports.showLoca = function(callback){
-	var obj ={};
-	LocationMongo.find({},{_id:0,loca_name:1},function(err,result){
-		obj.location=result;
-		callback(obj);
+exports.showLoca = function(callback){  //location 정보   첫화면 list
+
+	var arr=[];
+	async.waterfall([
+		function(callback){
+			LocationMongo.find({},{_id:0,loca_name:1,loca_category:1,loca_photo:1,loca_checkin:1,loca_guNum:1,loca_review:1},function(err,result){
+				callback(null,result);
+			})
+		},function(result,callback){
+			async.each(result,function(item,cb){
+				var obj ={};
+				obj.loca_name = item.loca_name;
+				obj.loca_photo = item.loca_photo[0];
+
+				if(obj.loca_photo!=null){
+					obj.loca_photo=obj.loca_photo.photo_url;
+				}
+				obj.loca_categorynum =0;
+				obj.loca_guNum=0;
+
+				if(item.loca_category[0]!=null){
+				obj.loca_categorynum = item.loca_category[0].loca_categorynum;
+				category(obj);
+				}
+
+				if(item.loca_guNum!=null){
+				obj.loca_guNum = item.loca_guNum;
+				gu(obj);
+				}
+
+				obj.loca_checkincount = item.loca_checkin.length;
+				obj.loca_reviewcount = item.loca_review.length;
+				arr.push(obj);
+				cb();
+			},function(err){
+				callback(null,arr);
+			})
+		}
+		],function(err,result){
+			var obj = {};
+			obj.location = result;
+			callback(obj);
 	})
+
+}
+
+exports.searchLocaName = function(data,callback){
+	var arr=[];
+		LocationMongo.find({},{_id:1,loca_name:1},function(err,results){
+
+			async.each(results,function(item,cb){
+					if(item.loca_name.includes(data)){
+						arr.push(item);
+					}
+					cb();
+			},function(err){
+				var obj ={};
+				obj.location=arr;
+					callback(obj);
+				}
+			)
+		})
+}
+
+exports.searchLocaAddress = function(data,callback){
+	var arr=[];
+		LocationMongo.find({},{_id:1,loca_address:1},function(err,results){
+
+			async.each(results,function(item,cb){
+					if(item.loca_address.includes(data)){
+						arr.push(item);
+					}
+					cb();
+			},function(err){
+				var obj={};
+				obj.location=arr;
+					callback(obj);
+				}
+			)
+		})
+}
+
+exports.showGuLoca = function(data,callback){
+
+	var arr=[];
+	async.waterfall([
+		function(callback){
+			LocationMongo.find({loca_guNum:data},{_id:0,loca_name:1,loca_category:1,loca_photo:1,loca_checkin:1,loca_guNum:1,loca_review:1},function(err,result){
+				callback(null,result);
+			})
+		},function(result,callback){
+			async.each(result,function(item,cb){
+				var obj ={};
+				obj.loca_name = item.loca_name;
+				obj.loca_photo = item.loca_photo[0];
+
+				if(obj.loca_photo!=null){
+					obj.loca_photo=obj.loca_photo.photo_url;
+				}
+				obj.loca_categorynum =0;
+				obj.loca_guNum=0;
+
+				if(item.loca_category[0]!=null){
+				obj.loca_categorynum = item.loca_category[0].loca_categorynum;
+				category(obj);
+				}
+
+				if(item.loca_guNum!=null){
+				obj.loca_guNum = item.loca_guNum;
+				gu(obj);
+				}
+
+				obj.loca_checkincount = item.loca_checkin.length;
+				obj.loca_reviewcount = item.loca_review.length;
+				arr.push(obj);
+				cb();
+			},function(err){
+				callback(null,arr);
+			})
+		}
+		],function(err,result){
+			var obj = {};
+			obj.location = result;
+			callback(obj);
+	})
+
+}
+
+exports.showCategoryLoca = function(data,callback){
+	var arr=[];
+	async.waterfall([
+		function(callback){
+			LocationMongo.find({},{_id:0,loca_name:1,loca_category:1,loca_photo:1,loca_checkin:1,loca_guNum:1,loca_review:1},function(err,result){
+				callback(null,result);
+			})
+		},function(result,callback){
+			async.each(result,function(item,cb){
+				if(item.loca_category[0]!=null&&item.loca_category[0].loca_categorynum==data)
+				{
+						var obj ={};
+						obj.loca_name = item.loca_name;
+						obj.loca_photo = item.loca_photo[0];
+
+						if(obj.loca_photo!=null){
+							obj.loca_photo=obj.loca_photo.photo_url;
+						}
+						obj.loca_categorynum =0;
+						obj.loca_guNum=0;
+
+						if(item.loca_category[0]!=null){
+						obj.loca_categorynum = item.loca_category[0].loca_categorynum;
+						category(obj);
+						}
+
+						if(item.loca_guNum!=null){
+						obj.loca_guNum = item.loca_guNum;
+						gu(obj);
+						}
+
+						obj.loca_checkincount = item.loca_checkin.length;
+						obj.loca_reviewcount = item.loca_review.length;
+						arr.push(obj);
+				}
+				cb();
+			},function(err){
+				callback(null,arr);
+			})
+		}
+		],function(err,result){
+			var obj = {};
+			obj.location = result;
+			callback(obj);
+	})
+
+}
+
+exports.showDetailLoca = function(data,callback){
+
+	LocationMongo.findOne({loca_name:data},{},function(err,result){
+		var obj ={};
+		var arr=[];
+		if(result.loca_photo[0]!=null){
+			async.each(result.loca_photo,function(item,cb){
+					arr.push(item.photo_url);
+					cb();
+			},function(err){
+				obj.loca_photo=arr
+			})
+		}
+		obj.loca_name = result.loca_name;
+		obj.loca_address = result.loca_address;
+		obj.loca_latitude = result.loca_latitude;
+		obj.loca_longitude = result.loca_longitude;
+		obj.loca_tel = result.loca_tel;
+		obj.loca_description = result.loca_description;
+		obj.loca_checkincount = result.loca_checkin.length;
+		obj.loca_review = result.loca_review;
+		obj.loca_url = result.loca_url;
+
+
+		callback(obj);
+
+	})
+}
+
+exports.checkin = function(data,callback){
+	LocationMongo.findOne({loca_name:data.loca_name},{_id:0,loca_latitude:1,loca_longitude:1},function(err,result){
+
+	var distance = geolib.getPathLength([
+	    {latitude: result.loca_latitude, longitude: result.loca_longitude},
+	    {latitude: data.loca_lat, longitude: data.loca_lon}
+	]);
+
+	if(distance<500)
+		callback(1);
+	else
+		callback(0);
+		//meter;
+	})
+}
+
+exports.addReview = function(data,callback){
+
+	LocationMongo.update({loca_name:data.loca_name},{ $push: {loca_review :  {user_id:data.user_id,review_content:data.content,date:data.date} } },function(err){
+			if(err){console.log(err);}
+			callback(1);
+	}); //category 넣기
+}
+
+//loca_checkin : [{user_id:String , date:String}]
+exports.addCheckin = function(data,callback){
+	LocationMongo.update({loca_name:data.loca_name},{ $push: {loca_checkin :  {user_id:data.user_id,date:data.date} } },function(err){
+			if(err){console.log(err);}
+			callback(1);
+	}); //category 넣기
+}
+
+exports.showCheckin = function(data,callback){
+	var arr=[];
+		async.waterfall([
+				function(callback){
+					LocationMongo.find({},{_id:0,loca_name:1,loca_category:1,loca_photo:1,loca_checkin:1,loca_guNum:1,loca_review:1},function(err,result){
+						callback(null,result);
+					})
+				},function(result,callback){
+					async.each(result,function(item,cb){
+						if(item.loca_checkin.length!=0){
+							async.each(item.loca_checkin,function(items,cb){
+								if(items.user_id==data){
+									var obj ={};
+									obj.loca_name = item.loca_name;
+									obj.loca_photo = item.loca_photo[0];
+
+									if(obj.loca_photo!=null){
+										obj.loca_photo=obj.loca_photo.photo_url;
+									}
+									obj.loca_categorynum =0;
+									obj.loca_guNum=0;
+
+									if(item.loca_category[0]!=null){
+									obj.loca_categorynum = item.loca_category[0].loca_categorynum;
+									category(obj);
+									}
+
+									if(item.loca_guNum!=null){
+									obj.loca_guNum = item.loca_guNum;
+									gu(obj);
+									}
+									obj.loca_checkincount = item.loca_checkin.length;
+									obj.loca_reviewcount = item.loca_review.length;
+									arr.push(obj);
+								}
+								cb();
+							})
+						}
+						cb();
+					},function(err){
+						callback(null,arr);
+					})
+				}//
+			],function(err,result){
+				var obj = {};
+				obj.location = result;
+				callback(obj);
+		})
+}
+
+function category(obj){
+	if(obj.loca_categorynum==1){
+		obj.loca_categorynum="쇼핑";
+	}else if(obj.loca_categorynum==2){
+		obj.loca_categorynum="문화";
+	}else if(obj.loca_categorynum==3){
+		obj.loca_categorynum="공원";
+	}else if(obj.loca_categorynum==4){
+		obj.loca_categorynum="전통시장";
+	}else if(obj.loca_categorynum==5){
+		obj.loca_categorynum="랜드마크";
+	}else if(obj.loca_categorynum==6){
+		obj.loca_categorynum="유적지";
+	}
+}
+
+function gu(obj){
+		if(obj.loca_guNum==1){
+				obj.loca_guNum="은평·서대문구"
+		}else if(obj.loca_guNum==2){
+				obj.loca_guNum="마포·용산구"
+		}else if(obj.loca_guNum==3){
+			obj.loca_guNum="종로·중구"
+		}else if(obj.loca_guNum==4){
+			obj.loca_guNum="성북·동대문·성동구"
+		}else if(obj.loca_guNum==5){
+			obj.loca_guNum="강북·도봉·노원구"
+		}else if(obj.loca_guNum==6){
+			obj.loca_guNum="중랑·광진구"
+		}else if(obj.loca_guNum==7){
+			obj.loca_guNum="송파·강동구"
+		}else if(obj.loca_guNum==8){
+			obj.loca_guNum="서초·강남구"
+		}else if(obj.loca_guNum==9){
+			obj.loca_guNum="관악·금천구"
+		}else if(obj.loca_guNum==10){
+			obj.loca_guNum="영등포·동작구"
+		}else if(obj.loca_guNum==11){
+			obj.loca_guNum="강서·양천·구로구"
+		}
+
 }

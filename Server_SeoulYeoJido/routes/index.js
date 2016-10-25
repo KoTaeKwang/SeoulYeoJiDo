@@ -137,7 +137,7 @@ router.get('/xmlapi',function(req,res,next){
 			}
 			if(url_yes){
 				var tmp = qwert.split("HomePage URL : ");
-				real_url = tmp[1].split("&lt;br&gt;")[0];
+				real_homepage = tmp[1].split("&lt;br&gt;")[0];
 			}
 
 			obj.address = real_ad;
