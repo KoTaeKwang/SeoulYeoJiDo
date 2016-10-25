@@ -126,9 +126,9 @@
             android:layout_height="70dp"
             android:id="@+id/img_photo3"
             android:layout_toRightOf="@+id/img_photo1"
+            android:layout_marginLeft="1dp"
             android:layout_below="@+id/img_photo2"
             android:padding="1dp"
-
             android:scaleType="centerCrop"
             android:src="@drawable/cheese_4"/>
         <ImageView
@@ -136,6 +136,7 @@
             android:layout_height="70dp"
             android:id="@+id/img_photo4"
             android:layout_toRightOf="@+id/img_photo3"
+            android:layout_marginLeft="1dp"
             android:layout_alignTop="@+id/img_photo3"
             android:padding="1dp"
             android:scaleType="centerCrop"
