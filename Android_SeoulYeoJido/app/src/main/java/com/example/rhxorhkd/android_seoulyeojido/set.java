@@ -94,7 +94,7 @@ public class set extends AppCompatActivity implements View.OnClickListener{
         });
     }
 
-    public static int REQ_CODE_SELECT_IMAGE = 100;
+
 
     @Override
     public void onClick(View view) {
@@ -106,34 +106,17 @@ public class set extends AppCompatActivity implements View.OnClickListener{
                 startActivity(new Intent(this, MapsActivity.class));
                 break;
             case R.id.my_profile_img :
-                Intent i = new Intent(Intent.ACTION_PICK);
-                i.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-                i.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, REQ_CODE_SELECT_IMAGE);
+//                Intent i = new Intent(this, ChangeInfo.class);
+//                i.putExtra("nickname", tv.getText());
+//                startActivity(i);
+                startActivity(new Intent(this, StartActivity.class));
                 break;
             default: break;
         }
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQ_CODE_SELECT_IMAGE) {
-            if (resultCode == Activity.RESULT_OK) {
-                Glide.with(this).load(data.getData()).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv) {
-                    @Override
-                    protected void setResource(Bitmap resource) {
-                        super.setResource(resource);
-                        RoundedBitmapDrawable circularBitmapDrawable =
-                                RoundedBitmapDrawableFactory.create(this.getView().getResources(), resource);
-                        circularBitmapDrawable.setCircular(true);
-                        iv.setImageDrawable(circularBitmapDrawable);
-                    }
-                });
-            }
-        }
-    }
+
 
 
     private class MyPagerAdapter extends FragmentPagerAdapter {

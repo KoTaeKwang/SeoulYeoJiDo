@@ -39,8 +39,6 @@
                         android:layout_width="120dp"
                         android:scaleType="centerCrop"
                         android:layout_height="120dp"
-                        android:src="@drawable/irene1"
-
                         />
                     <TextView
                         android:layout_below="@id/my_profile_img"

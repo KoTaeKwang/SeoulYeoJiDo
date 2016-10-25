@@ -41,8 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         rl = (RelativeLayout) findViewById(R.id.location_detail);
         rl.setVisibility(View.GONE);
         tv1 = (TextView)findViewById(R.id.location_name);
-
-        
+        findViewById(R.id.map_back).setOnClickListener(this);
     }
 
 
@@ -81,7 +80,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(ds).title("덕수궁 "));
         mMap.addMarker(new MarkerOptions().position(tg).title("퇴계로 "));
         mMap.addMarker(new MarkerOptions().position(md).title("명동 "));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.53501414281699,126.98524095118046), 13));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.53501414281699,126.98524095118046), 12));
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -97,7 +96,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                Log.d("여기는!!!!", ""+latLng);
+                rl.setVisibility(View.GONE);
             }
         });
 
@@ -110,6 +109,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.map_back :
+                finish();
+                break;
+            default: break;
+        }
 
     }
 }

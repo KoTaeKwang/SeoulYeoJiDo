@@ -40,3 +40,4 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:9.0.0'
     testCompile 'junit:junit:4.12'
 }
+apply plugin: 'com.google.gms.google-services'
