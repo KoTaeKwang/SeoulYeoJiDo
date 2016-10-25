@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,10 +23,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener{
 
     private GoogleMap mMap;
     private RelativeLayout rl;
+    private ImageView iv;
     private TextView tv1, tv2, tv3, tv4;
 
     @Override
@@ -39,6 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         rl = (RelativeLayout) findViewById(R.id.location_detail);
         rl.setVisibility(View.GONE);
         tv1 = (TextView)findViewById(R.id.location_name);
+        findViewById(R.id.map_back).setOnClickListener(this);
     }
 
 
@@ -77,7 +80,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(ds).title("덕수궁 "));
         mMap.addMarker(new MarkerOptions().position(tg).title("퇴계로 "));
         mMap.addMarker(new MarkerOptions().position(md).title("명동 "));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(kb, 13));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.53501414281699,126.98524095118046), 12));
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -88,6 +91,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 return false;
             }
         });
+        mMap.getUiSettings().setRotateGesturesEnabled(false);
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                rl.setVisibility(View.GONE);
+            }
+        });
 
 //        mMap.setMyLocationEnabled(true);
 
@@ -95,4 +106,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.map_back :
+                finish();
+                break;
+            default: break;
+        }
+
+    }
 }

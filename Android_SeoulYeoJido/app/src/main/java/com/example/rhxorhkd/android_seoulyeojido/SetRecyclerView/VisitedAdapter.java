@@ -22,7 +22,7 @@ public class VisitedAdapter extends RecyclerView.Adapter<VisitedViewHolder>{
 
     public VisitedAdapter(Context context, List<VisitedItem> list) {
         this.list = list;
-        mContext = context;
+        this.mContext = context;
     }
 
     @Override
