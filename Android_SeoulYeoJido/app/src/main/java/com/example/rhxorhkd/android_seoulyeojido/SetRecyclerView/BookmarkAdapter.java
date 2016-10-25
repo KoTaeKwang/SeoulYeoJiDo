@@ -12,28 +12,28 @@ import com.example.rhxorhkd.android_seoulyeojido.R;
 import java.util.List;
 
 /**
- * Created by 병윤 on 2016-10-24.
+ * Created by 병윤 on 2016-10-25.
  */
 
-public class VisitedAdapter extends RecyclerView.Adapter<VisitedViewHolder>{
+public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkViewHolder> {
 
     private Context mContext;
     private List<VisitedItem> list;
 
-    public VisitedAdapter(Context context, List<VisitedItem> list) {
+    public BookmarkAdapter(Context mContext, List<VisitedItem> list) {
+        this.mContext = mContext;
         this.list = list;
-        this.mContext = context;
     }
 
     @Override
-    public VisitedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BookmarkViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.visited_item, parent, false);
-        return new VisitedViewHolder(v, this);
+        return new BookmarkViewHolder(v, this);
     }
 
     @Override
-    public void onBindViewHolder(VisitedViewHolder holder, int position) {
+    public void onBindViewHolder(BookmarkViewHolder holder, int position) {
         VisitedItem item = list.get(position);
 //        holder.photo.setImageURI();
         holder.cnt.setText(item.getCnt());

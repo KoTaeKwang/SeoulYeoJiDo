@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,7 +18,9 @@ import android.os.Bundle;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +44,11 @@ public class set extends AppCompatActivity implements View.OnClickListener{
 
         ActionBar ab = getSupportActionBar();
         ab.hide();
+
+
+//        CollapsingToolbarLayout collapsingToolbar =
+//                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+//        collapsingToolbar.setTitle("아이린");
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tl_tab);
         ViewPager viewPager = (ViewPager)findViewById(R.id.vp_pager);
@@ -70,7 +78,7 @@ public class set extends AppCompatActivity implements View.OnClickListener{
         }else{
             findViewById(R.id.back_btn).setOnClickListener(this);
         }
-//        tv.setText(i.getStringExtra("name"));
+        tv.setText(i.getStringExtra("name"));
         tv.setText("아이린");
 
 
