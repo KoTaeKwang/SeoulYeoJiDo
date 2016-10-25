@@ -51,9 +51,6 @@
         <activity android:name=".DetailPage_YJ.ImageGridActivity" />
         <activity android:name=".DetailPage_YJ.AllreviewActivity" />
 
-
-
-
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -69,6 +66,9 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
+        <activity android:name=".JoinActivity" />
+        <activity android:name=".FindPwActivity" />
+        <activity android:name=".ChangePw"></activity>
     </application>
 
 </manifest>
