@@ -50,8 +50,8 @@ public class DetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent(); // 보내온 Intent를 얻는다
         final String locationTitle = intent.getStringExtra("name");
-        textView = (TextView) findViewById(R.id.text1);
-        textView.setText(locationTitle);
+//        textView = (TextView) findViewById(R.id.text1);
+//        textView.setText(locationTitle);
 
 
         loadBackdrop();     //이미지 로드
@@ -59,10 +59,6 @@ public class DetailActivity extends AppCompatActivity {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-//        ActionBar ab = getSupportActionBar();
-//        ab.hide();
-
 
 
         CollapsingToolbarLayout collapsingToolbar =
@@ -74,13 +70,17 @@ public class DetailActivity extends AppCompatActivity {
         initLayout();       //댓글 초기화
         initData();         //댓글
 
-
         /**
          * 댓글 입력
          */
         Button btnReview = (Button)findViewById(R.id.btn_review);
+        btnReview.setOnClickListener(mClickListener);
 
-
+        /**
+         * 전체 댓글보기
+         */
+        Button btnMore = (Button)findViewById(R.id.btn_more);
+        btnMore.setOnClickListener(mClickListener);
 
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -91,6 +91,29 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    Button.OnClickListener mClickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.btn_review:
+                    Log.d("OnClickListener", "click session button");
+                    // 액티비티 실행
+                    Intent intentSubActivity =
+                            new Intent(DetailActivity.this, Dialog.class);
+                    startActivity(intentSubActivity);
+                    break;
+
+                case R.id.btn_more:
+                    Log.d("OnClickListener", "click session button");
+                    // 액티비티 실행
+                    Intent intentSubActivity2 =
+                            new Intent(DetailActivity.this, AllreviewActivity.class);
+                    startActivity(intentSubActivity2);
+                    break;
+            }
+        }
+    };
 
 
     /**
@@ -122,7 +145,7 @@ public class DetailActivity extends AppCompatActivity {
 
         List<DetailReview> reviewList = new ArrayList<>();
 
-        for (int i =0; i<10; i ++){
+        for (int i =0; i<3; i ++){
 
             DetailReview review = new DetailReview();
 
@@ -144,13 +167,9 @@ public class DetailActivity extends AppCompatActivity {
      */
     private void loadBackdrop() {
         final ImageView imageview = (ImageView) findViewById(R.id.backdrop);
-        //imageview.setImageResource(R.drawable.location01010);
 
-        //setContentView(imageview);
         //Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
-
         Glide.with(this).load("http://kinimage.naver.net/20161005_33/1475666020537jIagj_JPEG/1475666020386.jpg?type=w620").into(imageview);
-        //Glide.with(this).load("hhttp://cfile26.uf.tistory.com/image/270BE841572B57BF2305D8").centerCrop().into(imageview);
 
     }
 

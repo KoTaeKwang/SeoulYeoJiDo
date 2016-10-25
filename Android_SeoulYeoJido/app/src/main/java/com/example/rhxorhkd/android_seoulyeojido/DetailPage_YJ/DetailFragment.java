@@ -3,6 +3,7 @@ package com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -45,6 +46,7 @@ public class DetailFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
 
+
         super.onViewCreated(view, savedInstanceState);
 
         /**
@@ -61,14 +63,36 @@ public class DetailFragment extends Fragment {
             }
         });
 
+        ImageView imgURL = (ImageView) view.findViewById(R.id.img_frg3);
+        imgURL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.naver.com"));
+                startActivity(intent);
 
-        ImageView imageView = (ImageView)view.findViewById(R.id.img_photo1);
-        Glide.with(this).load("http://cfile6.uf.tistory.com/image/2339F739567D2CAE3CADF4").into(imageView);
+            }
+        });
 
+        ImageView imageView1 = (ImageView)view.findViewById(R.id.img_photo1);
+        ImageView imageView2 = (ImageView)view.findViewById(R.id.img_photo2);
+        ImageView imageView3 = (ImageView)view.findViewById(R.id.img_photo3);
+        ImageView imageView4 = (ImageView)view.findViewById(R.id.img_photo4);
+        Glide.with(this).load("http://www.natuur-pop.com/_upload/icecream/2013871578_1293.jpg").into(imageView1);
+        Glide.with(this).load("http://www.natuur-pop.com/_upload/icecream/201387229_35063.jpg").into(imageView2);
+        Glide.with(this).load("http://www.natuur-pop.com/_upload/icecream/2013871422_15767.jpg").into(imageView3);
+        Glide.with(this).load("http://www.natuur-pop.com/_upload/icecream/2013872115_26090.jpg").into(imageView4);
 
+        imageView4.setBackgroundColor(new Color().argb(255, 40, 40, 40));
+        imageView4.setAlpha(50);
 
+        imageView4.setOnClickListener(new View.OnClickListener(){
 
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ImageGridActivity.class);
+                startActivity(intent);
+            }
+        });
     }
-
 
 }

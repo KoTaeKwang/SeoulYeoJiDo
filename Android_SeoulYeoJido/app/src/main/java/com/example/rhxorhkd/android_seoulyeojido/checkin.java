@@ -58,6 +58,7 @@ public class checkin extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 //String str = (String)adapter.getItem(position);
 //                //Toast.makeText(getBaseContext(),str,Toast.LENGTH_LONG).show(); //옮기고 이거써
 //                Toast.makeText(checkin.this,str,Toast.LENGTH_LONG).show();
