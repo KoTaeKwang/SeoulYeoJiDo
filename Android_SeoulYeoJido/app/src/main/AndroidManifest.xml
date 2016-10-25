@@ -39,7 +39,12 @@
         <activity android:name=".set" />
 
         <activity android:name=".DetailPage_YJ.DetailActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
+
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVIT"
+                android:value=".checkin"/>
+        </activity>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
