@@ -4,20 +4,25 @@
     android:id="@+id/activity_find_pw"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loginactivity"
     tools:context="com.example.rhxorhkd.android_seoulyeojido.FindPwActivity">
 
     <ImageView
+        android:scaleType="fitXY"
+        android:id="@+id/findpw_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <ImageView
         android:layout_marginTop="25dp"
         android:layout_marginLeft="16dp"
-        android:id="@+id/join_btn_back"
+        android:id="@+id/findpw_btn_back"
         android:background="@drawable/back"
         android:layout_width="18dp"
         android:layout_height="18dp" />
 
     <EditText
+
         android:layout_above="@+id/find_btn"
-        android:padding="16dp"
+        android:padding="8dp"
         android:inputType="textEmailAddress"
         android:background="@drawable/blank"
         android:id="@+id/find_mail"

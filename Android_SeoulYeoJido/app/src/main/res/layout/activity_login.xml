@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loginactivity"
     tools:context="com.example.rhxorhkd.android_seoulyeojido.LoginActivity">
+
+    <ImageView
+        android:scaleType="fitXY"
+        android:id="@+id/login_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <ImageView
         android:layout_marginTop="25dp"
@@ -16,7 +22,7 @@
         android:layout_height="18dp" />
     
     <ImageView
-        android:layout_above="@+id/email"
+        android:layout_marginTop="130dp"
         android:background="@drawable/mail_image"
         android:layout_centerHorizontal="true"
         android:layout_width="60dp"
@@ -62,7 +68,7 @@
 
 
     <ImageView
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="80dp"
         android:background="@drawable/login"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/go_join"
@@ -73,7 +79,7 @@
 
     <ImageView
         android:layout_marginTop="14dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="60dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/join"
         android:layout_centerHorizontal="true"

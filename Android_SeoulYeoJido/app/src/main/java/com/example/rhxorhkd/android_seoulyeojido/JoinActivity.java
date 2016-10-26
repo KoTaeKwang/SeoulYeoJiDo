@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.rhxorhkd.android_seoulyeojido.Validator.EmailValidator;
 import com.example.rhxorhkd.android_seoulyeojido.Validator.NickNameValidator;
 import com.example.rhxorhkd.android_seoulyeojido.Validator.PasswordValidator;
@@ -26,8 +28,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class JoinActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private FirebaseAuth auth;
     private EditText email, nickName, pw1, pw2;
+    private ImageView iv1;
+
+    private FirebaseAuth auth;
     private FirebaseDatabase db;
     private DatabaseReference Ref;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -40,6 +44,10 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
 
         ActionBar ab = getSupportActionBar();
         ab.hide();
+
+        iv1 = (ImageView)findViewById(R.id.join_background);
+
+        Glide.with(this).load(R.drawable.loginactivity).into(iv1);
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
