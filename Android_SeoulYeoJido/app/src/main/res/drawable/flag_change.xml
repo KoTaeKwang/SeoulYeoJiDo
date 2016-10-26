@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_selected="true" android:drawable="@drawable/after_check_in_flag" /> <!-- selected -->
-    <item android:state_pressed="false" android:drawable="@drawable/before_check_in_flag" /> <!-- selected -->
-    <item android:drawable="@drawable/before_check_in_flag" /> <!-- default -->
+
+    <item android:drawable="@drawable/after_check_in_flag" android:state_checked="true"></item>
+    <item android:drawable="@drawable/before_check_in_flag" android:state_checked="false"></item>
 </selector>
