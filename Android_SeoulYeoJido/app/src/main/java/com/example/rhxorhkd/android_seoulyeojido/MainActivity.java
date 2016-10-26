@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TabHost;
 
+import com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ.CheckinmapActivity;
+
 public class MainActivity extends ActivityGroup {
 
     @Override
@@ -22,7 +24,7 @@ public class MainActivity extends ActivityGroup {
         spec = tabHost.newTabSpec("Tab1").setContent(intent).setIndicator("home");
         tabHost.addTab(spec);
 
-        intent = new Intent(this,checkin.class);
+        intent = new Intent(this,CheckinmapActivity.class);
         spec = tabHost.newTabSpec("Tab2").setContent(intent).setIndicator("checkin");
         tabHost.addTab(spec);
 
