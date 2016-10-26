@@ -49,6 +49,7 @@ public class DetailRecyclerAdapter extends RecyclerView.Adapter<DetailRecyclerAd
         DetailReview item = reviewList.get(position);
         viewHolder.userName.setText(item.getTitle());
         viewHolder.reviewContent.setText(item.getReview());
+        viewHolder.date.setText(item.getDate());
         viewHolder.img.setBackgroundResource(item.getImage());
         viewHolder.itemView.setTag(item);
 
@@ -67,10 +68,10 @@ public class DetailRecyclerAdapter extends RecyclerView.Adapter<DetailRecyclerAd
         public ImageView img;
         public TextView userName;
         public TextView reviewContent;
-
+        public TextView date;
         public ViewHolder(View itemView){
             super(itemView);
-
+            date =(TextView) itemView.findViewById(R.id.date);
             img = (ImageView) itemView.findViewById(R.id.imgProfile);
             userName = (TextView) itemView.findViewById(R.id.username);
             reviewContent = (TextView) itemView.findViewById(R.id.review);

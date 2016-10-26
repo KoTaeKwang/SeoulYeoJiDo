@@ -68,11 +68,17 @@ public class ListviewAdapter extends BaseAdapter {
         TextView name = (TextView)convertView.findViewById(R.id.lay_textview);
         name.setText(listviewitem.getName());
 
-        TextView name2 = (TextView)convertView.findViewById(R.id.lay_textview2);
+        TextView name2 = (TextView)convertView.findViewById(R.id.lay_textcheckcount); //checkin 카운트
         name2.setText(listviewitem.getSubname());
 
-        TextView name3 = (TextView)convertView.findViewById(R.id.lay_textview3);
+        TextView name23 = (TextView)convertView.findViewById(R.id.lay_reviewcheckcount); //review 카운트
+        name23.setText(listviewitem.getReviewcount());
+
+        TextView name3 = (TextView)convertView.findViewById(R.id.lay_textview3);  //카테고리
         name3.setText(listviewitem.getThirdname());
+
+        TextView name4 = (TextView)convertView.findViewById(R.id.lay_textview4); // 장소
+        name4.setText(listviewitem.getFourthname());
 
         ImageView hearticon = (ImageView)convertView.findViewById(R.id.heartimage);
         hearticon.setImageResource(listviewitem.getHearticon());

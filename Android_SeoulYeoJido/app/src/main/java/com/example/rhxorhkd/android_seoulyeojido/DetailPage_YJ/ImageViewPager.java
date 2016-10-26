@@ -2,21 +2,67 @@ package com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.rhxorhkd.android_seoulyeojido.R;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class ImageViewPager extends AppCompatActivity {
 
     int position;
+    OkHttpClient client = new OkHttpClient();
+    Response response;
+    Request request;
+    GridView gridView;
+    JSONArray array;
+    JSONObject object;
+
+    public class showDataDetail extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            JSONObject json = new JSONObject();
+            try {
+                json.put("loca_name", params[0]);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            RequestBody posData = RequestBody.create(JSON,json.toString());
+            request = new Request.Builder()
+                    .url("http://211.189.20.136:4389/ko/showDetailLoca")
+                    .post(posData)
+                    .build();
+            try{
+                response = client.newCall(request).execute();
+                return response.body().string();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            //post gu num
+            return null;
+        }
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +78,20 @@ public class ImageViewPager extends AppCompatActivity {
 
         Intent p = getIntent();
         position = p.getExtras().getInt("id");
-
-        ImageGridAdapter imageGridAdapter = new ImageGridAdapter(this);
+        final String locationtitle = p.getStringExtra("title");
+        showDataDetail showDataDetail = new showDataDetail();
+        String result =null;
+        try {
+            result = showDataDetail.execute(locationtitle).get();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        ImageGridAdapter imageGridAdapter = new ImageGridAdapter(this,result);
         List<ImageView> images = new ArrayList<ImageView>();
 
         for(int i=0; i<imageGridAdapter.getCount(); i++){
             ImageView imageView = new ImageView(this);
-            imageView.setImageResource(imageGridAdapter.mThumblds[i]);
+            Glide.with(this).load( imageGridAdapter.mThumblds.get(i)).into(imageView);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             //imageView.setScaleType(ImageView.ScaleType.CENTER);
             images.add(imageView);
