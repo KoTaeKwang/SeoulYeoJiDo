@@ -30,7 +30,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
     private EditText email, nickName, pw1, pw2;
     private FirebaseDatabase db;
     private DatabaseReference Ref;
-    private FirebaseAuth.AuthStateListener authStateListener;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
 
     @Override
@@ -43,7 +43,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
-        Ref = db.getReference().child("member");
+        Ref = db.getReference("member");
 
         email = (EditText)findViewById(R.id.join_email);
         nickName = (EditText)findViewById(R.id.nickname);
@@ -54,8 +54,17 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.join_btn_back).setOnClickListener(this);
         findViewById(R.id.done).setOnClickListener(this);
 
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    startActivity(new Intent(JoinActivity.this, MainActivity.class));
+                } else {
 
-
+                }
+            }
+        };
     }
 
 
@@ -105,6 +114,20 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             default: break;
         }
-
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        auth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            auth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
 }

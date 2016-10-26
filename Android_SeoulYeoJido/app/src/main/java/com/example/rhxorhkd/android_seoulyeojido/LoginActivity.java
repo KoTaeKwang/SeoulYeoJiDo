@@ -10,16 +10,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private EditText email,pw;
 
     private FirebaseAuth auth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
 
     @Override
@@ -31,6 +32,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         ab.hide();
 
         auth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth auth) {
+                FirebaseUser user = auth.getCurrentUser();
+                if (user != null) {
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                } else {
+
+                }
+            }
+        };
+
 
         email = (EditText)findViewById(R.id.email);
         pw = (EditText)findViewById(R.id.pw);
@@ -69,6 +82,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.find_pw :
                 break;
             default: break;
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        auth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            auth.removeAuthStateListener(mAuthListener);
         }
     }
 }
