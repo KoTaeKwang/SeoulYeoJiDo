@@ -74,14 +74,11 @@ public class DetailFragment extends Fragment {
             }
         });
 
-
-
         imgURL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.naver.com"));
                 startActivity(intent);
-
             }
         });
 
