@@ -5,13 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.LocationManager;
-import android.provider.ContactsContract;
-import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +28,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import static com.example.rhxorhkd.android_seoulyeojido.R.id.map;
 
-public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
+public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private LocationManager locationManager = null;
     private Double longitude;
@@ -39,7 +38,7 @@ public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCa
     private GoogleMap mMap;
 
     private RelativeLayout rl;
-    private ImageView imgflag;
+    private CheckBox checkflag;
     private TextView tv1;
     private String markerId;
 
@@ -56,9 +55,10 @@ public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCa
         rl = (RelativeLayout) findViewById(R.id.location_detail);
         rl.setVisibility(View.GONE);
         tv1 = (TextView)findViewById(R.id.location_name);
-        imgflag = (ImageView)findViewById(R.id.default_flag);
-        imgflag.setOnClickListener(this);
 
+
+        checkflag = (CheckBox)findViewById(R.id.default_flag);
+        checkflag.setOnCheckedChangeListener(this);
 
         findViewById(R.id.map_back).setOnClickListener(this);
 
@@ -69,6 +69,7 @@ public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCa
 
 
     }
+
 
 
     /**
@@ -177,12 +178,33 @@ public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCa
             case R.id.map_back :
                 finish();
                 break;
-            case R.id.default_flag :
-                imgflag.setSelected(true);
-                break;
+//            case R.id.default_flag :
+//                break;
 
             default: break;
         }
 
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        String result = ""; // 문자열 초기화는 빈문자열로 하자
+
+//        if(isChecked) tv.setText("체크했음");
+//        else tv.setText("체크안했슴");
+
+        // 혹은 3항연산자
+        //tx.setText(isChecked?"체크했슴":"체크안했뜸");
+
+        if(checkflag.isChecked()) {
+            //result += checkflag.getText().toString() + ", ";
+            Toast.makeText(getApplicationContext(), "checkin!", Toast.LENGTH_LONG).show();
+        }
+        if(!checkflag.isChecked()) {
+            Toast.makeText(getApplicationContext(), "no Checkin!", Toast.LENGTH_LONG).show();
+
+        }
+
+        //tv.setText("체크항목: " + result);
     }
 }

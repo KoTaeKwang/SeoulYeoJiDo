@@ -42,7 +42,7 @@ public class checkin extends AppCompatActivity {
 
         data.add(data1);
         data.add(data2);
-        data.add(data3);
+        data.add(data3);5
         data.add(data4);
         data.add(data5);
         data.add(data6);

@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -18,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private EditText email,pw;
+    private ImageView iv1;
 
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -31,6 +34,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         ActionBar ab = getSupportActionBar();
         ab.hide();
 
+        iv1 = (ImageView)findViewById(R.id.login_background);
+
+        Glide.with(this).load(R.drawable.loginactivity).into(iv1);
+
         auth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -38,6 +45,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 FirebaseUser user = auth.getCurrentUser();
                 if (user != null) {
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
                 } else {
 
                 }
@@ -70,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     Toast.makeText(LoginActivity.this, "회원정보가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                                 }else{
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                    finish();
+//                                    finish();
                                 }
                             }
                         });
@@ -81,6 +89,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.find_pw :
+                startActivity(new Intent(this, FindPwActivity.class));
+                finish();
                 break;
             default: break;
         }

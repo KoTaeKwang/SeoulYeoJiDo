@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.rhxorhkd.android_seoulyeojido.Validator.EmailValidator;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,6 +21,7 @@ public class FindPwActivity extends AppCompatActivity implements View.OnClickLis
     private FirebaseAuth auth;
 
     private EditText email;
+    private ImageView iv1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +31,17 @@ public class FindPwActivity extends AppCompatActivity implements View.OnClickLis
         ActionBar ab = getSupportActionBar();
         ab.hide();
 
+        iv1 = (ImageView)findViewById(R.id.findpw_background);
+
+        Glide.with(this).load(R.drawable.loginactivity).into(iv1);
+
         auth = FirebaseAuth.getInstance();
 
         email = (EditText)findViewById(R.id.find_mail);
 
 
         findViewById(R.id.find_btn).setOnClickListener(this);
+        findViewById(R.id.findpw_btn_back).setOnClickListener(this);
 
 
 
@@ -59,6 +67,9 @@ public class FindPwActivity extends AppCompatActivity implements View.OnClickLis
                                 }
                             });
                 }
+                break;
+            case R.id.findpw_btn_back :
+                finish();
                 break;
             default: break;
 

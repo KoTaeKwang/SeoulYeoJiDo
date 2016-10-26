@@ -58,31 +58,165 @@
             android:orientation="vertical"
             android:paddingTop="24dp">
 
-            <fragment
-                android:id="@+id/detailFragment"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:name="com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ.DetailFragment"/>
+                android:layout_height="wrap_content"
+                android:id="@+id/relLayout01">
 
-            <!--<android.support.v7.widget.RecyclerView-->
-                <!--android:id="@+id/recyclerView"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="240dp"-->
-                <!--&gt;</android.support.v7.widget.RecyclerView>-->
+                <ImageView
+                    android:id="@+id/img_frg1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignRight="@+id/img_frg2"
+                    android:layout_alignTop="@+id/img_frg2"
+                    android:layout_marginRight="100dp"
+                    android:src="@drawable/ic_local_phone" />
 
-            <fragment
+                <TextView
+                    android:id="@+id/txt_tel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignRight="@+id/img_frg2"
+                    android:layout_below="@+id/img_frg1"
+                    android:layout_marginRight="80dp"
+                    android:text="02-1234-5678" />
+
+                <ImageView
+                    android:id="@+id/img_frg2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/ic_event" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/img_frg2"
+                    android:layout_below="@+id/img_frg2"
+                    android:layout_marginLeft="6dp"
+                    android:text="뭐넣지" />
+
+                <ImageView
+                    android:id="@+id/img_frg3"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignLeft="@+id/img_frg2"
+                    android:layout_alignTop="@+id/img_frg2"
+                    android:layout_marginLeft="100dp"
+                    android:src="@drawable/ic_language_black_48dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/img_frg3"
+                    android:layout_below="@+id/img_frg3"
+                    android:layout_marginLeft="6dp"
+                    android:text="뭐넣지2" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:layout_below="@+id/relLayout01">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:id="@+id/img_address"
+                    android:layout_marginTop="30dp"
+                    android:src= "@drawable/ic_place_black_48dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/img_address"
+                    android:layout_toRightOf="@+id/img_address"
+                    android:layout_marginLeft="10dp"
+                    android:text="11111111111111"/>
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:id="@+id/img_description"
+                    android:layout_below="@+id/img_address"
+                    android:layout_marginTop="30dp"
+                    android:src= "@drawable/ic_info_outline_black_48dp"/>
+                <TextView
+                    android:id="@+id/txt_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/img_description"
+                    android:layout_toRightOf="@+id/img_description"
+                    android:layout_marginLeft="10dp"
+                    android:text="111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"/>
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:id="@+id/img_icphoto"
+                    android:layout_below="@+id/txt_detail"
+                    android:layout_marginTop="30dp"
+                    android:src= "@drawable/ic_info_outline_black_48dp"/>
+
+                <ImageView
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:id="@+id/img_photo1"
+                    android:layout_toRightOf="@+id/img_icphoto"
+                    android:layout_alignTop="@+id/img_icphoto"
+                    android:layout_marginLeft="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/cheese_4"/>
+                <ImageView
+                    android:layout_width="141dp"
+                    android:layout_height="70dp"
+                    android:id="@+id/img_photo2"
+                    android:layout_toRightOf="@+id/img_photo1"
+                    android:layout_alignTop="@+id/img_icphoto"
+                    android:padding="1dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/cheese_4"/>
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:id="@+id/img_photo3"
+                    android:layout_toRightOf="@+id/img_photo1"
+                    android:layout_marginLeft="1dp"
+                    android:layout_below="@+id/img_photo2"
+                    android:padding="1dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/cheese_4"/>
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/img_photo3"
+                    android:layout_marginLeft="1dp"
+                    android:layout_alignTop="@+id/img_photo3">
+                    <ImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:id="@+id/img_photo4"
+                        android:padding="1dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/cheese_4"
+                        android:layout_gravity="center"/>
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/img_plus"
+                        android:src="@drawable/ic_keyboard_arrow_down"
+                        android:layout_gravity="center"/>
+                </FrameLayout>
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="240dp"
-                android:name="com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ.DetailReview_Fragment"
-                android:id="@+id/listfragment"/>
+                ></android.support.v7.widget.RecyclerView>
 
-            <!--<ListView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="240dp"-->
-                <!--android:id="@+id/detailListview"-->
-                <!--android:layout_weight="1">-->
-
-            <!--</ListView>-->
 
             <LinearLayout
                 android:layout_width="match_parent"

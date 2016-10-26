@@ -6,8 +6,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -16,11 +18,17 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    private ImageView iv1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
+        iv1 = (ImageView)findViewById(R.id.start_background);
+
+        Glide.with(this).load(R.drawable.start_activity).into(iv1);
 
         ActionBar ab = getSupportActionBar();
         ab.hide();
