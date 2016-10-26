@@ -127,7 +127,7 @@ public class DetailActivity extends AppCompatActivity {
         collapsingToolbar.setTitle(locationTitle);
 
         /**
-         * 이미지버튼- 전화걸기
+         * 상세 버튼, 설명 etc...
          */
         ImageView imgTel =  (ImageView) findViewById(R.id.img_frg1);
         ImageView imgMap =  (ImageView) findViewById(R.id.img_frg2);
@@ -176,23 +176,11 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        // OKOKOKOK****************************************
 
 
         /**
-        * detail fragment
+         * 댓글 리사이클뷰
          */
-//        FragmentManager fm = getSupportFragmentManager();
-//        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-
-        /**
-         * detail list fragment
-         */
-//        listFragment = (ListFragment) fm.findFragmentById(R.id.listfragment);
-
-
-
-
 
         ArrayList<DetailReview> list = new ArrayList<>();
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -211,9 +199,6 @@ public class DetailActivity extends AppCompatActivity {
 
 
 
-        /**
-         * detail list fragment
-         */
 
         // listInit(); //리스트 초기화
 
@@ -282,10 +267,21 @@ public class DetailActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * 이미지 로드
+     */
+    private void loadBackdrop(String url) {
+        final ImageView imageview = (ImageView) findViewById(R.id.backdrop);
 
+        //Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
+        Glide.with(this).load(url).into(imageview);
+    }
 
+}
 
-
+    /**
+     *
+     */
 //    public void listInit(){
 //        lv =(ListView) findViewById(R.id.detailListview);
 //
@@ -306,7 +302,6 @@ public class DetailActivity extends AppCompatActivity {
     /**
      *
      */
-//
 //    private void initLayout(){
 //
 //        lecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
@@ -336,15 +331,5 @@ public class DetailActivity extends AppCompatActivity {
 //    }
 
 
-    /**
-     * 이미지 로드
-     */
-    private void loadBackdrop(String url) {
-        final ImageView imageview = (ImageView) findViewById(R.id.backdrop);
 
-        //Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
-        Glide.with(this).load(url).into(imageview);
 
-    }
-
-}
