@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.rhxorhkd.android_seoulyeojido.MapsActivity;
 import com.example.rhxorhkd.android_seoulyeojido.R;
 
 import java.io.BufferedInputStream;
@@ -68,12 +69,12 @@ public class DetailFragment extends Fragment {
 
         imgMap.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                Toast.makeText(getContext(), "map 연결",Toast.LENGTH_LONG).show();
-
-                //Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+tel));
-                //startActivity(intent);
+                //Toast.makeText(getContext(), "map 연결",Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getActivity(), DetailMapsActivity.class));
             }
         });
+
+
 
         imgURL.setOnClickListener(new View.OnClickListener() {
             @Override

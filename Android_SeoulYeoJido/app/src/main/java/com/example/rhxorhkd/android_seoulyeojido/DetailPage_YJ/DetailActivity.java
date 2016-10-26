@@ -179,7 +179,7 @@ public class DetailActivity extends AppCompatActivity {
         final ImageView imageview = (ImageView) findViewById(R.id.backdrop);
 
         //Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
-        Glide.with(this).load("http://kinimage.naver.net/20161005_33/1475666020537jIagj_JPEG/1475666020386.jpg?type=w620").into(imageview);
+        Glide.with(this).load("http://thefermata.net/wp-content/uploads/2012/10/IMG_1035.jpg").into(imageview);
 
     }
 
