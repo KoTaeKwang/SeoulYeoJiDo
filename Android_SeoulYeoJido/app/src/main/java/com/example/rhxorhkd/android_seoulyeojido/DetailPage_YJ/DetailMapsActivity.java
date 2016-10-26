@@ -1,33 +1,48 @@
 package com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.LocationManager;
+import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rhxorhkd.android_seoulyeojido.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import static com.example.rhxorhkd.android_seoulyeojido.R.id.map;
 
-public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
 
     private LocationManager locationManager = null;
     private Double longitude;
     private Double latitude;
 
     private GpsInfo gps;
-
     private GoogleMap mMap;
+
+    private RelativeLayout rl;
+    private ImageView imgflag;
+    private TextView tv1;
+    private String markerId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +53,19 @@ public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCa
                 .findFragmentById(map);
         mapFragment.getMapAsync(this);
 
-        gps = new GpsInfo(DetailMapsActivity.this);
+        rl = (RelativeLayout) findViewById(R.id.location_detail);
+        rl.setVisibility(View.GONE);
+        tv1 = (TextView)findViewById(R.id.location_name);
+        imgflag = (ImageView)findViewById(R.id.default_flag);
+        imgflag.setOnClickListener(this);
 
-        //Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        //startActivity(myIntent);
+
+        findViewById(R.id.map_back).setOnClickListener(this);
+
+        gps = new GpsInfo(DetailMapsActivity.this);
 
         latitude = gps.getLatitude();
         longitude = gps.getLongitude();
-
 
 
     }
@@ -63,6 +83,12 @@ public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCa
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        int height = 126;
+        int width = 90;
+        BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.after_check_in);
+        Bitmap b = bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
 
         LatLng myLocation = new LatLng(latitude, longitude);
         Log.d("mr", "la: "+latitude);
@@ -88,19 +114,75 @@ public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCa
         LatLng ds = new LatLng(37.565776, 126.975163);
         LatLng tg = new LatLng(37.558283, 126.978028);
         LatLng md = new LatLng(37.560829, 126.986418);
+        mMap.addMarker(new MarkerOptions()
+                .position(kb)
+                .title("경북궁 ")
+                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
 
-//        mMap.addMarker(new MarkerOptions()
-//                .position(kb)
-//                .title("경북궁 ")
-//                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
-//
-//        );
-        mMap.addMarker(new MarkerOptions().position(kb).title("경복궁 "));
-        mMap.addMarker(new MarkerOptions().position(sd).title("사당역 "));
-        mMap.addMarker(new MarkerOptions().position(ds).title("덕수궁 "));
-        mMap.addMarker(new MarkerOptions().position(tg).title("퇴계로 "));
-        mMap.addMarker(new MarkerOptions().position(md).title("명동 "));
+        );
+        mMap.addMarker(new MarkerOptions()
+                .position(sd)
+                .title("사당역 ")
+                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
 
+        );
+        mMap.addMarker(new MarkerOptions()
+                .position(ds)
+                .title("덕수궁 ")
+                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
+
+        );
+        mMap.addMarker(new MarkerOptions()
+                .position(md)
+                .title("명동 ")
+                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
+
+        );
+        mMap.addMarker(new MarkerOptions()
+                .position(tg)
+                .title("퇴계로 ")
+                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
+
+        );
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+                tv1.setText(marker.getTitle());
+                rl.setVisibility(View.VISIBLE);
+
+                markerId = marker.getId().toString();
+                //Toast.makeText(getApplicationContext(), " == "+id, 1).show();
+
+                return false;
+            }
+        });
+
+        mMap.getUiSettings().setRotateGesturesEnabled(false);
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                rl.setVisibility(View.GONE);
+            }
+        });
+    }
+
+
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.map_back :
+                finish();
+                break;
+            case R.id.default_flag :
+                imgflag.setSelected(true);
+                break;
+
+            default: break;
+        }
 
     }
 }
