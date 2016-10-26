@@ -71,7 +71,7 @@ public class ChangeInfo extends AppCompatActivity implements View.OnClickListene
                         RoundedBitmapDrawableFactory.create(this.getView().getResources(), resource);
                 circularBitmapDrawable.setCircular(true);
                 iv1.setImageDrawable(circularBitmapDrawable);
-        }
+            }
         });
     }
 
@@ -81,9 +81,24 @@ public class ChangeInfo extends AppCompatActivity implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.chage_back :
+
                 if(!NickNameValidator.getInstance().validate(nickName.getText().toString(),2,12)){
                     Toast.makeText(getApplicationContext(),"닉네임 형식이 바르지 않습니다(특수문자제외 2~12자)",Toast.LENGTH_LONG).show();
                 }else{
+                    final FirebaseUser user = auth.getCurrentUser();
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(nickName.getText().toString())
+                            .build();
+
+                    user.updateProfile(profileUpdates)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Ref.child(user.getUid()+"/nickname").setValue(nickName.getText().toString());
+                                    }
+                                }
+                            });
                     finish();
                 }
                 break;

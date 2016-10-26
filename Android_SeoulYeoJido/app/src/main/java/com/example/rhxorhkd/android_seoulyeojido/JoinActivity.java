@@ -93,7 +93,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                             }else{
                                 final FirebaseUser user = auth.getCurrentUser();
                                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                        .setDisplayName("Jane Q. User")
+                                        .setDisplayName(nickName.getText().toString())
                                         .build();
 
                                 user.updateProfile(profileUpdates)
@@ -101,9 +101,11 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task1) {
                                                 if (task1.isSuccessful()) {
+                                                    Ref.child(user.getUid()+"/email").setValue(email.getText().toString());
+                                                    Ref.child(user.getUid()+"/nickname").setValue(nickName.getText().toString());
                                                     Toast.makeText(JoinActivity.this, "성공!", Toast.LENGTH_SHORT).show();
                                                 }else{
-                                                    Toast.makeText(JoinActivity.this, "에러ㅜ", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(JoinActivity.this, "닉네임 에러", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
