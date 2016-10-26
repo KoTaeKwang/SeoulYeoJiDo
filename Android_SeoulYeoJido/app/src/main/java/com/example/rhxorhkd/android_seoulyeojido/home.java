@@ -177,7 +177,7 @@ public class home extends AppCompatActivity {
         for(int i=0;i<listarr.length();i++){
             try{
             JSONObject object = listarr.getJSONObject(i);
-             Listviewitem tempdata = new Listviewitem(object.getString("loca_photo"),object.getString("loca_name"),object.getString("loca_categorynum"),object.getString("loca_guNum"),R.drawable.heart1);
+             Listviewitem tempdata = new Listviewitem(object.getString("loca_photo"),object.getString("loca_name"),object.getString("loca_checkincount"),object.getString("loca_reviewcount"),object.getString("loca_categorynum"),object.getString("loca_guNum"),R.drawable.heart1);
              data.add(tempdata);
             }catch (JSONException e){
                 e.printStackTrace();
