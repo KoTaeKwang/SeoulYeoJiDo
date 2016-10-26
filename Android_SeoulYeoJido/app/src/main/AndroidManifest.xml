@@ -66,9 +66,11 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".JoinActivity" />
         <activity android:name=".FindPwActivity" />
-        <activity android:name=".ChangePw"></activity>
+        <activity android:name=".ChangePw" />
+        <activity android:name=".StartActivity"></activity>
     </application>
 
 </manifest>

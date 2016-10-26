@@ -12,7 +12,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private EditText email, pw;
+    private EditText email,pw;
+
     private FirebaseAuth auth;
 
 
