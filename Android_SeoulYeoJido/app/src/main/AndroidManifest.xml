@@ -23,11 +23,6 @@
             android:name=".MainActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
             <meta-data
                 android:name="android.app.searchable"
@@ -68,9 +63,16 @@
             android:label="@string/title_activity_maps" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".JoinActivity" />
+        <activity android:name=".ChangeInfo" />
         <activity android:name=".FindPwActivity" />
         <activity android:name=".ChangePw" />
-        <activity android:name=".StartActivity"></activity>
+        <activity android:name=".StartActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -106,10 +106,9 @@ public class set extends AppCompatActivity implements View.OnClickListener{
                 startActivity(new Intent(this, MapsActivity.class));
                 break;
             case R.id.my_profile_img :
-//                Intent i = new Intent(this, ChangeInfo.class);
-//                i.putExtra("nickname", tv.getText());
-//                startActivity(i);
-                startActivity(new Intent(this, StartActivity.class));
+                Intent i = new Intent(this, ChangeInfo.class);
+                i.putExtra("nickname", tv.getText());
+                startActivity(i);
                 break;
             default: break;
         }

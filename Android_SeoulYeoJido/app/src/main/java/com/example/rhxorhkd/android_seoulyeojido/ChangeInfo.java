@@ -13,10 +13,12 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ChangeInfo extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView iv1, iv2;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +28,13 @@ public class ChangeInfo extends AppCompatActivity implements View.OnClickListene
         ActionBar ab = getSupportActionBar();
         ab.hide();
 
+        auth = FirebaseAuth.getInstance();
+
         iv1 = (ImageView)findViewById(R.id.change_img);
         findViewById(R.id.chage_back).setOnClickListener(this);
         findViewById(R.id.change_img).setOnClickListener(this);
+        findViewById(R.id.logout).setOnClickListener(this);
+
         Glide.with(this).load(R.drawable.irene1).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv1){
             @Override
             protected void setResource(Bitmap resource) {
@@ -54,6 +60,10 @@ public class ChangeInfo extends AppCompatActivity implements View.OnClickListene
                 i.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
                 i.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, REQ_CODE_SELECT_IMAGE);
+                break;
+            case R.id.logout :
+                auth.getInstance().signOut();
+                startActivity(new Intent(ChangeInfo.this, StartActivity.class));
                 break;
             default:break;
         }
