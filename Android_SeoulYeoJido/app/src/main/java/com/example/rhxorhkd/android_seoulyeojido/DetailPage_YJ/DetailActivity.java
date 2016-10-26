@@ -1,10 +1,12 @@
 package com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,10 +20,23 @@ import android.widget.ListView;
 import com.bumptech.glide.Glide;
 import com.example.rhxorhkd.android_seoulyeojido.R;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 
 public class DetailActivity extends AppCompatActivity {
-
+    Request request;
+    Response response;
+    OkHttpClient client = new OkHttpClient();
     FloatingActionButton fab;
+    JSONObject object;
 //    private RecyclerView lecyclerView;
 
     ListView lv; //리스트
@@ -31,16 +46,61 @@ public class DetailActivity extends AppCompatActivity {
 
 
 
+    public class showDataDetail extends AsyncTask<String, Void, String>{
+        @Override
+        protected String doInBackground(String... params) {
+            final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            JSONObject json = new JSONObject();
+            try {
+                json.put("loca_name", params[0]);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            RequestBody posData = RequestBody.create(JSON,json.toString());
+            request = new Request.Builder()
+                    .url("http://211.189.20.136:4389/ko/showDetailLoca")
+                    .post(posData)
+                    .build();
+            try{
+                response = client.newCall(request).execute();
+                return response.body().string();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            //post gu num
+            return null;
+        }
+    }
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //requestWindowFeature(Window.FEATURE_NO_TITLE); //타이틀바 삭제
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
+        String url =null;
         Intent intent = getIntent(); // 보내온 Intent를 얻는다
         final String locationTitle = intent.getStringExtra("name");
+        String result =null;
+        showDataDetail showDataDetail = new showDataDetail();
+        try {
+            Log.d("list","aaa"+locationTitle);
+            result = showDataDetail.execute(locationTitle).get();
+            object = new JSONObject(result);
+            JSONArray array = object.getJSONArray("loca_photo");
+            url =array.get(0).toString();
+           //url = array.getJSONObject(0).toString();
+            Log.d("list","-->"+url);
 
-        loadBackdrop();     //이미지 로드
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        loadBackdrop(url);     //이미지 로드
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -52,6 +112,10 @@ public class DetailActivity extends AppCompatActivity {
         collapsingToolbar.setTitle(locationTitle);
 
         FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+
+
+
         listFragment = (ListFragment) fm.findFragmentById(R.id.listfragment);
 
 
@@ -175,11 +239,11 @@ public class DetailActivity extends AppCompatActivity {
     /**
      * 이미지 로드
      */
-    private void loadBackdrop() {
+    private void loadBackdrop(String url) {
         final ImageView imageview = (ImageView) findViewById(R.id.backdrop);
 
         //Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
-        Glide.with(this).load("http://thefermata.net/wp-content/uploads/2012/10/IMG_1035.jpg").into(imageview);
+        Glide.with(this).load(url).into(imageview);
 
     }
 

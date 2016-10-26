@@ -117,7 +117,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
-        <ImageView
+        <CheckBox
             android:layout_marginTop="6dp"
             android:id="@+id/default_flag"
             android:background="@drawable/flag_change"
@@ -126,6 +126,7 @@
             android:layout_marginRight="16dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
+            android:button="@null"
 
             />
 

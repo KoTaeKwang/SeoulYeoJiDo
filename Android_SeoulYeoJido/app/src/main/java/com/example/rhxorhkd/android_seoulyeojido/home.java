@@ -195,8 +195,6 @@ public class home extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),DetailActivity.class);
                 intent.putExtra("name",str);
                 startActivity(intent);
-
-                Toast.makeText(home.this,str,Toast.LENGTH_LONG).show();
             }
         });
     }
