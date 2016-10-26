@@ -2,6 +2,8 @@ package com.example.rhxorhkd.android_seoulyeojido;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ.DetailActivity;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import org.json.JSONArray;
@@ -26,11 +29,15 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class home extends AppCompatActivity {
@@ -51,52 +58,19 @@ public class home extends AppCompatActivity {
     Response response;
     Request request;
 
-
-    String run(String url) throws IOException{ // get방식 리턴  string
-        Log.d("ans",url);
-        request = new Request.Builder()
-                .url(url)
-                .build();
-        String ans="";
-
-        new Thread(){
-            String ansresponse;
-            public void run(){
-                try{
-                    //response = client.newCall(request).execute();
-                    client.newCall(request).enqueue(new Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {Log.d("ans","실패");}
-
-                        @Override
-                        public void onResponse(Call call, Response response) throws IOException {  //데이터올때
-                           try {
-                                ansresponse = response.body().string();
-                               jsonobject = new JSONObject(ansresponse);
-                                jsonarray = jsonobject.getJSONArray("location");
-                                //listInit(jsonarray);
-                                Log.d("ans","ansresponse : "+jsonarray.length());
-                            }catch(JSONException e){
-                               e.printStackTrace();
-                            }
-                        }
-                    });
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-        return ans;
-    }
-
-    public void button2clicked(View v){
-        String ans="";
-        try {
-             ans=run("http://211.189.20.136:4389/ko/showloca");
-        }catch(Exception e){
+    public void button2clicked(View v){ //용산구
+        guListGetData getData = new guListGetData();
+        String result = null;
+        try{
+            result = getData.execute("2").get();
+            jsonobject = new JSONObject(result);
+            jsonarray = jsonobject.getJSONArray("location");
+            listInit(jsonarray);
+        }catch (Exception e){
             e.printStackTrace();
         }
-        Log.d("ans","aaasdasd"+ans);
+
+        mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
     }
 
     @Override
@@ -104,16 +78,28 @@ public class home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         client = new OkHttpClient();
-
         map=(LinearLayout)findViewById(R.id.map);
         searchlistview=(LinearLayout)findViewById(R.id.searchlistview);
         button =(Button) findViewById(R.id.button);
-
-
         ImageView imageView6 =(ImageView)findViewById(R.id.imageView6);
+        ImageView imageView5 = (ImageView)findViewById(R.id.imageView5);
 
-        searchInit(); //서치리스트 초기화
-        listInit(); //리스트 초기화
+        //searchInit(); //서치리스트 초기화
+
+        firstListGetData getData = new firstListGetData();
+        String result = null;
+        try {
+            result = getData.execute().get();
+            JSONObject object = new JSONObject(result);
+            JSONArray jsonArray = object.getJSONArray("location");
+            listInit(jsonArray);
+            searchInit(jsonArray);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        //listInit(); //리스트 초기화
+
+
 
         mLayout = (SlidingUpPanelLayout)findViewById(R.id.sliding_layout);
 
@@ -149,8 +135,61 @@ public class home extends AppCompatActivity {
             }
         });
 
+        imageView5.setOnClickListener(new MyListner());
     }
 
+    class MyListner implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            client = new OkHttpClient();
+            categoryListGetData getData = new categoryListGetData();
+            String result = null;
+            try{
+                result = getData.execute("2").get();
+                jsonobject = new JSONObject(result);
+                jsonarray = jsonobject.getJSONArray("location");
+                listInit(jsonarray);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+
+
+        }
+    }
+
+    public void listInit(JSONArray listarr){
+        lv =(ListView) findViewById(R.id.list);
+        Log.d("list",listarr.toString());
+        ArrayList<Listviewitem> data = new ArrayList<>();
+
+        for(int i=0;i<listarr.length();i++){
+            try{
+            JSONObject object = listarr.getJSONObject(i);
+             Listviewitem tempdata = new Listviewitem(object.getString("loca_photo"),object.getString("loca_name"),object.getString("loca_categorynum"),object.getString("loca_guNum"),R.drawable.heart1);
+             data.add(tempdata);
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
+
+        Log.d("list","data.size -> "+data.size());
+        adapter = new ListviewAdapter(this,R.layout.item,data);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String str = (String)adapter.getItem(position);
+                //Toast.makeText(getBaseContext(),str,Toast.LENGTH_LONG).show(); //옮기고 이거써
+                Intent intent = new Intent(getApplicationContext(),DetailActivity.class);
+                intent.putExtra("name",str);
+                startActivity(intent);
+
+                Toast.makeText(home.this,str,Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 
     public void listInit(){
         lv =(ListView) findViewById(R.id.list);
@@ -158,20 +197,7 @@ public class home extends AppCompatActivity {
         ArrayList<Listviewitem> data = new ArrayList<>();
         String title;
 
-       /* for(int i=0;i<jsonarray.length();i++){
-            try {
-                JSONObject jsonObject = jsonarray.getJSONObject(i);
-                title=jsonObject.getString("loca_name");
-                Log.d("ans","title : "+title);
-                Listviewitem data1 = new Listviewitem(R.drawable.ic_launcher,title,"temps","tempss",R.drawable.heart1);
-                data.add(data1);
-            }catch (JSONException e){
-                e.printStackTrace();
-            }
-        }*/
-
-
-        Listviewitem data1 = new Listviewitem(R.drawable.ic_launcher,"one","ones","oness",R.drawable.heart1);
+     /*   Listviewitem data1 = new Listviewitem(R.drawable.ic_launcher,"one","ones","oness",R.drawable.heart1);
         Listviewitem data2 = new Listviewitem(R.drawable.ic_launcher,"two","twos","twoss",R.drawable.heart1);
         Listviewitem data3 = new Listviewitem(R.drawable.ic_launcher,"three","threes","thress",R.drawable.heart1);
         Listviewitem data4 = new Listviewitem(R.drawable.ic_launcher,"four","fours","fourss",R.drawable.heart1);
@@ -194,7 +220,7 @@ public class home extends AppCompatActivity {
         data.add(data9);
         data.add(data10);
         data.add(data11);
-
+*/
          adapter = new ListviewAdapter(this,R.layout.item,data);
         lv.setAdapter(adapter);
 
@@ -204,16 +230,116 @@ public class home extends AppCompatActivity {
                 String str = (String)adapter.getItem(position);
                 //Toast.makeText(getBaseContext(),str,Toast.LENGTH_LONG).show(); //옮기고 이거써
                 Toast.makeText(home.this,str,Toast.LENGTH_LONG).show();
-
             }
         });
+    }
 
+    public void searchInit(JSONArray array){
+        listView1 = (ListView)findViewById(R.id.listview1);
+        searchdatas = new ArrayList<>(); //장소일때 주소일때 0,1 구별해서 state 넣기
+
+        for(int i=0;i<array.length();i++){
+            try{
+                JSONObject object = array.getJSONObject(i);
+                Searchitem tempdata = new Searchitem(object.getString("loca_name"),R.drawable.heart2,0);
+                searchdatas.add(tempdata);
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
+
+        Searchitem tempdata1  = new Searchitem("은평구",R.drawable.white,1);
+        Searchitem tempdata2  = new Searchitem("서대문구",R.drawable.white,1);
+        Searchitem tempdata3  = new Searchitem("마포구",R.drawable.white,1);
+        Searchitem tempdata4  = new Searchitem("중구",R.drawable.white,1);
+        Searchitem tempdata5  = new Searchitem("성북구",R.drawable.white,1);
+        Searchitem tempdata6  = new Searchitem("동대문구",R.drawable.white,1);
+        Searchitem tempdata7  = new Searchitem("성동구",R.drawable.white,1);
+        Searchitem tempdata8  = new Searchitem("강북구",R.drawable.white,1);
+        Searchitem tempdata9  = new Searchitem("도봉구",R.drawable.white,1);
+        Searchitem tempdata10  = new Searchitem("노원구",R.drawable.white,1);
+        Searchitem tempdata11  = new Searchitem("중랑구",R.drawable.white,1);
+        Searchitem tempdata12  = new Searchitem("광진구",R.drawable.white,1);
+        Searchitem tempdata13  = new Searchitem("송파구",R.drawable.white,1);
+        Searchitem tempdata14  = new Searchitem("강동구",R.drawable.white,1);
+        Searchitem tempdata15  = new Searchitem("서초구",R.drawable.white,1);
+        Searchitem tempdata16  = new Searchitem("강남구",R.drawable.white,1);
+        Searchitem tempdata17  = new Searchitem("관악구",R.drawable.white,1);
+        Searchitem tempdata18  = new Searchitem("금천구",R.drawable.white,1);
+        Searchitem tempdata19  = new Searchitem("영등포구",R.drawable.white,1);
+        Searchitem tempdata20  = new Searchitem("동작구",R.drawable.white,1);
+        Searchitem tempdata21  = new Searchitem("강서구",R.drawable.white,1);
+        Searchitem tempdata22  = new Searchitem("양천구",R.drawable.white,1);
+        Searchitem tempdata23  = new Searchitem("구로구",R.drawable.white,1);
+        Searchitem tempdata24  = new Searchitem("용산구",R.drawable.white,1);
+        Searchitem tempdata25  = new Searchitem("종로구",R.drawable.white,1);
+        searchdatas.add(tempdata1);
+        searchdatas.add(tempdata2);
+        searchdatas.add(tempdata3);
+        searchdatas.add(tempdata4);
+        searchdatas.add(tempdata5);
+        searchdatas.add(tempdata6);
+        searchdatas.add(tempdata7);
+        searchdatas.add(tempdata8);
+        searchdatas.add(tempdata9);
+        searchdatas.add(tempdata10);
+        searchdatas.add(tempdata11);
+        searchdatas.add(tempdata12);
+        searchdatas.add(tempdata13);
+        searchdatas.add(tempdata14);
+        searchdatas.add(tempdata15);
+        searchdatas.add(tempdata16);
+        searchdatas.add(tempdata17);
+        searchdatas.add(tempdata18);
+        searchdatas.add(tempdata19);
+        searchdatas.add(tempdata20);
+        searchdatas.add(tempdata21);
+        searchdatas.add(tempdata22);
+        searchdatas.add(tempdata23);
+        searchdatas.add(tempdata24);
+        searchdatas.add(tempdata25);
+
+
+
+        sadapter = new SearchitemAdapter(this,R.layout.searchitem,searchdatas);
+        listView1.setAdapter(sadapter);
+
+        listView1.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("text","listview1clicked");
+                String str = (String)sadapter.getItem(position);
+                String tt[] = str.split(":");
+                Log.d("list","tt[1]-->"+tt[1]);
+                if(tt[1].equals("0")){
+                    Intent intent = new Intent(getApplicationContext(),DetailActivity.class);
+                    intent.putExtra("name",tt[0]);
+                    startActivity(intent);
+                }else{
+                    searchListGetData searchListGetData = new searchListGetData();
+                    String result = null;
+
+                    try{
+                        result = searchListGetData.execute(tt[0]).get();
+                        jsonobject = new JSONObject(result);
+                        jsonarray = jsonobject.getJSONArray("location");
+                        Log.d("list","jsonarraysize"+jsonarray.length());
+                        listInit(jsonarray);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+                }
+            }
+        });
     }
 
     public void searchInit(){
         listView1 = (ListView)findViewById(R.id.listview1);
         searchdatas = new ArrayList<>(); //장소일때 주소일때 0,1 구별해서 state 넣기
-        Searchitem searchdata1 = new Searchitem("dog",R.drawable.heart2,0);
+
+
+      /*  Searchitem searchdata1 = new Searchitem("dog",R.drawable.heart2,0);
         Searchitem searchdata2 = new Searchitem("eagle",R.drawable.heart2,0);
         Searchitem searchdata3 = new Searchitem("pig",R.drawable.heart2,1);
         Searchitem searchdata4 = new Searchitem("tiger",R.drawable.heart2,1);
@@ -237,7 +363,7 @@ public class home extends AppCompatActivity {
         searchdatas.add(searchdata9);
         searchdatas.add(searchdata10);
         searchdatas.add(searchdata11);
-        searchdatas.add(searchdata12);
+        searchdatas.add(searchdata12);*/
 
         sadapter = new SearchitemAdapter(this,R.layout.searchitem,searchdatas);
         listView1.setAdapter(sadapter);
@@ -262,7 +388,6 @@ public class home extends AppCompatActivity {
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) { //search
         MenuInflater inflater = getMenuInflater();
@@ -270,6 +395,7 @@ public class home extends AppCompatActivity {
         MenuItem mSearch = menu.findItem(R.id.search);
         SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
         MenuItemCompat.setOnActionExpandListener(mSearch, new MenuItemCompat.OnActionExpandListener() {
+
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {  //서치 아이콘 누를때  expand
                 Log.d("text","open");
@@ -288,6 +414,8 @@ public class home extends AppCompatActivity {
                 mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                 return true;
             }
+
+
         });
 
         searchView  = (SearchView) MenuItemCompat.getActionView(mSearch);
@@ -299,6 +427,19 @@ public class home extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // Log.d("text",query); -> query 찍힘
+                searchListGetData searchListGetData = new searchListGetData();
+                String result = null;
+
+                try{
+                    result = searchListGetData.execute(query).get();
+                    jsonobject = new JSONObject(result);
+                    jsonarray = jsonobject.getJSONArray("location");
+                    Log.d("list","jsonarraysize"+jsonarray.length());
+                    listInit(jsonarray);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
                 mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
                 searchView.clearFocus();
                 return true;
@@ -308,10 +449,109 @@ public class home extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 sadapter.filter(newText);
                 Log.d("text",""+newText);
+                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                 return false;
             }
 
         });
         return super.onCreateOptionsMenu(menu);
     }
+
+    public class firstListGetData extends AsyncTask<String, Void, String>{
+        String listResult;
+
+        @Override
+        protected String doInBackground(String... params) {
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url("http://211.189.20.136:4389/ko/showloca")
+                    .build();
+
+            try{
+                Response response = client.newCall(request).execute();
+                return response.body().string();
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    public class searchListGetData extends AsyncTask<String, Void, String>{
+        @Override
+        protected String doInBackground(String... params) {
+            final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            JSONObject json = new JSONObject();
+            try {
+                json.put("searchtext", params[0]);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            RequestBody posData = RequestBody.create(JSON,json.toString());
+            request = new Request.Builder()
+                    .url("http://211.189.20.136:4389/ko/searchLocaAddress")
+                    .post(posData)
+                    .build();
+            try{
+                response = client.newCall(request).execute();
+                return response.body().string();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            //post gu num
+            return null;
+        }
+    }
+
+
+    public class guListGetData extends AsyncTask<String, Void, String>{
+        @Override
+        protected String doInBackground(String... params) {
+            RequestBody posData = new FormBody.Builder()
+                    .add("type","json")
+                    .add("guNum",params[0])
+                    .build();
+
+            request = new Request.Builder()
+                    .url("http://211.189.20.136:4389/ko/showGuLoca")
+                    .post(posData)
+                    .build();
+            try{
+                response = client.newCall(request).execute();
+                return response.body().string();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            //post gu num
+            return null;
+        }
+    }
+
+    public class categoryListGetData extends AsyncTask<String, Void, String>{
+        @Override
+        protected String doInBackground(String... params) {
+            RequestBody posData = new FormBody.Builder()
+                    .add("type","json")
+                    .add("categoryNum",params[0])
+                    .build();
+
+            request = new Request.Builder()
+                    .url("http://211.189.20.136:4389/ko/showCategoryLoca")
+                    .post(posData)
+                    .build();
+            try{
+                response = client.newCall(request).execute();
+                return response.body().string();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            //post gu num
+            return null;
+        }
+    }
+
+
+
+
 }
+
