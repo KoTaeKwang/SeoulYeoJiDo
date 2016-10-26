@@ -283,6 +283,7 @@ public class DetailActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), CheckinPopup.class));
                 Snackbar.make(v, "Hello World", Snackbar.LENGTH_LONG).show();
             }
         });

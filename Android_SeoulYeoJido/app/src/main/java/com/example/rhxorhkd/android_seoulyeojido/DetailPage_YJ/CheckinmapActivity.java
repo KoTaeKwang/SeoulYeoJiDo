@@ -1,5 +1,6 @@
 package com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -25,53 +26,49 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.tsengvn.typekit.Typekit;
+import com.tsengvn.typekit.TypekitContextWrapper;
 
-import static android.R.attr.id;
-import static com.example.rhxorhkd.android_seoulyeojido.R.id.map;
+public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener{
 
-public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+
+    private GoogleMap mMap;
+    private GpsInfo gps;
 
     private LocationManager locationManager = null;
     private Double longitude;
     private Double latitude;
 
-    private GpsInfo gps;
-    private GoogleMap mMap;
 
     private RelativeLayout rl;
-    private CheckBox checkflag;
     private TextView tv1;
     private String markerId;
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_maps);
+        setContentView(R.layout.activity_checkinmap);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(map);
+                .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        //글꼴 라이브러리
+        Typekit.getInstance()
+                .addNormal(Typekit.createFromAsset(this,"NotoSans-Regular.ttf"));
 
         rl = (RelativeLayout) findViewById(R.id.location_detail);
         rl.setVisibility(View.GONE);
         tv1 = (TextView)findViewById(R.id.location_name);
 
-
-        checkflag = (CheckBox)findViewById(R.id.default_flag);
-        checkflag.setOnCheckedChangeListener(this);
-
         findViewById(R.id.map_back).setOnClickListener(this);
 
-        gps = new GpsInfo(DetailMapsActivity.this);
+        gps = new GpsInfo(CheckinmapActivity.this);
 
         latitude = gps.getLatitude();
         longitude = gps.getLongitude();
-
-
     }
-
 
 
     /**
@@ -102,7 +99,7 @@ public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCa
         Log.d("mr", "lo: "+longitude);
 
         mMap.setMyLocationEnabled(true);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 13));
         mMap.addMarker(new MarkerOptions()
                 .title("현재 위치")
                 .snippet("innoaus.")
@@ -113,7 +110,6 @@ public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCa
                 .radius(500)
                 .strokeColor(Color.parseColor("#884169e1"))
                 .fillColor(Color.parseColor("#5587cefa")));
-
 
         // Add a marker in Sydney and move the camera
         LatLng kb = new LatLng(37.5129622, 126.9270477);
@@ -126,31 +122,26 @@ public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCa
                 .position(kb)
                 .title("경북궁 ")
                 .icon(BitmapDescriptorFactory.fromBitmap(CheckedsmallMarker))
-
         );
         mMap.addMarker(new MarkerOptions()
                 .position(sd)
                 .title("사당역 ")
                 .icon(BitmapDescriptorFactory.fromBitmap(CheckedsmallMarker))
-
         );
         mMap.addMarker(new MarkerOptions()
                 .position(ds)
                 .title("덕수궁 ")
                 .icon(BitmapDescriptorFactory.fromBitmap(CheckedsmallMarker))
-
         );
         mMap.addMarker(new MarkerOptions()
                 .position(md)
                 .title("명동 ")
                 .icon(BitmapDescriptorFactory.fromBitmap(noChecksmallMarker))
-
         );
         mMap.addMarker(new MarkerOptions()
                 .position(tg)
                 .title("퇴계로 ")
                 .icon(BitmapDescriptorFactory.fromBitmap(noChecksmallMarker))
-
         );
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -158,10 +149,6 @@ public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCa
             public boolean onMarkerClick(Marker marker) {
 
 //                Log.d("OnClickListener", "click session button");
-//                // 액티비티 실행
-//                Intent intentSubActivity =
-//                        new Intent(DetailMapsActivity.this, CheckinPopup.class);
-//                startActivity(intentSubActivity);
 
                 tv1.setText(marker.getTitle());
                 rl.setVisibility(View.VISIBLE);
@@ -169,9 +156,9 @@ public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCa
                 markerId = marker.getId().toString();
                 Toast.makeText(getApplicationContext(), " == "+markerId, 1).show();
 
-
-                Intent intentSubActivity = new Intent(DetailMapsActivity.this, CheckinPopup.class);
+                Intent intentSubActivity = new Intent(CheckinmapActivity.this, CheckinPopup.class);
                 startActivity(intentSubActivity);
+
                 return false;
             }
         });
@@ -186,8 +173,6 @@ public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCa
         });
     }
 
-
-
     @Override
     public void onClick(View view) {
         switch(view.getId()){
@@ -199,28 +184,11 @@ public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCa
 
             default: break;
         }
-
     }
-
+    
     @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        String result = ""; // 문자열 초기화는 빈문자열로 하자
-
-//        if(isChecked) tv.setText("체크했음");
-//        else tv.setText("체크안했슴");
-
-        // 혹은 3항연산자
-        //tx.setText(isChecked?"체크했슴":"체크안했뜸");
-
-        if(checkflag.isChecked()) {
-            //result += checkflag.getText().toString() + ", ";
-            Toast.makeText(getApplicationContext(), "checkin!", Toast.LENGTH_LONG).show();
-        }
-        if(!checkflag.isChecked()) {
-            Toast.makeText(getApplicationContext(), "no Checkin!", Toast.LENGTH_LONG).show();
-
-        }
-
-        //tv.setText("체크항목: " + result);
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
     }
+
 }

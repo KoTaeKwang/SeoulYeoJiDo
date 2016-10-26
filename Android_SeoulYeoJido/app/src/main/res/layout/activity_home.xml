@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
-    sothree:umanoPanelHeight="160dp"
+    sothree:umanoPanelHeight="140dp"
     sothree:umanoShadowHeight="1dp"
     sothree:umanoParallaxOffset="100dp"
     sothree:umanoDragView="@+id/dragView"
@@ -161,52 +161,135 @@
                 android:layout_height="80dp"
                 android:orientation="horizontal">
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     app:srcCompat="@mipmap/ic_launcher"
                     android:id="@+id/imageView6"
-                    android:layout_weight="1" />
-
-                <ImageView
+                    android:layout_weight="1"
+                    />
+                <TextView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    app:srcCompat="@mipmap/ic_launcher"
-                    android:id="@+id/imageView5"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="20dp" />
+                    android:gravity="center"
+                    android:text="유적지"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"/>
+                
+            </RelativeLayout>
+                
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp">
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        app:srcCompat="@mipmap/ic_launcher"
+                        android:id="@+id/imageView5"
+                        android:layout_weight="1"
+                         />
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:gravity="center"
+                        android:text="랜드마크"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp"/>
+                </RelativeLayout>
+                
+                
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp">
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        app:srcCompat="@mipmap/ic_launcher"
+                        android:id="@+id/imageView4"
+                        android:layout_weight="1"
+                        />
 
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    app:srcCompat="@mipmap/ic_launcher"
-                    android:id="@+id/imageView4"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="20dp" />
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:gravity="center"
+                        android:text="전통시장"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp"/>
+                </RelativeLayout>
+               
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp">
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        app:srcCompat="@mipmap/ic_launcher"
+                        android:id="@+id/imageView3"
+                        android:layout_weight="1"
+                         />
 
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    app:srcCompat="@mipmap/ic_launcher"
-                    android:id="@+id/imageView3"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="20dp" />
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:gravity="center"
+                        android:text="공원"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp"/>
+                    
+                </RelativeLayout>
 
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp">
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     app:srcCompat="@mipmap/ic_launcher"
                     android:id="@+id/imageView2"
                     android:layout_weight="1"
-                    android:layout_marginLeft="20dp" />
-
-                <ImageView
+                    />
+                <TextView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    app:srcCompat="@mipmap/ic_launcher"
-                    android:id="@+id/imageView"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="20dp" />
+                    android:gravity="center"
+                    android:text="문화"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"/>
+
+
+            </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp">
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        app:srcCompat="@mipmap/ic_launcher"
+                        android:id="@+id/imageView"
+                        android:layout_weight="1"
+                         />
+
+                    <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:gravity="center"
+                    android:text="쇼핑"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"/>
+
+                </RelativeLayout>
 
             </LinearLayout>
         </HorizontalScrollView>
