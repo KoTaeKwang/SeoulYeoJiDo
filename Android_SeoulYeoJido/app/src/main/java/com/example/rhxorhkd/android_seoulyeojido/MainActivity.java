@@ -19,24 +19,28 @@ public class MainActivity extends ActivityGroup {
         //Setcontent -> 탭의 내용물 XML 문서의 뷰 이용, setContent(Intent intent) -> 인텐트를 이용하여 다른 액티비티 호출
 
         intent = new Intent(this,home.class);
-        spec = tabHost.newTabSpec("Tab1").setContent(intent).setIndicator("home");
+        spec = tabHost.newTabSpec("Tab1").setContent(intent).setIndicator("home",getResources().getDrawable(R.drawable.choice_home));
         tabHost.addTab(spec);
 
         intent = new Intent(this,checkin.class);
-        spec = tabHost.newTabSpec("Tab2").setContent(intent).setIndicator("checkin");
+        spec = tabHost.newTabSpec("Tab2").setContent(intent).setIndicator("checkin",getResources().getDrawable(R.drawable.choice_checkin));
         tabHost.addTab(spec);
 
         intent = new Intent(this,rank.class);
-        spec = tabHost.newTabSpec("Tab3").setContent(intent).setIndicator("rank");
+        spec = tabHost.newTabSpec("Tab3").setContent(intent).setIndicator("rank",getResources().getDrawable(R.drawable.choice_rank));
         tabHost.addTab(spec);
 
         intent = new Intent(this,set.class);
-        spec = tabHost.newTabSpec("Tab4").setContent(intent).setIndicator("set");
+        spec = tabHost.newTabSpec("Tab4").setContent(intent).setIndicator("set",getResources().getDrawable(R.drawable.choice_my));
         tabHost.addTab(spec);
 
 
         //높이설정
-        //tabHost.getTabWidget().getChildAt(0).getLayoutParams().height=80;
+        tabHost.getTabWidget().getChildAt(0).getLayoutParams().height=168;
+        tabHost.getTabWidget().getChildAt(1).getLayoutParams().height=168;
+        tabHost.getTabWidget().getChildAt(2).getLayoutParams().height=168;
+        tabHost.getTabWidget().getChildAt(3).getLayoutParams().height=168;
+
 
         tabHost.setCurrentTab(0); //첫 시작
     }

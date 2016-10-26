@@ -3,8 +3,15 @@ package com.example.rhxorhkd.android_seoulyeojido;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -18,8 +25,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ.DetailActivity;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.tsengvn.typekit.Typekit;
@@ -45,7 +55,7 @@ import okhttp3.Response;
 public class home extends AppCompatActivity {
     ListviewAdapter adapter; //listview adapter
     SearchitemAdapter sadapter; //search adapter
-    LinearLayout map; //지도
+    RelativeLayout map; //지도
     LinearLayout searchlistview; //검색창누르면 나오는 리스트뷰
     Button button; // 지도 안의 버튼
     SearchView searchView; //서치뷰
@@ -59,12 +69,13 @@ public class home extends AppCompatActivity {
     JSONArray jsonarray;
     Response response;
     Request request;
+    public static String guNum;
 
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
     }
-
+/*
     public void button2clicked(View v){ //용산구
         guListGetData getData = new guListGetData();
         String result = null;
@@ -78,23 +89,132 @@ public class home extends AppCompatActivity {
         }
 
         mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         client = new OkHttpClient();
-        map=(LinearLayout)findViewById(R.id.map);
+        map=(RelativeLayout)findViewById(R.id.map);
         searchlistview=(LinearLayout)findViewById(R.id.searchlistview);
-        button =(Button) findViewById(R.id.button);
-        ImageView imageView6 =(ImageView)findViewById(R.id.imageView6);
-        ImageView imageView5 = (ImageView)findViewById(R.id.imageView5);
+
+        ImageView mapview1 = (ImageView)findViewById(R.id.mapone);
+        ImageView mapview2= (ImageView)findViewById(R.id.maptwo);
+        ImageView mapview3= (ImageView)findViewById(R.id.mapthree);
+        ImageView mapview4= (ImageView)findViewById(R.id.mapfour);
+        ImageView mapview5= (ImageView)findViewById(R.id.mapfive);
+        ImageView mapview6= (ImageView)findViewById(R.id.mapsix);
+        ImageView mapview7= (ImageView)findViewById(R.id.mapseven);
+        ImageView mapview8= (ImageView)findViewById(R.id.mapeight);
+        ImageView mapview9= (ImageView)findViewById(R.id.mapnine);
+        ImageView mapview10= (ImageView)findViewById(R.id.mapten);
+        ImageView mapview11= (ImageView)findViewById(R.id.mapeleven);
+        ImageView mapview12= (ImageView)findViewById(R.id.mapriver);
+        Glide.with(this).load(R.drawable.map_one_clear).into(mapview1);
+        Glide.with(this).load(R.drawable.map_two_clear).into(mapview2);
+        Glide.with(this).load(R.drawable.map_three_clear).into(mapview3);
+        Glide.with(this).load(R.drawable.map_four_clear).into(mapview4);
+        Glide.with(this).load(R.drawable.map_five_clear).into(mapview5);
+        Glide.with(this).load(R.drawable.map_six_clear).into(mapview6);
+        Glide.with(this).load(R.drawable.map_seven_clear).into(mapview7);
+        Glide.with(this).load(R.drawable.map_eight_clear).into(mapview8);
+        Glide.with(this).load(R.drawable.map_nine_clear).into(mapview9);
+        Glide.with(this).load(R.drawable.map_ten_clear).into(mapview10);
+        Glide.with(this).load(R.drawable.map_eleven_clear).into(mapview11);
+        Glide.with(this).load(R.drawable.map).into(mapview12);
+
+    //6 유적지 5 랜드마크  4 전통시장 3  공원 2 문화 1 쇼핑
+        final ImageView imageView6 =(ImageView)findViewById(R.id.imageView6);
+        final ImageView imageView5 = (ImageView)findViewById(R.id.imageView5);
+        final ImageView imageView4 = (ImageView)findViewById(R.id.imageView4);
+        final ImageView imageView3 = (ImageView)findViewById(R.id.imageView3);
+        final ImageView imageView2 = (ImageView)findViewById(R.id.imageView2);
+        final ImageView imageView = (ImageView)findViewById(R.id.imageView);
+
+        Glide.with(this).load(R.drawable.oldbuild).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView6){
+            @Override
+            protected void setResource(Bitmap resource) {
+                super.setResource(resource);
+                RoundedBitmapDrawable circularBitmapDrawable =
+                        RoundedBitmapDrawableFactory.create(getResources(), resource);
+                circularBitmapDrawable.setCircular(true);
+                imageView6.setImageDrawable(circularBitmapDrawable);
+            }
+        });
+
+        Glide.with(this).load(R.drawable.oldbuild).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView5){
+            @Override
+            protected void setResource(Bitmap resource) {
+                super.setResource(resource);
+                RoundedBitmapDrawable circularBitmapDrawable =
+                        RoundedBitmapDrawableFactory.create(getResources(), resource);
+                circularBitmapDrawable.setCircular(true);
+                imageView5.setImageDrawable(circularBitmapDrawable);
+            }
+        });
+
+        Glide.with(this).load(R.drawable.market).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView4){
+            @Override
+            protected void setResource(Bitmap resource) {
+                super.setResource(resource);
+                RoundedBitmapDrawable circularBitmapDrawable =
+                        RoundedBitmapDrawableFactory.create(getResources(), resource);
+                circularBitmapDrawable.setCircular(true);
+                imageView4.setImageDrawable(circularBitmapDrawable);
+            }
+        });
+
+        Glide.with(this).load(R.drawable.culture).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView3){
+            @Override
+            protected void setResource(Bitmap resource) {
+                super.setResource(resource);
+                RoundedBitmapDrawable circularBitmapDrawable =
+                        RoundedBitmapDrawableFactory.create(getResources(), resource);
+                circularBitmapDrawable.setCircular(true);
+                imageView3.setImageDrawable(circularBitmapDrawable);
+            }
+        });
+
+        Glide.with(this).load(R.drawable.culture).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView2){
+            @Override
+            protected void setResource(Bitmap resource) {
+                super.setResource(resource);
+                RoundedBitmapDrawable circularBitmapDrawable =
+                        RoundedBitmapDrawableFactory.create(getResources(), resource);
+                circularBitmapDrawable.setCircular(true);
+                imageView2.setImageDrawable(circularBitmapDrawable);
+            }
+        });
+
+        Glide.with(this).load(R.drawable.culture).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView){
+            @Override
+            protected void setResource(Bitmap resource) {
+                super.setResource(resource);
+                RoundedBitmapDrawable circularBitmapDrawable =
+                        RoundedBitmapDrawableFactory.create(getResources(), resource);
+                circularBitmapDrawable.setCircular(true);
+                imageView.setImageDrawable(circularBitmapDrawable);
+            }
+        });
+
+        Glide.with(this).load(R.drawable.culture).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView6){
+            @Override
+            protected void setResource(Bitmap resource) {
+                super.setResource(resource);
+                RoundedBitmapDrawable circularBitmapDrawable =
+                        RoundedBitmapDrawableFactory.create(getResources(), resource);
+                circularBitmapDrawable.setCircular(true);
+                imageView6.setImageDrawable(circularBitmapDrawable);
+            }
+        });
+
+
+
 
         //searchInit(); //서치리스트 초기화
         Typekit.getInstance()
                 .addNormal(Typekit.createFromAsset(this,"NotoSans-Regular.ttf"));
-
 
         firstListGetData getData = new firstListGetData();
         String result = null;
@@ -131,38 +251,68 @@ public class home extends AppCompatActivity {
             }
         });
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-            }
-        });
+        mapview1.setOnClickListener(new guListner("1"));
+        mapview2.setOnClickListener(new guListner("2"));
+        mapview3.setOnClickListener(new guListner("3"));
+        mapview4.setOnClickListener(new guListner("4"));
+        mapview5.setOnClickListener(new guListner("5"));
+        mapview6.setOnClickListener(new guListner("6"));
+        mapview7.setOnClickListener(new guListner("7"));
+        mapview8.setOnClickListener(new guListner("8"));
+        mapview9.setOnClickListener(new guListner("9"));
+        mapview10.setOnClickListener(new guListner("10"));
+        mapview11.setOnClickListener(new guListner("11"));
 
-        imageView6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-            }
-        });
-
-        imageView5.setOnClickListener(new MyListner());
+        imageView6.setOnClickListener(new MyListner("6"));
+        imageView5.setOnClickListener(new MyListner("5"));
+        imageView4.setOnClickListener(new MyListner("4"));
+        imageView3.setOnClickListener(new MyListner("3"));
+        imageView2.setOnClickListener(new MyListner("2"));
+        imageView.setOnClickListener(new MyListner("1"));
     }
 
-    class MyListner implements View.OnClickListener{
+
+    class guListner implements View.OnClickListener{
+        String guNum;
+        public guListner(String guNum){
+            this.guNum=guNum;
+        }
         @Override
         public void onClick(View v) {
             client = new OkHttpClient();
-            categoryListGetData getData = new categoryListGetData();
+            guListGetData getData = new guListGetData();
             String result = null;
             try{
-                result = getData.execute("2").get();
+                result = getData.execute(guNum).get();
                 jsonobject = new JSONObject(result);
                 jsonarray = jsonobject.getJSONArray("location");
                 listInit(jsonarray);
             }catch (Exception e){
                 e.printStackTrace();
             }
+            mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+        }
+    }
 
+
+    class MyListner implements View.OnClickListener{
+        String categoryNum;
+        public MyListner(String categoryNum) {
+            this.categoryNum = categoryNum;
+        }
+        @Override
+        public void onClick(View v) {
+            client = new OkHttpClient();
+            categoryListGetData getData = new categoryListGetData();
+            String result = null;
+            try{
+                result = getData.execute(categoryNum).get();
+                jsonobject = new JSONObject(result);
+                jsonarray = jsonobject.getJSONArray("location");
+                listInit(jsonarray);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
             mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
 
 
@@ -396,11 +546,29 @@ public class home extends AppCompatActivity {
         }
     }
 
+    private Drawable resizeImage(int resId,int w,int h){
+        Bitmap bitmapOrg = BitmapFactory.decodeResource(getResources(),resId);
+        int width = bitmapOrg.getWidth();
+        int height = bitmapOrg.getHeight();
+
+        int newWidth = w;
+        int newHeight = h;
+
+        float scaleWidth = ((float)newWidth)/width;
+        float scaleHeight =  ((float)newHeight)/height;
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth,scaleHeight);
+        Bitmap resizedBitmap = Bitmap.createBitmap(bitmapOrg,0,0,width,height,matrix,true);
+        return new BitmapDrawable(resizedBitmap);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) { //search
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.action_view,menu);
         MenuItem mSearch = menu.findItem(R.id.search);
+        mSearch.setIcon(resizeImage(R.drawable.search,150,150));
         SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
         MenuItemCompat.setOnActionExpandListener(mSearch, new MenuItemCompat.OnActionExpandListener() {
 
@@ -510,7 +678,6 @@ public class home extends AppCompatActivity {
             return null;
         }
     }
-
 
     public class guListGetData extends AsyncTask<String, Void, String>{
         @Override
