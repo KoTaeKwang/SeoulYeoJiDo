@@ -1,10 +1,13 @@
 package com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
 
+import com.example.rhxorhkd.android_seoulyeojido.ChangeInfo;
 import com.example.rhxorhkd.android_seoulyeojido.R;
 
 /**
@@ -20,6 +23,8 @@ public class CheckinPopup extends Activity implements View.OnClickListener {
         setContentView(R.layout.checkinpopup);
 
         findViewById(R.id.btn_checkincancel).setOnClickListener(this);
+        findViewById(R.id.btn_checkin).setOnClickListener(this);
+
     }
 
     public void onClick(View v){
@@ -28,6 +33,14 @@ public class CheckinPopup extends Activity implements View.OnClickListener {
                 this.finish();
                 break;
             case R.id.btn_checkin:
+                //Toast.makeText(getApplicationContext(), "눌림", Toast.LENGTH_LONG).show();
+
+                startActivity(new Intent(this, CheckinOK.class));
+                finish();
+                //Intent i = new Intent(this, CheckinOK.class);
+                //startActivity(i);
+                break;
+            default: break;
         }
     }
 }

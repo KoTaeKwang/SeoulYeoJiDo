@@ -4,45 +4,30 @@
     android:layout_height="200dp"
     android:background="#ffffff"
     android:layout_centerInParent="true">
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLargePopupMenu"
-        android:text="하시겠습니까"
+        android:text="체크인 성공"
         android:paddingTop="10dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/textView1"/>
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:id="@+id/img_checkinGIF"
-        android:src="@drawable/irene1"
+        android:src="@drawable/heart2"
         android:padding="10dp"
         android:layout_below="@+id/textView1"
         android:layout_marginTop="23dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/img_checkinGIF"
-        android:padding="10dp"
-        android:orientation="horizontal">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="3초후 종료됩니다 3,2,1..."
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/img_checkinGIF"/>
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_checkin"
-            android:layout_weight="1"
-            android:text="체크인"/>
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_checkincancel"
-            android:layout_weight="1"
-            android:text="취소"/>
-    </LinearLayout>
 
 </RelativeLayout>

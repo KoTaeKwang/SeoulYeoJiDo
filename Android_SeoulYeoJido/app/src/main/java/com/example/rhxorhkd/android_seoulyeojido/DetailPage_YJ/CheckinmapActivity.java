@@ -1,5 +1,6 @@
 package com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -25,6 +26,8 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.tsengvn.typekit.Typekit;
+import com.tsengvn.typekit.TypekitContextWrapper;
 
 public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener{
 
@@ -51,7 +54,9 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
+        //글꼴 라이브러리
+        Typekit.getInstance()
+                .addNormal(Typekit.createFromAsset(this,"NotoSans-Regular.ttf"));
 
         rl = (RelativeLayout) findViewById(R.id.location_detail);
         rl.setVisibility(View.GONE);
@@ -63,8 +68,6 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
 
         latitude = gps.getLatitude();
         longitude = gps.getLongitude();
-
-
     }
 
 
@@ -119,31 +122,26 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
                 .position(kb)
                 .title("경북궁 ")
                 .icon(BitmapDescriptorFactory.fromBitmap(CheckedsmallMarker))
-
         );
         mMap.addMarker(new MarkerOptions()
                 .position(sd)
                 .title("사당역 ")
                 .icon(BitmapDescriptorFactory.fromBitmap(CheckedsmallMarker))
-
         );
         mMap.addMarker(new MarkerOptions()
                 .position(ds)
                 .title("덕수궁 ")
                 .icon(BitmapDescriptorFactory.fromBitmap(CheckedsmallMarker))
-
         );
         mMap.addMarker(new MarkerOptions()
                 .position(md)
                 .title("명동 ")
                 .icon(BitmapDescriptorFactory.fromBitmap(noChecksmallMarker))
-
         );
         mMap.addMarker(new MarkerOptions()
                 .position(tg)
                 .title("퇴계로 ")
                 .icon(BitmapDescriptorFactory.fromBitmap(noChecksmallMarker))
-
         );
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -151,10 +149,6 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
             public boolean onMarkerClick(Marker marker) {
 
 //                Log.d("OnClickListener", "click session button");
-//                // 액티비티 실행
-//                Intent intentSubActivity =
-//                        new Intent(DetailMapsActivity.this, CheckinPopup.class);
-//                startActivity(intentSubActivity);
 
                 tv1.setText(marker.getTitle());
                 rl.setVisibility(View.VISIBLE);
@@ -162,9 +156,9 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
                 markerId = marker.getId().toString();
                 Toast.makeText(getApplicationContext(), " == "+markerId, 1).show();
 
-
                 Intent intentSubActivity = new Intent(CheckinmapActivity.this, CheckinPopup.class);
                 startActivity(intentSubActivity);
+
                 return false;
             }
         });
@@ -179,8 +173,6 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
         });
     }
 
-
-
     @Override
     public void onClick(View view) {
         switch(view.getId()){
@@ -192,7 +184,11 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
 
             default: break;
         }
-
+    }
+    
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
     }
 
 }
