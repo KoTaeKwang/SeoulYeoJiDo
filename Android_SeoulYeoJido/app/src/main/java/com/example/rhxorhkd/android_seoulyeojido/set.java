@@ -33,8 +33,6 @@ public class set extends AppCompatActivity implements View.OnClickListener{
     private FirebaseUser user;
 
 
-
-
     private ImageView iv, iv2;
     private TextView tv, tv2;
 
@@ -80,7 +78,7 @@ public class set extends AppCompatActivity implements View.OnClickListener{
             iv2.setImageDrawable(null);
             tv.setText(user.getDisplayName().toString());
 
-            Glide.with(this).load(R.drawable.irene1).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv){
+            Glide.with(this).load(user.getPhotoUrl()).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv){
                 @Override
                 protected void setResource(Bitmap resource) {
                     super.setResource(resource);
@@ -157,7 +155,7 @@ public class set extends AppCompatActivity implements View.OnClickListener{
         public CharSequence getPageTitle(int position) {
             switch (position){
                 case 0 :
-                    return  "체크인";
+                    return  "\n";
                 case 1 :
                     return "담은 서울";
                 case 2 :
