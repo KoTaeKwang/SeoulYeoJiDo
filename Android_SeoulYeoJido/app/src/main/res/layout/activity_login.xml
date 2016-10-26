@@ -4,7 +4,6 @@
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loginactivity"
     tools:context="com.example.rhxorhkd.android_seoulyeojido.LoginActivity">
 
     <ImageView
