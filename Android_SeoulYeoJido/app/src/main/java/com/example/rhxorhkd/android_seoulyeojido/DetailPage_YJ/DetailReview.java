@@ -7,6 +7,7 @@ package com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ;
 public class DetailReview {
     private String username;
     private String review;
+    private String date;
     private int image;
 
     public String getTitle() {
@@ -33,9 +34,14 @@ public class DetailReview {
         this.image = image;
     }
 
-    public DetailReview(String username,String review, int image){
+    public String getDate() {
+        return date;
+    }
+
+    public DetailReview(String username, String review, String date,int image){
         this.username=username;
         this.review=review;
+        this.date =date;
         this.image=image;
     }
 }

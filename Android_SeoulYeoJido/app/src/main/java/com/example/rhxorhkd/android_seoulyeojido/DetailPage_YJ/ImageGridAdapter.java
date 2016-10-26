@@ -10,7 +10,13 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.rhxorhkd.android_seoulyeojido.R;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by hanyoojin on 2016. 10. 25..
@@ -18,25 +24,37 @@ import com.example.rhxorhkd.android_seoulyeojido.R;
 
 public class ImageGridAdapter extends BaseAdapter {
     Context context;
+    String images;
+    JSONObject object;
+    JSONArray array;
+    public ArrayList<String> mThumblds = new ArrayList<>();
 
-    public Integer[] mThumblds ={
-            R.drawable.cheese_4, R.drawable.cheese_4, R.drawable.cheese_4,
-            R.drawable.cheese_4, R.drawable.cheese_4, R.drawable.cheese_4,
-            R.drawable.cheese_4, R.drawable.cheese_4, R.drawable.cheese_4,
-            R.drawable.cheese_4, R.drawable.cheese_4, R.drawable.cheese_4,
-            R.drawable.cheese_4, R.drawable.cheese_4, R.drawable.cheese_4,
-            R.drawable.cheese_4, R.drawable.cheese_4, R.drawable.cheese_4,
-            R.drawable.cheese_4, R.drawable.cheese_4, R.drawable.cheese_4,
-            R.drawable.cheese_4, R.drawable.cheese_4, R.drawable.cheese_4
-    };
-
-    public ImageGridAdapter(Context context){
+    public ImageGridAdapter(Context context,String images){
         this.context = context;
+        this.images =images;
+        try {
+            object = new JSONObject(images);
+            array = object.getJSONArray("loca_photo");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if(array!=null){
+            for(int i=0;i<array.length();i++){
+                try {
+                    String temp = array.get(i).toString();
+                    mThumblds.add(temp);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+
     }
 
     @Override
     public int getCount() {
-        return mThumblds.length;
+        return mThumblds.size();
     }
 
     @Override
@@ -61,7 +79,10 @@ public class ImageGridAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        imageView.setImageResource(mThumblds[position]);
+
+            Glide.with(context).load( mThumblds.get(position)).into(imageView);
+
+        //imageView.setImageResource(mThumblds[position]);
         return imageView;
     }
 }
