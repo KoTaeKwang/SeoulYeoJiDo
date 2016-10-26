@@ -48,7 +48,7 @@ public class RankAdapter extends RecyclerView.Adapter<RankViewHolder>{
         holder.nickname.setText(item.getNickname());
         holder.ect.setText(item.getEct());
 
-        Glide.with(mContext).load("http://image.fmkorea.com/files/attach/new/20151029/3655109/197008532/246979169/6adb5a0eedd3cf9a98029123d9b71130.jpg").asBitmap().centerCrop().into(new BitmapImageViewTarget(holder.profile){
+        Glide.with(mContext).load(item.getImg()).asBitmap().centerCrop().into(new BitmapImageViewTarget(holder.profile){
             @Override
             protected void setResource(Bitmap resource) {
                 super.setResource(resource);

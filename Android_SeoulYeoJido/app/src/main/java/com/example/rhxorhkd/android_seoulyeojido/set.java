@@ -78,7 +78,7 @@ public class set extends AppCompatActivity implements View.OnClickListener{
             iv2.setImageDrawable(null);
             tv.setText(user.getDisplayName().toString());
 
-            Glide.with(this).load(user.getPhotoUrl()).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv){
+            Glide.with(this).load(user.getPhotoUrl().toString()).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv){
                 @Override
                 protected void setResource(Bitmap resource) {
                     super.setResource(resource);

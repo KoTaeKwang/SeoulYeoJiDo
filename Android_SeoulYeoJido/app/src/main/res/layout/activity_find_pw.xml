@@ -9,5 +9,32 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.rhxorhkd.android_seoulyeojido.FindPwActivity">
+    <TextView
+        android:id="@+id/find_text"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="비밀번호 변경 메일 발송하기"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:padding="16dp"
+        android:inputType="textEmailAddress"
+        android:background="#ffffff"
+        android:layout_below="@+id/find_text"
+        android:id="@+id/find_mail"
+        android:layout_centerHorizontal="true"
+        android:textSize="16sp"
+        android:hint="이메일"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <Button
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:text="변경 메일 전송하기"
+        android:layout_below="@+id/find_mail"
+        android:id="@+id/find_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 
 </RelativeLayout>

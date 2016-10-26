@@ -63,7 +63,9 @@ public class ChangeInfo extends AppCompatActivity implements View.OnClickListene
         findViewById(R.id.change_img).setOnClickListener(this);
         findViewById(R.id.logout).setOnClickListener(this);
 
-        Glide.with(this).load(R.drawable.irene1).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv1){
+        nickName.setText(auth.getCurrentUser().getDisplayName().toString());
+
+        Glide.with(this).load(auth.getCurrentUser().getPhotoUrl()).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv1){
             @Override
             protected void setResource(Bitmap resource) {
                 super.setResource(resource);
@@ -96,10 +98,11 @@ public class ChangeInfo extends AppCompatActivity implements View.OnClickListene
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         Ref.child(user.getUid()+"/nickname").setValue(nickName.getText().toString());
+                                        finish();
                                     }
                                 }
                             });
-                    finish();
+
                 }
                 break;
             case R.id.change_img :
