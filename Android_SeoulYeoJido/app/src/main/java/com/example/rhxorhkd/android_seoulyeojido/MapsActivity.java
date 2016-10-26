@@ -61,8 +61,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        int height = 42;
-        int width = 30;
+        int height = 126;
+        int width = 120;
         BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.after_check_in);
         Bitmap b = bitmapdraw.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);

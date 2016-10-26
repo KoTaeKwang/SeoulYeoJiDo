@@ -77,17 +77,32 @@ public class set extends AppCompatActivity implements View.OnClickListener{
         if(i.getStringExtra("name") == null){//탭으로 본 마이페이지
             iv2.setImageDrawable(null);
             tv.setText(user.getDisplayName().toString());
+            String photo;
+            if(user.getPhotoUrl() != null) {
+                Glide.with(this).load(user.getPhotoUrl().toString()).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv){
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        super.setResource(resource);
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(this.getView().getResources(), resource);
+                        circularBitmapDrawable.setCircular(true);
+                        iv.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
+            }else{
+                Glide.with(this).load(R.drawable.profile).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv){
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        super.setResource(resource);
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(this.getView().getResources(), resource);
+                        circularBitmapDrawable.setCircular(true);
+                        iv.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
+            }
 
-            Glide.with(this).load(user.getPhotoUrl().toString()).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv){
-                @Override
-                protected void setResource(Bitmap resource) {
-                    super.setResource(resource);
-                    RoundedBitmapDrawable circularBitmapDrawable =
-                            RoundedBitmapDrawableFactory.create(this.getView().getResources(), resource);
-                    circularBitmapDrawable.setCircular(true);
-                    iv.setImageDrawable(circularBitmapDrawable);
-                }
-            });
+
 
         }else{//랭킹에서 넘어온경우
             findViewById(R.id.back_btn).setOnClickListener(this);

@@ -70,6 +70,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     Toast.makeText(LoginActivity.this, "회원정보가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                                 }else{
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    finish();
                                 }
                             }
                         });
