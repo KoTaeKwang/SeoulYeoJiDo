@@ -5,14 +5,14 @@ package com.example.rhxorhkd.android_seoulyeojido;
  */
 
 public class Listviewitem {
-    private int icon;
+    private String icon;
     private String name;
     private String subname;
     private String thirdname;
     private int hearticon;
 
 
-    public int getIcon() {
+    public String getIcon() {
         return icon;
     }
 
@@ -31,7 +31,7 @@ public class Listviewitem {
     public String getName() {
         return name;
     }
-    public Listviewitem(int icon,String name,String subname, String thirdname, int hearticon){
+    public Listviewitem(String icon,String name,String subname, String thirdname, int hearticon){
         this.icon=icon;
         this.name=name;
         this.subname=subname;

@@ -39,7 +39,7 @@ public class SearchitemAdapter extends BaseAdapter{
     @Override
     public Object getItem(int position) {
         String str;
-        str=searchlist.get(position).getName()+" "+searchlist.get(position).getState();
+        str=searchlist.get(position).getName()+":"+searchlist.get(position).getState();
         return str;
     }
 

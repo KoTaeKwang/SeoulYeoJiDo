@@ -1,6 +1,10 @@
 package com.example.rhxorhkd.android_seoulyeojido;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +13,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -19,11 +27,14 @@ public class ListviewAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private ArrayList<Listviewitem> data;
     private int layout;
-
+    private View tempview;
+    public static int counts=0;
+    public Context context;
     public ListviewAdapter(Context context, int layout, ArrayList<Listviewitem> data){
         this.inflater=(LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         this.data=data;
         this.layout=layout;
+        this.context=context;
     }
 
     @Override
@@ -43,13 +54,16 @@ public class ListviewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         if(convertView==null)
             convertView = inflater.inflate(layout,parent,false);
 
+        tempview = convertView;
         Listviewitem listviewitem = data.get(position);
-
         ImageView icon = (ImageView) convertView.findViewById(R.id.lay_imageview);
-        icon.setImageResource(listviewitem.getIcon());
+
+        setImagedata setImagedata = new setImagedata(icon);
+        setImagedata.execute(listviewitem.getIcon());
 
         TextView name = (TextView)convertView.findViewById(R.id.lay_textview);
         name.setText(listviewitem.getName());
@@ -73,5 +87,21 @@ public class ListviewAdapter extends BaseAdapter {
         Log.d("layout","position : "+position);
         Log.d("layout",""+listviewitem.getName());
         return convertView;
+    }
+
+
+    public class setImagedata extends AsyncTask<String, Void, String>{
+        public  ImageView icon;
+        public setImagedata(ImageView icon){
+            this.icon=icon;
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            return params[0];
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            Glide.with(context).load(s).into(icon);
+        }
     }
 }

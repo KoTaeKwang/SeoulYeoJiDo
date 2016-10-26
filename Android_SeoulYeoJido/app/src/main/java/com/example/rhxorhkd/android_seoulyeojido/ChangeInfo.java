@@ -110,10 +110,12 @@ public class ChangeInfo extends AppCompatActivity implements View.OnClickListene
                 i.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
                 i.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, REQ_CODE_SELECT_IMAGE);
+                finish();
                 break;
             case R.id.logout :
                 auth.getInstance().signOut();
                 startActivity(new Intent(ChangeInfo.this, StartActivity.class));
+                finish();
                 break;
             default:break;
         }

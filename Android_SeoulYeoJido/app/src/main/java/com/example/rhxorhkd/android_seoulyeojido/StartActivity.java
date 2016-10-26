@@ -35,6 +35,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 FirebaseUser user = auth.getCurrentUser();
                 if (user != null) {
                     startActivity(new Intent(StartActivity.this, MainActivity.class));
+                    finish();
                 } else {
 
                 }
