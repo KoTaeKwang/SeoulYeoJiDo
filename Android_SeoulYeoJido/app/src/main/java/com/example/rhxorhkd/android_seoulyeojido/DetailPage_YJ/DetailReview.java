@@ -17,11 +17,11 @@ public class DetailReview {
         this.username = username;
     }
 
-    public String getArtist() {
+    public String getReview() {
         return review;
     }
 
-    public void setArtist(String review) {
+    public void setReview(String review) {
         this.review = review;
     }
 
@@ -31,5 +31,11 @@ public class DetailReview {
 
     public void setImage(int image) {
         this.image = image;
+    }
+
+    public DetailReview(String username,String review, int image){
+        this.username=username;
+        this.review=review;
+        this.image=image;
     }
 }

@@ -1,10 +1,8 @@
 package com.example.rhxorhkd.android_seoulyeojido;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,14 +14,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.OnScrollListener;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
@@ -31,8 +24,14 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.rhxorhkd.android_seoulyeojido.SetActivityFragment.AnalysisFragment;
 import com.example.rhxorhkd.android_seoulyeojido.SetActivityFragment.BookmarkFragment;
 import com.example.rhxorhkd.android_seoulyeojido.SetActivityFragment.VisitedFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class set extends AppCompatActivity implements View.OnClickListener{
+
+    private FirebaseAuth auth;
+    private FirebaseUser user;
+
 
     private ImageView iv, iv2;
     private TextView tv, tv2;
@@ -44,6 +43,9 @@ public class set extends AppCompatActivity implements View.OnClickListener{
 
         ActionBar ab = getSupportActionBar();
         ab.hide();
+
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
 
 
 //        CollapsingToolbarLayout collapsingToolbar =
@@ -72,28 +74,40 @@ public class set extends AppCompatActivity implements View.OnClickListener{
         tv2 = (TextView)findViewById(R.id.up_name);
 
         Intent i = getIntent();
-        if(i.getStringExtra("name") == null){
+        if(i.getStringExtra("name") == null){//탭으로 본 마이페이지
             iv2.setImageDrawable(null);
+            tv.setText(user.getDisplayName().toString());
 
-        }else{
+            Glide.with(this).load(user.getPhotoUrl().toString()).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv){
+                @Override
+                protected void setResource(Bitmap resource) {
+                    super.setResource(resource);
+                    RoundedBitmapDrawable circularBitmapDrawable =
+                            RoundedBitmapDrawableFactory.create(this.getView().getResources(), resource);
+                    circularBitmapDrawable.setCircular(true);
+                    iv.setImageDrawable(circularBitmapDrawable);
+                }
+            });
+
+        }else{//랭킹에서 넘어온경우
             findViewById(R.id.back_btn).setOnClickListener(this);
+            tv.setText(i.getStringExtra("name"));
+
+            Glide.with(this).load(R.drawable.irene1).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv){
+                @Override
+                protected void setResource(Bitmap resource) {
+                    super.setResource(resource);
+                    RoundedBitmapDrawable circularBitmapDrawable =
+                            RoundedBitmapDrawableFactory.create(this.getView().getResources(), resource);
+                    circularBitmapDrawable.setCircular(true);
+                    iv.setImageDrawable(circularBitmapDrawable);
+                }
+            });
         }
-        tv.setText(i.getStringExtra("name"));
-        tv.setText("아이린");
 
 
-        Glide.with(this).load(R.drawable.irene1).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv){
-            @Override
-            protected void setResource(Bitmap resource) {
-                super.setResource(resource);
-                RoundedBitmapDrawable circularBitmapDrawable =
-                        RoundedBitmapDrawableFactory.create(this.getView().getResources(), resource);
-                circularBitmapDrawable.setCircular(true);
-                iv.setImageDrawable(circularBitmapDrawable);
-            }
-        });
+
     }
-
 
 
     @Override
@@ -106,10 +120,9 @@ public class set extends AppCompatActivity implements View.OnClickListener{
                 startActivity(new Intent(this, MapsActivity.class));
                 break;
             case R.id.my_profile_img :
-//                Intent i = new Intent(this, ChangeInfo.class);
-//                i.putExtra("nickname", tv.getText());
-//                startActivity(i);
-                startActivity(new Intent(this, StartActivity.class));
+                Intent i = new Intent(this, ChangeInfo.class);
+                i.putExtra("nickname", tv.getText());
+                startActivity(i);
                 break;
             default: break;
         }
@@ -142,11 +155,11 @@ public class set extends AppCompatActivity implements View.OnClickListener{
         public CharSequence getPageTitle(int position) {
             switch (position){
                 case 0 :
-                    return  "다녀온 곳";
+                    return  "\n";
                 case 1 :
-                    return "갈 곳";
+                    return "담은 서울";
                 case 2 :
-                    return "분석";
+                    return "나의 서울";
                 default:
                     return "";
             }

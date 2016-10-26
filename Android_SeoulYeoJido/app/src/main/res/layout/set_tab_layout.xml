@@ -44,12 +44,12 @@
                         android:layout_below="@id/my_profile_img"
                         android:id="@+id/down_name"
                         android:layout_centerHorizontal="true"
-                        android:text="아이린"
+                        android:text=""
                         android:textSize="20sp"
                         android:textColor="#000000"
                         android:textAlignment="center"
-                        android:layout_width="60dp"
-                        android:layout_height="25dp" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 </RelativeLayout>
             </LinearLayout>
 

@@ -1,6 +1,7 @@
 package com.example.rhxorhkd.android_seoulyeojido;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -26,11 +27,10 @@ import com.google.firebase.database.FirebaseDatabase;
 public class JoinActivity extends AppCompatActivity implements View.OnClickListener{
 
     private FirebaseAuth auth;
-    private FirebaseUser user;
     private EditText email, nickName, pw1, pw2;
     private FirebaseDatabase db;
     private DatabaseReference Ref;
-    private FirebaseAuth.AuthStateListener authStateListener;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
 
     @Override
@@ -42,9 +42,8 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
         ab.hide();
 
         auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
         db = FirebaseDatabase.getInstance();
-        Ref = db.getReference().child("member");
+        Ref = db.getReference("member");
 
         email = (EditText)findViewById(R.id.join_email);
         nickName = (EditText)findViewById(R.id.nickname);
@@ -55,6 +54,17 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.join_btn_back).setOnClickListener(this);
         findViewById(R.id.done).setOnClickListener(this);
 
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    startActivity(new Intent(JoinActivity.this, MainActivity.class));
+                } else {
+
+                }
+            }
+        };
     }
 
 
@@ -82,31 +92,23 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                                 Toast.makeText(JoinActivity.this, "이미 가입된 이메일입니다.", Toast.LENGTH_SHORT).show();
                             }else{
                                 final FirebaseUser user = auth.getCurrentUser();
-                                UserProfileChangeRequest nickUpdate = new UserProfileChangeRequest.Builder() .setDisplayName(nickName.getText().toString()).build();
-                                user.updateProfile(nickUpdate).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task1) {
-                                        if (task1.isSuccessful()) {
-                                            Ref.child(user.getUid() + "/email").setValue(email);
-                                            Ref.child(user.getUid() + "/nickname").setValue(nickName);
-                                            Ref.child(user.getUid() + "/profile").setValue(user.getPhotoUrl());
-                                            Ref.child(user.getUid() + "/facebook").setValue(false);
-                                            startActivity(new Intent(JoinActivity.this, MainActivity.class));
-                                            Toast.makeText(JoinActivity.this, "가입완료", Toast.LENGTH_LONG).show();
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(nickName.getText().toString())
+                                        .build();
 
-
-                                        } else{
-                                            Toast.makeText(JoinActivity.this, "닉네임등록 에러", Toast.LENGTH_LONG).show();
-                                            Toast.makeText(JoinActivity.this, ""+user.getDisplayName(), Toast.LENGTH_SHORT).show();
-                                        }
-
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.d("왜안대", ""+e);
-                                    }
-                                });
+                                user.updateProfile(profileUpdates)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task1) {
+                                                if (task1.isSuccessful()) {
+                                                    Ref.child(user.getUid()+"/email").setValue(email.getText().toString());
+                                                    Ref.child(user.getUid()+"/nickname").setValue(nickName.getText().toString());
+                                                    Toast.makeText(JoinActivity.this, "성공!", Toast.LENGTH_SHORT).show();
+                                                }else{
+                                                    Toast.makeText(JoinActivity.this, "닉네임 에러", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
                             }
                         }
                     });
@@ -114,6 +116,20 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             default: break;
         }
-
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        auth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            auth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
 }

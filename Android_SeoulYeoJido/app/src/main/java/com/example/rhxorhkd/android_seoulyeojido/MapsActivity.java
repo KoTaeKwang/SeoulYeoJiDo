@@ -42,7 +42,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         rl.setVisibility(View.GONE);
         tv1 = (TextView)findViewById(R.id.location_name);
         findViewById(R.id.map_back).setOnClickListener(this);
+
+
     }
+
 
 
     /**
@@ -58,9 +61,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        int height = 50;
-        int width = 50;
-        BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.pin);
+        int height = 42;
+        int width = 30;
+        BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.after_check_in);
         Bitmap b = bitmapdraw.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
 
@@ -76,10 +79,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
 
         );
-        mMap.addMarker(new MarkerOptions().position(sd).title("사당역 "));
-        mMap.addMarker(new MarkerOptions().position(ds).title("덕수궁 "));
-        mMap.addMarker(new MarkerOptions().position(tg).title("퇴계로 "));
-        mMap.addMarker(new MarkerOptions().position(md).title("명동 "));
+        mMap.addMarker(new MarkerOptions()
+                .position(sd)
+                .title("사당역 ")
+                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
+
+        );
+        mMap.addMarker(new MarkerOptions()
+                .position(ds)
+                .title("덕수궁 ")
+                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
+
+        );
+        mMap.addMarker(new MarkerOptions()
+                .position(md)
+                .title("명동 ")
+                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
+
+        );
+        mMap.addMarker(new MarkerOptions()
+                .position(tg)
+                .title("퇴계로 ")
+                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
+
+        );
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.53501414281699,126.98524095118046), 12));
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
