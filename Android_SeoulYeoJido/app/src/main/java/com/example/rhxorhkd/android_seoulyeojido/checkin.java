@@ -28,7 +28,7 @@ public class checkin extends AppCompatActivity {
         lv =(ListView) findViewById(R.id.list);
 
         final ArrayList<Listviewitem> data = new ArrayList<>();
-        Listviewitem data1 = new Listviewitem(R.drawable.ic_launcher,"one","ones","oness",R.drawable.heart1);
+       /* Listviewitem data1 = new Listviewitem(R.drawable.ic_launcher,"one","ones","oness",R.drawable.heart1);
         Listviewitem data2 = new Listviewitem(R.drawable.ic_launcher,"two","twos","twoss",R.drawable.heart1);
         Listviewitem data3 = new Listviewitem(R.drawable.ic_launcher,"three","threes","thress",R.drawable.heart1);
         Listviewitem data4 = new Listviewitem(R.drawable.ic_launcher,"four","fours","fourss",R.drawable.heart1);
@@ -50,7 +50,7 @@ public class checkin extends AppCompatActivity {
         data.add(data8);
         data.add(data9);
         data.add(data10);
-        data.add(data11);
+        data.add(data11);*/
 
         adapter = new ListviewAdapter(this,R.layout.item,data);
         lv.setAdapter(adapter);

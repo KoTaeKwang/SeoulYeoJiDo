@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ.DetailActivity;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+import com.tsengvn.typekit.Typekit;
+import com.tsengvn.typekit.TypekitContextWrapper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,6 +60,11 @@ public class home extends AppCompatActivity {
     Response response;
     Request request;
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
+    }
+
     public void button2clicked(View v){ //용산구
         guListGetData getData = new guListGetData();
         String result = null;
@@ -85,6 +92,9 @@ public class home extends AppCompatActivity {
         ImageView imageView5 = (ImageView)findViewById(R.id.imageView5);
 
         //searchInit(); //서치리스트 초기화
+        Typekit.getInstance()
+                .addNormal(Typekit.createFromAsset(this,"NotoSans-Regular.ttf"));
+
 
         firstListGetData getData = new firstListGetData();
         String result = null;
