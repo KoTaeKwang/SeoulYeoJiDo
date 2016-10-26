@@ -52,18 +52,29 @@ public class DetailFragment extends Fragment {
         /**
          * 이미지버튼- 전화걸기
          */
-        ImageButton imgbtn =  (ImageButton)view.findViewById(R.id.img_frg1);
+        ImageView imgTel =  (ImageView) view.findViewById(R.id.img_frg1);
+        ImageView imgMap =  (ImageView) view.findViewById(R.id.img_frg2);
+        ImageView imgURL = (ImageView) view.findViewById(R.id.img_frg3);
+
         TextView txt_tel = (TextView)view.findViewById(R.id.txt_tel);
         final String tel = txt_tel.getText().toString();
 
-        imgbtn.setOnClickListener(new View.OnClickListener(){
+        imgTel.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+tel));
                 startActivity(intent);
             }
         });
 
-        ImageView imgURL = (ImageView) view.findViewById(R.id.img_frg3);
+        imgMap.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "map 연결",Toast.LENGTH_LONG).show();
+
+                //Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+tel));
+                //startActivity(intent);
+            }
+        });
+
         imgURL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

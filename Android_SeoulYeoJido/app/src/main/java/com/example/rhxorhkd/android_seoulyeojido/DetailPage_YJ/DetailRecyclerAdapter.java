@@ -48,7 +48,7 @@ public class DetailRecyclerAdapter extends RecyclerView.Adapter<DetailRecyclerAd
 
         DetailReview item = reviewList.get(position);
         viewHolder.userName.setText(item.getTitle());
-        viewHolder.reviewContent.setText(item.getArtist());
+        viewHolder.reviewContent.setText(item.getReview());
         viewHolder.img.setBackgroundResource(item.getImage());
         viewHolder.itemView.setTag(item);
 

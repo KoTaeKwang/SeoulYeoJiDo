@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.example.rhxorhkd.android_seoulyeojido.R;
 
 import java.util.ArrayList;
@@ -35,10 +33,10 @@ public class AllreviewActivity extends AppCompatActivity {
 
         for (int i = 0; i < 10; i++) {
 
-            DetailReview review = new DetailReview();
-            review.setImage(R.drawable.irene3);
-            review.setTitle("사용자명 " + (i + 1));
-            review.setArtist("리뷰리뷰 써주세요 " + (i + 1));
+            DetailReview review = new DetailReview("사용자명 " + (i + 1),"리뷰리뷰 써주세요 " + (i + 1),R.drawable.irene3);
+//            review.setImage(R.drawable.irene3);
+//            review.setTitle("사용자명 " + (i + 1));
+//            review.setReview("리뷰리뷰 써주세요 " + (i + 1));
             reviewList.add(review);
         }
         lecyclerView02.setAdapter(new DetailRecyclerAdapter(reviewList, R.layout.detail_row));
