@@ -24,14 +24,7 @@
         tools:context="com.example.rhxorhkd.android_seoulyeojido.MapsActivity" />
 
 
-    <ImageView
-        android:layout_marginTop="13dp"
-        android:layout_marginBottom="13dp"
-        android:layout_marginLeft="10dp"
-        android:src="@drawable/map_back"
-        android:id="@+id/map_back"
-        android:layout_width="48dp"
-        android:layout_height="56dp" />
+
 
     <RelativeLayout
         android:id="@+id/location_detail"

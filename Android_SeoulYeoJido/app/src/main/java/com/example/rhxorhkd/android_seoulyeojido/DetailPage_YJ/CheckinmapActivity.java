@@ -14,17 +14,13 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.rhxorhkd.android_seoulyeojido.ChangeInfo;
 import com.example.rhxorhkd.android_seoulyeojido.R;
-import com.example.rhxorhkd.android_seoulyeojido.home;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -34,10 +30,6 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.tsengvn.typekit.Typekit;
 import com.tsengvn.typekit.TypekitContextWrapper;
 
@@ -134,7 +126,7 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
         rl.setVisibility(View.GONE);
         tv1 = (TextView) findViewById(R.id.location_name);
 
-        findViewById(R.id.map_back).setOnClickListener(this);
+      //  findViewById(R.id.map_back).setOnClickListener(this);
 
         gps = new GpsInfo(CheckinmapActivity.this);
 
@@ -328,9 +320,6 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
     @Override
     public void onClick(View view) {
         switch(view.getId()){
-            case R.id.map_back :
-                finish();
-                break;
 //            case R.id.default_flag :
 //                break;
 
