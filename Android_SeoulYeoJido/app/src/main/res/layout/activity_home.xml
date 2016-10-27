@@ -7,8 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
-    sothree:umanoPanelHeight="40dp"
-    sothree:umanoShadowHeight="4dp"
+    sothree:umanoPanelHeight="140dp"
+    sothree:umanoShadowHeight="1dp"
     sothree:umanoParallaxOffset="100dp"
     sothree:umanoDragView="@+id/dragView"
     sothree:umanoOverlay="true"
@@ -16,9 +16,10 @@
 
     <!-- MAIN CONTENT -->
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_width="360dp"
+        android:layout_height="360dp"
+
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,24 +34,96 @@
             </ListView>
         </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <RelativeLayout
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_width="360dp"
+        android:layout_height="360dp"
         android:id="@+id/map"
-        android:orientation="horizontal">
-        <Button
-            android:text="Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/button" />
+        android:background="#ffffff"
+       >
+        <ImageView
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="46dp"
+            android:id="@+id/mapone"/>
 
-        <Button
+        <ImageView
+            android:layout_width="81dp"
+            android:layout_height="57dp"
+            android:layout_marginLeft="98dp"
+            android:layout_marginTop="120dp"
+            android:id="@+id/maptwo"/>
+
+        <ImageView
+            android:layout_width="63dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="184dp"
+            android:layout_marginTop="92dp"
+            android:id="@+id/mapfour"/>
+        
+        <ImageView
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginLeft="118dp"
+            android:layout_marginTop="55dp"
+            android:id="@+id/mapthree"/>
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginLeft="192dp"
+            android:id="@+id/mapfive"/>
+
+        <ImageView
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginLeft="254dp"
+            android:layout_marginTop="85dp"
+            android:id="@+id/mapsix"/>
+
+        <ImageView
+            android:layout_width="74dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="270dp"
+               android:layout_marginTop="185dp"
+            android:id="@+id/mapseven"/>
+
+        <ImageView
+            android:layout_width="74dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="192dp"
+            android:layout_marginTop="208dp"
+            android:id="@+id/mapeight"/>
+
+        <ImageView
+            android:layout_width="82dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="132dp"
+            android:layout_marginTop="273dp"
+            android:id="@+id/mapnine"/>
+
+        <ImageView
+            android:layout_width="74dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="101dp"
+            android:layout_marginTop="209dp"
+            android:id="@+id/mapten"/>
+
+        <ImageView
+            android:layout_width="74dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="209dp"
+            android:id="@+id/mapeleven"/>
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button2"
-            android:text="button2"
-            android:onClick="button2clicked"/>
-    </LinearLayout>
+            android:id="@+id/mapriver"/>
+
+    </RelativeLayout>
 
 
     </FrameLayout>
@@ -65,66 +138,167 @@
         android:focusable="false"
         android:id="@+id/dragView"
         >
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#f6f6f6"/>
 
+        <TextView
+            android:layout_marginTop="22dp"
+            android:layout_marginLeft="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text="명소 카테고리"/>
         <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="160dp"
             >
             <LinearLayout
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="80dp"
                 android:orientation="horizontal">
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     app:srcCompat="@mipmap/ic_launcher"
                     android:id="@+id/imageView6"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@mipmap/ic_launcher"
-                    android:id="@+id/imageView5"
                     android:layout_weight="1"
-                    android:layout_marginLeft="30dp" />
-
-                <ImageView
+                    />
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:gravity="center"
+                    android:text="유적지"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"/>
+                
+            </RelativeLayout>
+                
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@mipmap/ic_launcher"
-                    android:id="@+id/imageView4"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="30dp" />
-
-                <ImageView
+                    android:layout_marginLeft="20dp">
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        app:srcCompat="@mipmap/ic_launcher"
+                        android:id="@+id/imageView5"
+                        android:layout_weight="1"
+                         />
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:gravity="center"
+                        android:text="랜드마크"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp"/>
+                </RelativeLayout>
+                
+                
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@mipmap/ic_launcher"
-                    android:id="@+id/imageView3"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="30dp" />
+                    android:layout_marginLeft="20dp">
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        app:srcCompat="@mipmap/ic_launcher"
+                        android:id="@+id/imageView4"
+                        android:layout_weight="1"
+                        />
 
-                <ImageView
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:gravity="center"
+                        android:text="전통시장"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp"/>
+                </RelativeLayout>
+               
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp">
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        app:srcCompat="@mipmap/ic_launcher"
+                        android:id="@+id/imageView3"
+                        android:layout_weight="1"
+                         />
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:gravity="center"
+                        android:text="공원"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp"/>
+                    
+                </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp">
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     app:srcCompat="@mipmap/ic_launcher"
                     android:id="@+id/imageView2"
                     android:layout_weight="1"
-                    android:layout_marginLeft="30dp" />
+                    />
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:gravity="center"
+                    android:text="문화"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"/>
 
-                <ImageView
+
+            </RelativeLayout>
+
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@mipmap/ic_launcher"
-                    android:id="@+id/imageView"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="30dp" />
+                    android:layout_marginLeft="20dp">
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        app:srcCompat="@mipmap/ic_launcher"
+                        android:id="@+id/imageView"
+                        android:layout_weight="1"
+                         />
+
+                    <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:gravity="center"
+                    android:text="쇼핑"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"/>
+
+                </RelativeLayout>
 
             </LinearLayout>
         </HorizontalScrollView>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="#f6f6f6"/>
         <ListView
+            android:layout_marginTop="10dp"
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="0dp"

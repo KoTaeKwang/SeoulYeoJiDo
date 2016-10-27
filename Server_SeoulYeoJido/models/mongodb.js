@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var async = require('async');
 var geolib = require('geolib');
+var mongoXlsx = require('mongo-xlsx');
+var request = require('request');
 //var geolocation = require('node-geolocation');
 var url = 'mongodb://localhost/test';
 var options = {
@@ -156,21 +158,22 @@ exports.showLoca = function(callback){  //location 정보   첫화면 list
 	var arr=[];
 	async.waterfall([
 		function(callback){
-			LocationMongo.find({},{_id:0,loca_name:1,loca_category:1,loca_photo:1,loca_checkin:1,loca_guNum:1,loca_review:1},function(err,result){
+			LocationMongo.find({},{_id:0,loca_name:1,loca_category:1,loca_photo:1,loca_checkin:1,loca_guNum:1,loca_review:1,loca_address:1},function(err,result){
 				callback(null,result);
 			})
 		},function(result,callback){
 			async.each(result,function(item,cb){
 				var obj ={};
 				obj.loca_name = item.loca_name;
-				obj.loca_photo = item.loca_photo[0];
+				obj.loca_photolength = item.loca_photo.length;
 
-				if(obj.loca_photo!=null){
+				if(obj.loca_photolength!=0){
+					obj.loca_photo = item.loca_photo[0];
 					obj.loca_photo=obj.loca_photo.photo_url;
 				}
 				obj.loca_categorynum =0;
 				obj.loca_guNum=0;
-
+				obj.loca_address=item.loca_address;
 				if(item.loca_category[0]!=null){
 				obj.loca_categorynum = item.loca_category[0].loca_categorynum;
 				category(obj);
@@ -215,21 +218,56 @@ exports.searchLocaName = function(data,callback){
 		})
 }
 
+/*
+if(item.loca_address.includes(data)){
+	arr.push(item);
+}
+*/
 exports.searchLocaAddress = function(data,callback){
+	console.log(data);
 	var arr=[];
-		LocationMongo.find({},{_id:1,loca_address:1},function(err,results){
-
-			async.each(results,function(item,cb){
+		async.waterfall([
+			function(callback){
+				LocationMongo.find({},{_id:0,loca_name:1,loca_category:1,loca_photo:1,loca_checkin:1,loca_guNum:1,loca_review:1,loca_address:1},function(err,result){
+					callback(null,result);
+				})
+			},function(result,callback){
+				async.each(result,function(item,cb){
 					if(item.loca_address.includes(data)){
-						arr.push(item);
+						var obj ={};
+						obj.loca_name = item.loca_name;
+						obj.loca_photolength = item.loca_photo.length;
+
+						if(obj.loca_photolength!=0){
+							obj.loca_photo = item.loca_photo[0];
+							obj.loca_photo=obj.loca_photo.photo_url;
+						}
+						obj.loca_categorynum =0;
+						obj.loca_guNum=0;
+						obj.loca_address=item.loca_address;
+						if(item.loca_category[0]!=null){
+						obj.loca_categorynum = item.loca_category[0].loca_categorynum;
+						category(obj);
+						}
+
+						if(item.loca_guNum!=null){
+						obj.loca_guNum = item.loca_guNum;
+						gu(obj);
+						}
+
+						obj.loca_checkincount = item.loca_checkin.length;
+						obj.loca_reviewcount = item.loca_review.length;
+						arr.push(obj);
 					}
 					cb();
-			},function(err){
-				var obj={};
-				obj.location=arr;
-					callback(obj);
-				}
-			)
+				},function(err){
+					callback(null,arr);
+				})
+			}
+			],function(err,result){
+				var obj = {};
+				obj.location = result;
+				callback(obj);
 		})
 }
 
@@ -436,6 +474,72 @@ exports.showCheckin = function(data,callback){
 				obj.location = result;
 				callback(obj);
 		})
+}
+
+exports.mongoexcel = function(callback){
+	var data = [];
+	async.waterfall([
+			function(callback){
+				LocationMongo.find({},{},function(err,results){
+					async.each(results,function(item,cb){
+						data.push(item);
+						cb();
+					},function(err){
+						callback(null,data);
+					})
+				});
+			}
+		],function(err,result){
+				/* Generate automatic model for processing (A static model should be used) */
+				var model = mongoXlsx.buildDynamicModel(result);
+
+				/* Generate Excel */
+				mongoXlsx.mongoData2Xlsx(result, model, function(err, data) {
+				  console.log('File saved at:', data.fullPath);
+				  callback(0);
+				});
+	})
+
+}
+
+exports.removeLocation = function(callback){
+	async.waterfall([
+		function(callback){
+				LocationMongo.find({},{loca_photo:1,loca_name:1},function(err,conn){
+					callback(null,conn);
+				})
+			},function(conn,callback){
+				async.each(conn,function(item,cb){
+
+					if(item.loca_photo.length!=0){
+						request({uri:item.loca_photo[0].photo_url},function(err,response,body){
+							if(response.statusCode==404){
+								LocationMongo.remove({loca_name:item.loca_name},function(err){
+								})
+							}
+						})
+					}
+					else
+					{
+							LocationMongo.remove({loca_name:item.loca_name},function(err){
+							})
+					}
+					cb();
+				},function(err){
+					callback(null,0);
+				})
+			}
+		],function(err,result){
+			callback(0);
+	})
+}
+
+exports.updatepicture = function(data,callback){
+	LocationMongo.update({loca_name:data},{$set:{loca_photo : {photo_url : "http://mblogthumb3.phinf.naver.net/20140228_274/papasme_1393579002622tPdCt_JPEG/2014-02-26_13.18.26.jpg?type=w2"}}},function(err){
+		callback(1);
+	})
+		///db.books.update( { _id: 1 }, { $unset: { tags: 1 } } )
+
 }
 
 function category(obj){

@@ -15,6 +15,7 @@
     "express": "~4.13.4",
     "geolib": "^2.0.21",
     "iconv-lite": "^0.4.13",
+    "mongo-xlsx": "^1.0.12",
     "mongoose": "^4.6.3",
     "morgan": "~1.7.0",
     "mysql": "^2.11.1",
