@@ -54,7 +54,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
         Ref = db.getReference("member");
 
         email = (EditText)findViewById(R.id.join_email);
-        nickName = (EditText)findViewById(R.id.nickname);
+        nickName = (EditText)findViewById(R.id.join_nickname);
         pw1 = (EditText)findViewById(R.id.pw1);
         pw2 = (EditText)findViewById(R.id.pw2);
 
@@ -68,6 +68,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     startActivity(new Intent(JoinActivity.this, MainActivity.class));
+                    finish();
                 } else {
 
                 }
@@ -100,23 +101,26 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                                 Toast.makeText(JoinActivity.this, "이미 가입된 이메일입니다.", Toast.LENGTH_SHORT).show();
                             }else{
                                 final FirebaseUser user = auth.getCurrentUser();
-                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                        .setDisplayName(nickName.getText().toString())
-                                        .build();
-
-                                user.updateProfile(profileUpdates)
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task1) {
-                                                if (task1.isSuccessful()) {
-                                                    Ref.child(user.getUid()+"/email").setValue(email.getText().toString());
-                                                    Ref.child(user.getUid()+"/nickname").setValue(nickName.getText().toString());
-                                                    Toast.makeText(JoinActivity.this, "성공!", Toast.LENGTH_SHORT).show();
-                                                }else{
-                                                    Toast.makeText(JoinActivity.this, "닉네임 에러", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                        });
+                                Ref.child(user.getUid()+"/email").setValue(email.getText().toString());
+                                Ref.child(user.getUid()+"/nickname").setValue(nickName.getText().toString());
+                                Ref.child(user.getUid()+"/profile").setValue("https://firebasestorage.googleapis.com/v0/b/seoulmap-db7e1.appspot.com/o/profile%2Fprofile.png?alt=media&token=17e6a808-4662-4be3-be44-716190af4666");
+                                Toast.makeText(JoinActivity.this, "성공!", Toast.LENGTH_SHORT).show();
+//                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+//                                        .setDisplayName(nickName.getText().toString())
+//                                        .build();
+//
+//                                user.updateProfile(profileUpdates)
+//                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                            @Override
+//                                            public void onComplete(@NonNull Task<Void> task1) {
+//                                                if (task1.isSuccessful()) {
+//
+//
+//                                                }else{
+//                                                    Toast.makeText(JoinActivity.this, "닉네임 에러", Toast.LENGTH_SHORT).show();
+//                                                }
+//                                            }
+//                                        });
                             }
                         }
                     });

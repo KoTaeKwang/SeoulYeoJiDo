@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
@@ -35,18 +37,37 @@ public class RankAdapter extends RecyclerView.Adapter<RankViewHolder>{
     @Override
     public RankViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.rank_item, parent, false);
-
+                .inflate(R.layout.rank_first_item, parent, false);
         return new RankViewHolder(v, this);
     }
 
     @Override
     public void onBindViewHolder(final RankViewHolder holder, int position) {
         RankItem item = list.get(position);
+        holder.visited_cnt.setText(item.getChk_cnt());
+        if(position == 0){
+            holder.upline.setVisibility(View.VISIBLE);
+            holder.upline.setBackgroundColor(0xFF000000);
+            holder.downline.setVisibility(View.VISIBLE);
+            holder.downline.setBackgroundColor(0xFF000000);
+            holder.visited_cnt.setTextColor(0xFF3f51b5);
+            Glide.with(mContext).load(R.drawable.rank_one).into(holder.medal);
+        }else if(position == 1){
+            holder.downline.setBackgroundColor(0xFFd7d7d7);
+            holder.upline.setVisibility(View.GONE);
+            Glide.with(mContext).load(R.drawable.rank_two).into(holder.medal);
+        }else if(position == 2){
+            holder.downline.setBackgroundColor(0xFFd7d7d7);
+            holder.upline.setVisibility(View.GONE);
+            Glide.with(mContext).load(R.drawable.rank_three).into(holder.medal);
+        }else{
+            Glide.with(mContext).load("").into(holder.medal);
+            holder.profile.setBackgroundColor(0);
+            holder.downline.setBackgroundColor(0xFFd7d7d7);
+            holder.upline.setVisibility(View.GONE);
+        }
         holder.rank.setText(item.getRank());
-        holder.chk_cnt.setText(item.getChk_cnt());
         holder.nickname.setText(item.getNickname());
-        holder.ect.setText(item.getEct());
 
         Glide.with(mContext).load(item.getImg()).asBitmap().centerCrop().into(new BitmapImageViewTarget(holder.profile){
             @Override

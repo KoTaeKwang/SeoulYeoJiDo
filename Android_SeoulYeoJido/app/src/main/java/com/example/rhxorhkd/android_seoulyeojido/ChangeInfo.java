@@ -25,8 +25,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -63,18 +66,31 @@ public class ChangeInfo extends AppCompatActivity implements View.OnClickListene
         findViewById(R.id.change_img).setOnClickListener(this);
         findViewById(R.id.logout).setOnClickListener(this);
 
-        nickName.setText(auth.getCurrentUser().getDisplayName().toString());
-
-        Glide.with(this).load(auth.getCurrentUser().getPhotoUrl()).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv1){
+        FirebaseUser user = auth.getCurrentUser();
+        Ref.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            protected void setResource(Bitmap resource) {
-                super.setResource(resource);
-                RoundedBitmapDrawable circularBitmapDrawable =
-                        RoundedBitmapDrawableFactory.create(this.getView().getResources(), resource);
-                circularBitmapDrawable.setCircular(true);
-                iv1.setImageDrawable(circularBitmapDrawable);
+            public void onDataChange(DataSnapshot data) {
+                nickName.setText(data.child("nickname").getValue().toString());
+                Glide.with(ChangeInfo.this).load(data.child("profile").getValue().toString()).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv1){
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        super.setResource(resource);
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(this.getView().getResources(), resource);
+                        circularBitmapDrawable.setCircular(true);
+                        iv1.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
+
+
+
     }
 
     public static int REQ_CODE_SELECT_IMAGE = 100;
@@ -88,20 +104,8 @@ public class ChangeInfo extends AppCompatActivity implements View.OnClickListene
                     Toast.makeText(getApplicationContext(),"닉네임 형식이 바르지 않습니다(특수문자제외 2~12자)",Toast.LENGTH_LONG).show();
                 }else{
                     final FirebaseUser user = auth.getCurrentUser();
-                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(nickName.getText().toString())
-                            .build();
+                    Ref.child(user.getUid()+"/nickname").setValue(nickName.getText().toString());
 
-                    user.updateProfile(profileUpdates)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Ref.child(user.getUid()+"/nickname").setValue(nickName.getText().toString());
-                                        finish();
-                                    }
-                                }
-                            });
 
                 }
                 break;
