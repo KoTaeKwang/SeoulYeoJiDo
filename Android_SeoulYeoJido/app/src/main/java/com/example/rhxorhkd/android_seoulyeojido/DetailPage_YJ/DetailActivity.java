@@ -43,10 +43,12 @@ import okhttp3.Response;
 
 
 public class DetailActivity extends AppCompatActivity {
-
+    private GpsInfo gps;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private Double longitude;
+    private Double latitude;
     String number;
     String weburl;
     String description="내용없음";
@@ -98,6 +100,34 @@ public class DetailActivity extends AppCompatActivity {
     }
 
 
+    public class checkinsuccess extends AsyncTask<String, Void, String>{
+        @Override
+        protected String doInBackground(String... params) {
+            final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            JSONObject json = new JSONObject();
+            try {
+                json.put("loca_name", params[0]);
+                json.put("loca_lat",params[1]);
+                json.put("loca_lon",params[2]);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            RequestBody posData = RequestBody.create(JSON,json.toString());
+            request = new Request.Builder()
+                    .url("http://211.189.20.136:4389/ko/checkin")
+                    .post(posData)
+                    .build();
+            try{
+                response = client.newCall(request).execute();
+                return response.body().string();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            //post gu num
+            return null;
+        }
+    }
+
 
 
 
@@ -110,7 +140,9 @@ public class DetailActivity extends AppCompatActivity {
         String url =null;
         Intent intent = getIntent(); // 보내온 Intent를 얻는다
         final String locationTitle = intent.getStringExtra("name");
-
+        gps = new GpsInfo(DetailActivity.this);
+        latitude = gps.getLatitude();
+        longitude = gps.getLongitude();
 
         showDataDetail showDataDetail = new showDataDetail();
         //{"loca_photo":["http:\/\/contents.visitseoul.net\/file_save\/art_img\/2014\/01\/22\/20140122165615.jpg","http:\/\/contents.visitseoul.net\/file_save\/art_img\/2014\/01\/22\/20140122165635.jpg","http:\/\/contents.visitseoul.net\/file_save\/art_img\/2014\/01\/22\/20140122165650.jpg","http:\/\/contents.visitseoul.net\/file_save\/art_img\/2014\/01\/22\/20140122165707.jpg"],"loca_name":"소공 지하쇼핑센터","loca_address":"서울 중구 소공동 87-1","loca_latitude":"37.5644064","loca_longitude":"126.9796971","loca_tel":"02-775-2234","loca_description":"관광객에게 각광받는 쇼핑명소 서울시청에서 명동으로 이어지는 소공지하상가는 80년대 서울에서 가장 잘나가는 쇼핑 1번지로 꼽혔다. 현재도 인근의 롯데백화점, 프라자호텔과 연결되어 있어 관광객들의 이용도가 높다.소공지하상가의 토산품, 도자기, 민속 공예품 가게에는 아기자기한 저가의 관광상품이 많다. 일본인 관광객이 많아 일본어 가격표를 쉽게 볼 수 있다.통로 역시 넓고 쾌적하다. 롯데백화점 본점, 영플라자, 에비뉴엘 지하와 바로 연결되는 통로가 있어 연계된 쇼핑이 편리하다. ※ 이용 Tip한국은행 본점 옆길로 가서 웨스틴 조선 호텔쪽 입구로 들어가는 방법도 있지만 그 다음 코스를 시청역으로 잡는다면 명동 쪽에서 출발해 지하상가를 계속 따라가 시청으로 가는 방법이 편하다.\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n Address : 서울 중구 소공동 87-1&lt;br&gt; Tel : 02-775-2234&lt;br&gt; HomePage URL : http:\/\/sogongmall.com\/kor\/&lt;br&gt;","loca_checkincount":0,"loca_review":[],"loca_url":"http:\/\/sogongmall.com\/kor\/"}
@@ -280,10 +312,23 @@ public class DetailActivity extends AppCompatActivity {
 
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
+            checkinsuccess checkinsuccess = new checkinsuccess();
+
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), CheckinPopup.class));
+                String result =null;
+                try{
+                    result = checkinsuccess.execute(locationTitle,latitude.toString(),longitude.toString()).get();
+                    Log.d("list","result : "+result);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent(getApplicationContext(),CheckinPopup.class);
+                intent.putExtra("result",result); //result 가 0 이면 실패 , 1이면 성공
+                startActivity(intent);
+               // startActivity(new Intent(getApplicationContext(), CheckinPopup.class));
                 Snackbar.make(v, "Hello World", Snackbar.LENGTH_LONG).show();
             }
         });
@@ -342,26 +387,6 @@ public class DetailActivity extends AppCompatActivity {
     }
 
 }
-
-    /**
-     *
-     */
-//    public void listInit(){
-//        lv =(ListView) findViewById(R.id.detailListview);
-//
-//        final ArrayList<DetailReview> data = new ArrayList<>();
-//        DetailReview data1 = new DetailReview("병윤사랑아이린1","리뷰써줘1",R.drawable.irene1);
-//        DetailReview data2 = new DetailReview("병윤사랑아이린1","리뷰써줘1",R.drawable.irene1);
-//        DetailReview data3 = new DetailReview("병윤사랑아이린1","리뷰써줘1",R.drawable.irene1);
-//
-//        data.add(data1);
-//        data.add(data2);
-//        data.add(data3);
-//
-//        adapter = new DetailListviewAdapter(this,R.layout.detail_row,data);
-//        lv.setAdapter(adapter);
-//    }
-
 
     /**
      *

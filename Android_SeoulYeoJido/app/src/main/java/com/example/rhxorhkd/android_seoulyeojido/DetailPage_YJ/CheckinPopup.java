@@ -15,13 +15,13 @@ import com.example.rhxorhkd.android_seoulyeojido.R;
  */
 
 public class CheckinPopup extends Activity implements View.OnClickListener {
-
+    String result;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE); //타이틀바 삭제
         super.onCreate(savedInstanceState);
         setContentView(R.layout.checkinpopup);
-
+        result = getIntent().getStringExtra("result");
         findViewById(R.id.btn_checkincancel).setOnClickListener(this);
         findViewById(R.id.btn_checkin).setOnClickListener(this);
 
@@ -34,8 +34,9 @@ public class CheckinPopup extends Activity implements View.OnClickListener {
                 break;
             case R.id.btn_checkin:
                 //Toast.makeText(getApplicationContext(), "눌림", Toast.LENGTH_LONG).show();
-
+                if(result.equals("1"))
                 startActivity(new Intent(this, CheckinOK.class));
+                
                 finish();
                 //Intent i = new Intent(this, CheckinOK.class);
                 //startActivity(i);
