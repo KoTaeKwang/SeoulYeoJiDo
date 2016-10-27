@@ -49,12 +49,20 @@
         android:id="@+id/map"
         android:background="#ffffff"
        >
+
         <ImageView
             android:layout_width="63dp"
             android:layout_height="63dp"
             android:layout_marginTop="50dp"
             android:layout_marginLeft="46dp"
             android:id="@+id/mapone"/>
+
+        <ImageView
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="46dp"
+            android:id="@+id/maptempone"/>
 
         <ImageView
             android:layout_width="81dp"
@@ -64,11 +72,25 @@
             android:id="@+id/maptwo"/>
 
         <ImageView
+            android:layout_width="81dp"
+            android:layout_height="57dp"
+            android:layout_marginLeft="98dp"
+            android:layout_marginTop="120dp"
+            android:id="@+id/maptemptwo"/>
+
+        <ImageView
             android:layout_width="63dp"
             android:layout_height="70dp"
             android:layout_marginLeft="184dp"
             android:layout_marginTop="92dp"
             android:id="@+id/mapfour"/>
+
+        <ImageView
+            android:layout_width="63dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="184dp"
+            android:layout_marginTop="92dp"
+            android:id="@+id/maptempfour"/>
         
         <ImageView
             android:layout_width="63dp"
@@ -78,6 +100,13 @@
             android:id="@+id/mapthree"/>
 
         <ImageView
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginLeft="118dp"
+            android:layout_marginTop="55dp"
+            android:id="@+id/maptempthree"/>
+
+        <ImageView
             android:layout_width="70dp"
             android:layout_height="63dp"
             android:layout_marginTop="22dp"
@@ -85,11 +114,25 @@
             android:id="@+id/mapfive"/>
 
         <ImageView
+            android:layout_width="70dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginLeft="192dp"
+            android:id="@+id/maptempfive"/>
+
+        <ImageView
             android:layout_width="63dp"
             android:layout_height="63dp"
             android:layout_marginLeft="254dp"
             android:layout_marginTop="85dp"
             android:id="@+id/mapsix"/>
+
+        <ImageView
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_marginLeft="254dp"
+            android:layout_marginTop="85dp"
+            android:id="@+id/maptempsix"/>
 
         <ImageView
             android:layout_width="74dp"
@@ -101,16 +144,38 @@
         <ImageView
             android:layout_width="74dp"
             android:layout_height="60dp"
+            android:layout_marginLeft="270dp"
+            android:layout_marginTop="185dp"
+            android:id="@+id/maptempseven"/>
+
+
+        <ImageView
+            android:layout_width="74dp"
+            android:layout_height="60dp"
             android:layout_marginLeft="192dp"
             android:layout_marginTop="208dp"
             android:id="@+id/mapeight"/>
 
+        <ImageView
+            android:layout_width="74dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="192dp"
+            android:layout_marginTop="208dp"
+            android:id="@+id/maptempeight"/>
         <ImageView
             android:layout_width="82dp"
             android:layout_height="60dp"
             android:layout_marginLeft="132dp"
             android:layout_marginTop="273dp"
             android:id="@+id/mapnine"/>
+
+        <ImageView
+            android:layout_width="82dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="132dp"
+            android:layout_marginTop="273dp"
+            android:id="@+id/maptempnine"/>
+
 
         <ImageView
             android:layout_width="74dp"
@@ -122,9 +187,23 @@
         <ImageView
             android:layout_width="74dp"
             android:layout_height="60dp"
+            android:layout_marginLeft="101dp"
+            android:layout_marginTop="209dp"
+            android:id="@+id/maptempten"/>
+
+        <ImageView
+            android:layout_width="74dp"
+            android:layout_height="60dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="209dp"
             android:id="@+id/mapeleven"/>
+
+        <ImageView
+            android:layout_width="74dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="209dp"
+            android:id="@+id/maptempeleven"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -160,7 +239,7 @@
             android:text="명소 카테고리"/>
         <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="130dp"
             >
             <LinearLayout
                 android:layout_marginTop="16dp"

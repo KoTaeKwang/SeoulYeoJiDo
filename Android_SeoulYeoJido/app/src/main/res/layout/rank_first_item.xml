@@ -48,8 +48,9 @@
 
 
         <TextView
-            android:id="@+id/visited_cnt"
             android:layout_marginRight="22dp"
+            android:gravity="right"
+            android:id="@+id/visited_cnt"
             android:layout_alignParentRight="true"
             android:text="101"
             android:layout_centerVertical="true"
