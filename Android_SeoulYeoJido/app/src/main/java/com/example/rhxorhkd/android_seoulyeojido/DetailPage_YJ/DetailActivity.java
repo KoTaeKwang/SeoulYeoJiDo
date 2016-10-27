@@ -58,6 +58,7 @@ public class DetailActivity extends AppCompatActivity {
     String lat;
     String lon;
     String checkincount;
+    String guNumber;
     Request request;
     Response response;
     OkHttpClient client = new OkHttpClient();
@@ -99,6 +100,8 @@ public class DetailActivity extends AppCompatActivity {
             return null;
         }
     }
+
+
 
     public class checkinsuccess extends AsyncTask<String, Void, String>{
         @Override
@@ -144,6 +147,7 @@ public class DetailActivity extends AppCompatActivity {
             checkincount = object.getString("loca_checkincount");
             reviewarray = object.getJSONArray("loca_review");
             array = object.getJSONArray("loca_photo");
+            guNumber = object.getString("loca_guNum");
             if(array==null)
                 Log.d("list","null"+locationTitle);
             url =array.get(0).toString();
@@ -328,6 +332,8 @@ public class DetailActivity extends AppCompatActivity {
                 }
                 Intent intent = new Intent(getApplicationContext(),CheckinPopup.class);
                 intent.putExtra("result",result); //result 가 0 이면 실패 , 1이면 성공
+                intent.putExtra("title",locationTitle);
+
                 startActivity(intent);
                // startActivity(new Intent(getApplicationContext(), CheckinPopup.class));
                 //Snackbar.make(v, "Hello World", Snackbar.LENGTH_LONG).show();
