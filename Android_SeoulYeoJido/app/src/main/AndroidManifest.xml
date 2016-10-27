@@ -53,6 +53,9 @@
         <activity
             android:name=".DetailPage_YJ.CheckinOK"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
+        <activity
+            android:name=".DetailPage_YJ.CheckinFail"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
         <activity android:name=".DetailPage_YJ.ImageViewPager" />
         <activity android:name=".DetailPage_YJ.ImageGridActivity" />
         <activity android:name=".DetailPage_YJ.AllreviewActivity" />
