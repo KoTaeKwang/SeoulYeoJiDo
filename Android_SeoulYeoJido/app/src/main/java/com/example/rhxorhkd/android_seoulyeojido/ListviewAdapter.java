@@ -96,8 +96,6 @@ public class ListviewAdapter extends BaseAdapter {
         if(!checked[position])
             hearticon.setChecked(false);
 
-        hearticon.setFocusable(false);
-        hearticon.setClickable(false);
         hearticon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override

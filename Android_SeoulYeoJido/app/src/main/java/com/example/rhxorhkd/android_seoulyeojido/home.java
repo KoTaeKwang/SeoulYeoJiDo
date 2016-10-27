@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -65,6 +66,18 @@ public class home extends AppCompatActivity {
     private DatabaseReference ref;
     private FirebaseUser user;
 
+    ImageView mapview1;
+    ImageView mapview2;
+    ImageView mapview3;
+    ImageView mapview4;
+    ImageView mapview5;
+    ImageView mapview6;
+    ImageView mapview7;
+    ImageView mapview8;
+    ImageView mapview9;
+    ImageView mapview10;
+    ImageView mapview11;
+    ImageView mapview12;
 
     ListviewAdapter adapter; //listview adapter
     SearchitemAdapter sadapter; //search adapter
@@ -83,26 +96,13 @@ public class home extends AppCompatActivity {
     Response response;
     Request request;
     public static String guNum;
-
+    int guNumber_1, guNumber_2, guNumber_3, guNumber_4, guNumber_5, guNumber_6, guNumber_7,
+            guNumber_8, guNumber_9, guNumber_10, guNumber_11;
+    ImageView tempmapview1;
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
     }
-/*
-    public void button2clicked(View v){ //용산구
-        guListGetData getData = new guListGetData();
-        String result = null;
-        try{
-            result = getData.execute("2").get();
-            jsonobject = new JSONObject(result);
-            jsonarray = jsonobject.getJSONArray("location");
-            listInit(jsonarray);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,18 +126,20 @@ public class home extends AppCompatActivity {
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
 
-        ImageView mapview1 = (ImageView)findViewById(R.id.mapone);
-        ImageView mapview2= (ImageView)findViewById(R.id.maptwo);
-        ImageView mapview3= (ImageView)findViewById(R.id.mapthree);
-        ImageView mapview4= (ImageView)findViewById(R.id.mapfour);
-        ImageView mapview5= (ImageView)findViewById(R.id.mapfive);
-        ImageView mapview6= (ImageView)findViewById(R.id.mapsix);
-        ImageView mapview7= (ImageView)findViewById(R.id.mapseven);
-        ImageView mapview8= (ImageView)findViewById(R.id.mapeight);
-        ImageView mapview9= (ImageView)findViewById(R.id.mapnine);
-        ImageView mapview10= (ImageView)findViewById(R.id.mapten);
-        ImageView mapview11= (ImageView)findViewById(R.id.mapeleven);
-        ImageView mapview12= (ImageView)findViewById(R.id.mapriver);
+         mapview1 = (ImageView)findViewById(R.id.mapone);
+         mapview2= (ImageView)findViewById(R.id.maptwo);
+         mapview3= (ImageView)findViewById(R.id.mapthree);
+         mapview4= (ImageView)findViewById(R.id.mapfour);
+         mapview5= (ImageView)findViewById(R.id.mapfive);
+         mapview6= (ImageView)findViewById(R.id.mapsix);
+         mapview7= (ImageView)findViewById(R.id.mapseven);
+         mapview8= (ImageView)findViewById(R.id.mapeight);
+         mapview9= (ImageView)findViewById(R.id.mapnine);
+         mapview10= (ImageView)findViewById(R.id.mapten);
+         mapview11= (ImageView)findViewById(R.id.mapeleven);
+         mapview12= (ImageView)findViewById(R.id.mapriver);
+
+
         Glide.with(this).load(R.drawable.map_one_clear).into(mapview1);
         Glide.with(this).load(R.drawable.map_two_clear).into(mapview2);
         Glide.with(this).load(R.drawable.map_three_clear).into(mapview3);
@@ -285,48 +287,47 @@ public class home extends AppCompatActivity {
 
         //체크인 기록 불러오기
         ref.addChildEventListener(new ChildEventListener() {
-
-            int guNumber_1, guNumber_2, guNumber_3, guNumber_4, guNumber_5, guNumber_6, guNumber_7,
-                    guNumber_8, guNumber_9, guNumber_10, guNumber_11;
-
             @Override
             public void onChildAdded(DataSnapshot data, String s) {
-                switch (Integer.parseInt(""+data.child("guNumber").getValue())){
-                    case 1 :
-                        guNumber_1++;
-                        break;
-                    case 2 :
-                        guNumber_2++;
-                        break;
-                    case 3 :
-                        guNumber_3++;
-                        break;
-                    case 4 :
-                        guNumber_4++;
-                        break;
-                    case 5 :
-                        guNumber_5++;
-                        break;
-                    case 6 :
-                        guNumber_6++;
-                        break;
-                    case 7 :
-                        guNumber_7++;
-                        break;
-                    case 8 :
-                        guNumber_8++;
-                        break;
-                    case 9 :
-                        guNumber_9++;
-                        break;
-                    case 10 :
-                        guNumber_10++;
-                        break;
-                    case 11 :
-                        guNumber_11++;
-                        break;
+                if(data.child("guNumber").getValue()!=null)
+                {
+                    switch (Integer.parseInt(""+data.child("guNumber").getValue())){
+                        case 1 :
+                            guNumber_1++;
+                            break;
+                        case 2 :
+                            guNumber_2++;
+                            break;
+                        case 3 :
+                            guNumber_3++;
+                            break;
+                        case 4 :
+                            guNumber_4++;
+                            break;
+                        case 5 :
+                            guNumber_5++;
+                            break;
+                        case 6 :
+                            guNumber_6++;
+                            break;
+                        case 7 :
+                            guNumber_7++;
+                            break;
+                        case 8 :
+                            guNumber_8++;
+                            break;
+                        case 9 :
+                            guNumber_9++;
+                            break;
+                        case 10 :
+                            guNumber_10++;
+                            break;
+                        case 11 :
+                            guNumber_11++;
+                            break;
 
-                    default: break;
+                        default: break;
+                    }
                 }
                 Log.d("영등포구 체크인 수: ", ""+guNumber_10);
             }
@@ -344,6 +345,327 @@ public class home extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {}
         });
 
+
+        gustage();
+    }
+//1.은평 1   ,  2.마포 4   3.종로 21   4.성북 1  5.강북 1    6. 중랑0    7.송파 2   8. 서초3   9.관악 0  10.영등포  5,  11.강서 0
+    public void gustage(){
+       guone();
+        gutwo();
+        guthree();
+        gufour();
+        gufive();
+        gusix();
+        guseven();
+        gueight();
+        gunine();
+        guten();
+        gueleven();
+    }
+
+    public void gueleven(){
+        int per = 100;
+        int i;
+        int tempper ;
+        for(i=5;i<=1;i--){
+            tempper = per/i;
+            if(guNumber_11/1*100<=tempper){
+                break;
+            }
+        }
+        switch (per/i){
+            case 20 :
+                break;
+
+            case 40 :
+                break;
+
+            case 60 :
+                break;
+
+            case 80 :
+                break;
+
+            case 100 :
+                break;
+        }
+    }
+    public void guten(){
+        int per = 100;
+        int i;
+        int tempper ;
+        for(i=5;i<=1;i--){
+            tempper = per/i;
+            if(guNumber_10/5*100<=tempper){
+                break;
+            }
+        }
+        switch (per/i){
+            case 20 :
+                break;
+
+            case 40 :
+                break;
+
+            case 60 :
+                break;
+
+            case 80 :
+                break;
+
+            case 100 :
+                break;
+        }
+    }
+
+    public void gunine(){
+        int per = 100;
+        int i;
+        int tempper ;
+        for(i=5;i<=1;i--){
+            tempper = per/i;
+            if(guNumber_9/1*100<=tempper){
+                break;
+            }
+        }
+        switch (per/i){
+            case 20 :
+                break;
+
+            case 40 :
+                break;
+
+            case 60 :
+                break;
+
+            case 80 :
+                break;
+
+            case 100 :
+                break;
+        }
+    }
+
+    public void gueight(){
+        int per = 100;
+        int i;
+        int tempper ;
+        for(i=5;i<=1;i--){
+            tempper = per/i;
+            if(guNumber_8/3*100<=tempper){
+                break;
+            }
+        }
+        switch (per/i){
+            case 20 :
+                break;
+
+            case 40 :
+                break;
+
+            case 60 :
+                break;
+
+            case 80 :
+                break;
+
+            case 100 :
+                break;
+        }
+    }
+    public void guseven(){
+        int per = 100;
+        int i;
+        int tempper ;
+        for(i=5;i<=1;i--){
+            tempper = per/i;
+            if(guNumber_7/2*100<=tempper){
+                break;
+            }
+        }
+        switch (per/i){
+            case 20 :
+                break;
+
+            case 40 :
+                break;
+
+            case 60 :
+                break;
+
+            case 80 :
+                break;
+
+            case 100 :
+                break;
+        }
+    }
+    public void gusix(){
+        int per = 100;
+        int i;
+        int tempper ;
+        for(i=5;i<=1;i--){
+            tempper = per/i;
+            if(guNumber_6/1*100<=tempper){
+                break;
+            }
+        }
+        switch (per/i){
+            case 20 :
+                break;
+
+            case 40 :
+                break;
+
+            case 60 :
+                break;
+
+            case 80 :
+                break;
+
+            case 100 :
+                break;
+        }
+    }
+
+    public void gufive(){
+        int per = 100;
+        int i;
+        int tempper ;
+        for(i=5;i<=1;i--){
+            tempper = per/i;
+            if(guNumber_5/1*100<=tempper){
+                break;
+            }
+        }
+        switch (per/i){
+            case 20 :
+                break;
+
+            case 40 :
+                break;
+
+            case 60 :
+                break;
+
+            case 80 :
+                break;
+
+            case 100 :
+                break;
+        }
+    }
+
+    public void gufour(){
+        int per = 100;
+        int i;
+        int tempper ;
+        for(i=5;i<=1;i--){
+            tempper = per/i;
+            if(guNumber_4/1*100<=tempper){
+                break;
+            }
+        }
+        switch (per/i){
+            case 20 :
+                break;
+
+            case 40 :
+                break;
+
+            case 60 :
+                break;
+
+            case 80 :
+                break;
+
+            case 100 :
+                break;
+        }
+    }
+
+    public void guone(){
+        int per = 100;
+        int i;
+        int tempper ;
+        for(i=5;i<=1;i--){
+            tempper = per/i;
+            if(guNumber_1/1*100<=tempper){
+                break;
+            }
+        }
+        switch (per/i){
+            case 20 :
+                break;
+
+            case 40 :
+                break;
+
+            case 60 :
+                break;
+
+            case 80 :
+                break;
+
+            case 100 :
+                break;
+        }
+    }
+
+    public void gutwo(){
+        int per = 100;
+        int i;
+        int tempper ;
+        for(i=5;i<=1;i--){
+            tempper = per/i;
+            if(guNumber_2/4*100<=tempper){
+                break;
+            }
+        }
+        switch (per/i){
+            case 20 :
+                break;
+
+            case 40 :
+                break;
+
+            case 60 :
+                break;
+
+            case 80 :
+                break;
+
+            case 100 :
+                break;
+        }
+    }
+
+    public void guthree(){
+        int per = 100;
+        int i;
+        int tempper ;
+        for(i=5;i<=1;i--){
+            tempper = per/i;
+            if(guNumber_3/21*100<=tempper){
+                break;
+            }
+        }
+        switch (per/i){
+            case 20 :
+                break;
+
+            case 40 :
+                break;
+
+            case 60 :
+                break;
+
+            case 80 :
+                break;
+
+            case 100 :
+                break;
+        }
     }
 
 
