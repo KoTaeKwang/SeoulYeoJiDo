@@ -91,10 +91,10 @@ public class ListviewAdapter extends BaseAdapter {
         TextView name4 = (TextView)convertView.findViewById(R.id.lay_textview4); // 장소
         name4.setText(listviewitem.getFourthname());
 
-        final CheckBox hearticon = (CheckBox) convertView.findViewById(R.id.default_flag);
 
-        if(!checked[position])
-            hearticon.setChecked(false);
+
+
+
 
 //        hearticon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //
