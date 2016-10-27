@@ -35,6 +35,8 @@ public class ListviewAdapter extends BaseAdapter {
     private View tempview;
     public static int counts=0;
     public Context context;
+    boolean checked[] = new boolean[80];
+
     HashMap<String, Boolean> hm = new HashMap<String, Boolean>();
 
     public ListviewAdapter(Context context, int layout, ArrayList<Listviewitem> data){
@@ -98,21 +100,24 @@ public class ListviewAdapter extends BaseAdapter {
         hearticon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
+                Log.d("list","posi ->"+position);
                 String result = ""; // 문자열 초기화는 빈문자열로 하자
 
-//        if(isChecked) tv.setText("체크했음");
-//        else tv.setText("체크안했슴");
-
-                if(hearticon.isChecked()) {
-                    //result += checkflag.getText().toString() + ", ";
+                if(checked[position]){
+                    checked[position]=false;
+                    hearticon.setChecked(false);
+                }else{
+                    checked[position]=true;
+                    hearticon.setChecked(true);
+                }
+              /*  if(hearticon.isChecked()) {
                     hearticon.setChecked(true);
                    Log.d("checkcheck", "ok@");
                 }
                 if(!hearticon.isChecked()) {
                     Log.d("checkcheck", "no@");
-                    //Toast.makeText(getApplicationContext(), "no Checkin!", Toast.LENGTH_LONG).show();
-                }
+                }*/
+               // notifyDataSetChanged();
             }
         });
 
