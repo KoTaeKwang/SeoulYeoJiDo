@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
@@ -20,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -98,6 +100,12 @@ public class home extends AppCompatActivity {
         client = new OkHttpClient();
         map=(RelativeLayout)findViewById(R.id.map);
         searchlistview=(LinearLayout)findViewById(R.id.searchlistview);
+
+
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setCustomView(R.layout.hometitle);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
 
         ImageView mapview1 = (ImageView)findViewById(R.id.mapone);
         ImageView mapview2= (ImageView)findViewById(R.id.maptwo);
@@ -568,6 +576,7 @@ public class home extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.action_view,menu);
         MenuItem mSearch = menu.findItem(R.id.search);
+
         mSearch.setIcon(resizeImage(R.drawable.search,150,150));
         SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
         MenuItemCompat.setOnActionExpandListener(mSearch, new MenuItemCompat.OnActionExpandListener() {
@@ -623,9 +632,10 @@ public class home extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                if(newText!=null){
                 sadapter.filter(newText);
                 Log.d("text",""+newText);
-                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);}
                 return false;
             }
 

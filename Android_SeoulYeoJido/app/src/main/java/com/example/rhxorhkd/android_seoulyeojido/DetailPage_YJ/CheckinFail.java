@@ -1,10 +1,8 @@
 package com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 
 import com.example.rhxorhkd.android_seoulyeojido.R;
@@ -16,7 +14,7 @@ import java.util.TimerTask;
  * Created by hanyoojin on 2016. 10. 27..
  */
 
-public class CheckinOK extends Activity {
+public class CheckinFail extends Activity {
 
     private TimerTask mTask;
     private Timer mTimer;
@@ -25,7 +23,7 @@ public class CheckinOK extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE); //타이틀바 삭제
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.checkinok);
+        setContentView(R.layout.checkinfail);
 
         mTask = new TimerTask() {
             @Override
@@ -40,7 +38,7 @@ public class CheckinOK extends Activity {
         mTimer = new Timer();
 
         mTimer.schedule(mTask, 2000);
-       // mTimer.schedule(mTask, 3000, 5000);
+        // mTimer.schedule(mTask, 3000, 5000);
 
 
         //findViewById(R.id.btn_checkincancel).setOnClickListener(this);
@@ -49,7 +47,7 @@ public class CheckinOK extends Activity {
 
     }
 
-        @Override
+    @Override
     protected void onDestroy() {
         Log.i("test", "onDstory()");
         mTimer.cancel();
