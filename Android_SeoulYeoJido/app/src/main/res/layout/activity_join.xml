@@ -41,7 +41,7 @@
         android:layout_height="40dp"
         android:inputType="textEmailAddress"
         android:id="@+id/join_email"
-        android:layout_above="@+id/nickname"
+        android:layout_above="@+id/join_nickname"
         />
 
     <EditText
@@ -55,7 +55,7 @@
         android:layout_width="256dp"
         android:layout_height="40dp"
         android:layout_above="@+id/pw1"
-        android:id="@+id/nickname" />
+        android:id="@+id/join_nickname" />
 
     <EditText
         android:padding="8dp"

@@ -394,7 +394,7 @@ public class DetailActivity extends AppCompatActivity {
      */
 //    private void initLayout(){
 //
-//        lecyclerView = (RecyclerView)findViewById(R.id.recyclerView); 
+//        lecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
 //    }
 
     /**
