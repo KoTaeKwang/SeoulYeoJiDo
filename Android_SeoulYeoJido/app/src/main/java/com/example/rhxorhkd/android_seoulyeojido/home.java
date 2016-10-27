@@ -21,7 +21,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -43,10 +42,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -142,7 +138,7 @@ public class home extends AppCompatActivity {
         final ImageView imageView2 = (ImageView)findViewById(R.id.imageView2);
         final ImageView imageView = (ImageView)findViewById(R.id.imageView);
 
-        Glide.with(this).load(R.drawable.oldbuild).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView6){
+        Glide.with(this).load(R.drawable.history).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView6){
             @Override
             protected void setResource(Bitmap resource) {
                 super.setResource(resource);
@@ -153,7 +149,7 @@ public class home extends AppCompatActivity {
             }
         });
 
-        Glide.with(this).load(R.drawable.oldbuild).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView5){
+        Glide.with(this).load(R.drawable.landmark).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView5){
             @Override
             protected void setResource(Bitmap resource) {
                 super.setResource(resource);
@@ -164,7 +160,7 @@ public class home extends AppCompatActivity {
             }
         });
 
-        Glide.with(this).load(R.drawable.market).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView4){
+        Glide.with(this).load(R.drawable.markets).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView4){
             @Override
             protected void setResource(Bitmap resource) {
                 super.setResource(resource);
@@ -175,7 +171,7 @@ public class home extends AppCompatActivity {
             }
         });
 
-        Glide.with(this).load(R.drawable.park).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView3){
+        Glide.with(this).load(R.drawable.parks).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView3){
             @Override
             protected void setResource(Bitmap resource) {
                 super.setResource(resource);
@@ -186,7 +182,7 @@ public class home extends AppCompatActivity {
             }
         });
 
-        Glide.with(this).load(R.drawable.culture).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView2){
+        Glide.with(this).load(R.drawable.cultures).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView2){
             @Override
             protected void setResource(Bitmap resource) {
                 super.setResource(resource);
@@ -197,7 +193,7 @@ public class home extends AppCompatActivity {
             }
         });
 
-        Glide.with(this).load(R.drawable.culture).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView){
+        Glide.with(this).load(R.drawable.shoping).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView){
             @Override
             protected void setResource(Bitmap resource) {
                 super.setResource(resource);
@@ -207,20 +203,6 @@ public class home extends AppCompatActivity {
                 imageView.setImageDrawable(circularBitmapDrawable);
             }
         });
-
-        Glide.with(this).load(R.drawable.culture).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView6){
-            @Override
-            protected void setResource(Bitmap resource) {
-                super.setResource(resource);
-                RoundedBitmapDrawable circularBitmapDrawable =
-                        RoundedBitmapDrawableFactory.create(getResources(), resource);
-                circularBitmapDrawable.setCircular(true);
-                imageView6.setImageDrawable(circularBitmapDrawable);
-            }
-        });
-
-
-
 
         //searchInit(); //서치리스트 초기화
         Typekit.getInstance()
