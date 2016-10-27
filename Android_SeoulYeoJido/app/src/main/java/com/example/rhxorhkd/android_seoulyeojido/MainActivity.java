@@ -29,7 +29,7 @@ public class MainActivity extends ActivityGroup {
         tabHost.addTab(spec);
 
         Drawable c = ContextCompat.getDrawable(this,R.drawable.checkin);
-        intent = new Intent(this,checkin.class);
+        intent = new Intent(this,CheckinmapActivity.class);
         spec = tabHost.newTabSpec("Tab2").setContent(intent).setIndicator("",c);
         tabHost.addTab(spec);
 

@@ -102,7 +102,9 @@ public class home extends AppCompatActivity {
         searchlistview=(LinearLayout)findViewById(R.id.searchlistview);
 
 
+        // 액션바 디자인
         final ActionBar actionBar = getSupportActionBar();
+        actionBar.setElevation(0); // 그림자 없애기
         actionBar.setCustomView(R.layout.hometitle);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
