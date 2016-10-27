@@ -139,18 +139,17 @@ public class home extends AppCompatActivity {
          mapview11= (ImageView)findViewById(R.id.mapeleven);
          mapview12= (ImageView)findViewById(R.id.mapriver);
 
-
-        Glide.with(this).load(R.drawable.map_one_clear).into(mapview1);
-        Glide.with(this).load(R.drawable.map_two_clear).into(mapview2);
-        Glide.with(this).load(R.drawable.map_three_clear).into(mapview3);
-        Glide.with(this).load(R.drawable.map_four_clear).into(mapview4);
-        Glide.with(this).load(R.drawable.map_five_clear).into(mapview5);
-        Glide.with(this).load(R.drawable.map_six_clear).into(mapview6);
-        Glide.with(this).load(R.drawable.map_seven_clear).into(mapview7);
-        Glide.with(this).load(R.drawable.map_eight_clear).into(mapview8);
-        Glide.with(this).load(R.drawable.map_nine_clear).into(mapview9);
-        Glide.with(this).load(R.drawable.map_ten_clear).into(mapview10);
-        Glide.with(this).load(R.drawable.map_eleven_clear).into(mapview11);
+        Glide.with(this).load(R.drawable.map_one_1).into(mapview1);
+        Glide.with(this).load(R.drawable.map_two_1).into(mapview2);
+        Glide.with(this).load(R.drawable.map_three_1).into(mapview3);
+        Glide.with(this).load(R.drawable.map_four_1).into(mapview4);
+        Glide.with(this).load(R.drawable.map_five_1).into(mapview5);
+        Glide.with(this).load(R.drawable.map_six_1).into(mapview6);
+        Glide.with(this).load(R.drawable.map_seven_1).into(mapview7);
+        Glide.with(this).load(R.drawable.map_eight_1).into(mapview8);
+        Glide.with(this).load(R.drawable.map_nine_1).into(mapview9);
+        Glide.with(this).load(R.drawable.map_ten_1).into(mapview10);
+        Glide.with(this).load(R.drawable.map_eleven_1).into(mapview11);
         Glide.with(this).load(R.drawable.map).into(mapview12);
 
     //6 유적지 5 랜드마크  4 전통시장 3  공원 2 문화 1 쇼핑
@@ -278,6 +277,7 @@ public class home extends AppCompatActivity {
         mapview10.setOnClickListener(new guListner("10"));
         mapview11.setOnClickListener(new guListner("11"));
 
+
         imageView6.setOnClickListener(new MyListner("6"));
         imageView5.setOnClickListener(new MyListner("5"));
         imageView4.setOnClickListener(new MyListner("4"));
@@ -329,6 +329,7 @@ public class home extends AppCompatActivity {
                         default: break;
                     }
                 }
+              gustage();
                 Log.d("영등포구 체크인 수: ", ""+guNumber_10);
             }
 
@@ -344,12 +345,11 @@ public class home extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
-
-
-        gustage();
+        //
     }
 //1.은평 1   ,  2.마포 4   3.종로 21   4.성북 1  5.강북 1    6. 중랑0    7.송파 2   8. 서초3   9.관악 0  10.영등포  5,  11.강서 0
     public void gustage(){
+        Log.d("list","gggggg");
        guone();
         gutwo();
         guthree();
@@ -364,278 +364,331 @@ public class home extends AppCompatActivity {
     }
 
     public void gueleven(){
-        int per = 100;
+
         int i;
-        int tempper ;
-        for(i=5;i<=1;i--){
-            tempper = per/i;
-            if(guNumber_11/1*100<=tempper){
+        int tempper=0 ;
+        for(i=1;i<=5;i++){
+            tempper =20*i;
+            if(guNumber_11*100/1<=tempper){
                 break;
             }
         }
-        switch (per/i){
+        switch (tempper){
             case 20 :
+                Glide.with(this).load(R.drawable.map_eleven_1).into(mapview11);
                 break;
 
             case 40 :
+                Glide.with(this).load(R.drawable.map_eleven_2).into(mapview11);
                 break;
 
             case 60 :
+                Glide.with(this).load(R.drawable.map_eleven_3).into(mapview11);
                 break;
 
             case 80 :
+                Glide.with(this).load(R.drawable.map_eleven_4).into(mapview11);
                 break;
 
             case 100 :
+                Glide.with(this).load(R.drawable.map_eleven_5).into(mapview11);
                 break;
         }
     }
     public void guten(){
-        int per = 100;
         int i;
-        int tempper ;
-        for(i=5;i<=1;i--){
-            tempper = per/i;
-            if(guNumber_10/5*100<=tempper){
+        int tempper=0 ;
+
+        for(i=1;i<=5;i++){
+            tempper = 20*i;
+            Log.d("list","tempper -->"+tempper);
+            if((guNumber_10*100/5)<=tempper){
                 break;
             }
         }
-        switch (per/i){
+        Log.d("list","tempper"+tempper);
+
+        switch (tempper){
             case 20 :
+                Glide.with(this).load(R.drawable.map_ten_1).into(mapview10);
                 break;
 
             case 40 :
+                Glide.with(this).load(R.drawable.map_ten_2).into(mapview10);
                 break;
 
             case 60 :
+                Glide.with(this).load(R.drawable.map_ten_3).into(mapview10);
                 break;
 
             case 80 :
+                Glide.with(this).load(R.drawable.map_ten_4).into(mapview10);
                 break;
 
             case 100 :
+                Glide.with(this).load(R.drawable.map_ten_5).into(mapview10);
                 break;
         }
     }
 
     public void gunine(){
-        int per = 100;
+
         int i;
-        int tempper ;
-        for(i=5;i<=1;i--){
-            tempper = per/i;
-            if(guNumber_9/1*100<=tempper){
+        int tempper=0 ;
+        for(i=1;i<=5;i++){
+            tempper = 20*i;
+            if(guNumber_9*100/1<=tempper){
                 break;
             }
         }
-        switch (per/i){
+        switch (tempper){
             case 20 :
+                Glide.with(this).load(R.drawable.map_nine_1).into(mapview9);
                 break;
 
             case 40 :
+                Glide.with(this).load(R.drawable.map_nine_2).into(mapview9);
                 break;
 
             case 60 :
+                Glide.with(this).load(R.drawable.map_nine_3).into(mapview9);
                 break;
 
             case 80 :
+                Glide.with(this).load(R.drawable.map_nine_4).into(mapview9);
                 break;
 
             case 100 :
+                Glide.with(this).load(R.drawable.map_nine_5).into(mapview9);
                 break;
         }
     }
 
     public void gueight(){
-        int per = 100;
+
         int i;
-        int tempper ;
-        for(i=5;i<=1;i--){
-            tempper = per/i;
-            if(guNumber_8/3*100<=tempper){
+        int tempper=0 ;
+        for(i=1;i<=5;i++){
+            tempper =20*i;
+            if(guNumber_8*100/3<=tempper){
                 break;
             }
         }
-        switch (per/i){
+        switch (tempper){
             case 20 :
+                Glide.with(this).load(R.drawable.map_eight_1).into(mapview8);
                 break;
 
             case 40 :
+                Glide.with(this).load(R.drawable.map_eight_2).into(mapview8);
                 break;
 
             case 60 :
+                Glide.with(this).load(R.drawable.map_eight_3).into(mapview8);
                 break;
 
             case 80 :
+                Glide.with(this).load(R.drawable.map_eight_4).into(mapview8);
                 break;
 
             case 100 :
+                Glide.with(this).load(R.drawable.map_eight_5).into(mapview8);
                 break;
         }
     }
     public void guseven(){
-        int per = 100;
+
         int i;
-        int tempper ;
-        for(i=5;i<=1;i--){
-            tempper = per/i;
-            if(guNumber_7/2*100<=tempper){
+        int tempper =0;
+        for(i=1;i<=5;i++){
+            tempper = 20*i;
+            if(guNumber_7*100/2<=tempper){
                 break;
             }
         }
-        switch (per/i){
+        switch (tempper){
             case 20 :
+                Glide.with(this).load(R.drawable.map_seven_1).into(mapview7);
                 break;
 
             case 40 :
+                Glide.with(this).load(R.drawable.map_seven_2).into(mapview7);
                 break;
 
             case 60 :
+                Glide.with(this).load(R.drawable.map_seven_3).into(mapview7);
                 break;
 
             case 80 :
+                Glide.with(this).load(R.drawable.map_seven_4).into(mapview7);
                 break;
 
             case 100 :
+                Glide.with(this).load(R.drawable.map_seven_5).into(mapview7);
                 break;
         }
     }
     public void gusix(){
-        int per = 100;
+
         int i;
-        int tempper ;
-        for(i=5;i<=1;i--){
-            tempper = per/i;
-            if(guNumber_6/1*100<=tempper){
+        int tempper =0;
+        for(i=1;i<=5;i++){
+            tempper = 20*i;
+            if(guNumber_6*100/1<=tempper){
                 break;
             }
         }
-        switch (per/i){
+        switch (tempper){
             case 20 :
+                Glide.with(this).load(R.drawable.map_six_1).into(mapview6);
                 break;
 
             case 40 :
+                Glide.with(this).load(R.drawable.map_six_2).into(mapview6);
                 break;
 
             case 60 :
+                Glide.with(this).load(R.drawable.map_six_3).into(mapview6);
                 break;
 
             case 80 :
+                Glide.with(this).load(R.drawable.map_six_4).into(mapview6);
                 break;
 
             case 100 :
+                Glide.with(this).load(R.drawable.map_six_5).into(mapview6);
                 break;
         }
     }
 
     public void gufive(){
-        int per = 100;
+
         int i;
-        int tempper ;
-        for(i=5;i<=1;i--){
-            tempper = per/i;
-            if(guNumber_5/1*100<=tempper){
+        int tempper=0 ;
+        for(i=1;i<=5;i++){
+            tempper =20*i;
+            if(guNumber_5*100/1<=tempper){
                 break;
             }
         }
-        switch (per/i){
+        switch (tempper){
             case 20 :
+                Glide.with(this).load(R.drawable.map_five_1).into(mapview5);
                 break;
 
             case 40 :
+                Glide.with(this).load(R.drawable.map_five_2).into(mapview5);
                 break;
 
             case 60 :
+                Glide.with(this).load(R.drawable.map_five_3).into(mapview5);
                 break;
 
             case 80 :
+                Glide.with(this).load(R.drawable.map_five_4).into(mapview5);
                 break;
 
             case 100 :
+                Glide.with(this).load(R.drawable.map_five_5).into(mapview5);
                 break;
         }
     }
 
     public void gufour(){
-        int per = 100;
+
         int i;
-        int tempper ;
-        for(i=5;i<=1;i--){
-            tempper = per/i;
-            if(guNumber_4/1*100<=tempper){
+        int tempper =0;
+        for(i=1;i<=5;i++){
+            tempper = 20*i;
+            if(guNumber_4*100/1<=tempper){
                 break;
             }
         }
-        switch (per/i){
+        switch (tempper){
             case 20 :
+                Glide.with(this).load(R.drawable.map_four_1).into(mapview4);
                 break;
 
             case 40 :
+                Glide.with(this).load(R.drawable.map_four_2).into(mapview4);
                 break;
 
             case 60 :
+                Glide.with(this).load(R.drawable.map_four_3).into(mapview4);
                 break;
 
             case 80 :
+                Glide.with(this).load(R.drawable.map_four_4).into(mapview4);
                 break;
 
             case 100 :
+                Glide.with(this).load(R.drawable.map_four_5).into(mapview4);
                 break;
         }
     }
 
     public void guone(){
-        int per = 100;
+
         int i;
-        int tempper ;
-        for(i=5;i<=1;i--){
-            tempper = per/i;
-            if(guNumber_1/1*100<=tempper){
+        int tempper=0 ;
+        for(i=1;i<=5;i++){
+            tempper = 20*i;
+            if(guNumber_1*100/1<=tempper){
                 break;
             }
         }
-        switch (per/i){
+        switch (tempper){
             case 20 :
+                Glide.with(this).load(R.drawable.map_one_1).into(mapview1);
                 break;
 
             case 40 :
+                Glide.with(this).load(R.drawable.map_one_2).into(mapview1);
                 break;
 
             case 60 :
+                Glide.with(this).load(R.drawable.map_one_3).into(mapview1);
                 break;
 
             case 80 :
+                Glide.with(this).load(R.drawable.map_one_4).into(mapview1);
                 break;
 
             case 100 :
+                Glide.with(this).load(R.drawable.map_one_5).into(mapview1);
                 break;
         }
     }
 
     public void gutwo(){
-        int per = 100;
+
         int i;
-        int tempper ;
-        for(i=5;i<=1;i--){
-            tempper = per/i;
-            if(guNumber_2/4*100<=tempper){
+        int tempper=0 ;
+        for(i=1;i<=5;i++){
+            tempper = 20*i;
+            if(guNumber_2*100/4<=tempper){
                 break;
             }
         }
-        switch (per/i){
+        switch (tempper){
             case 20 :
+                Glide.with(this).load(R.drawable.map_two_1).into(mapview2);
                 break;
 
             case 40 :
+                Glide.with(this).load(R.drawable.map_two_2).into(mapview2);
                 break;
 
             case 60 :
+                Glide.with(this).load(R.drawable.map_two_3).into(mapview2);
                 break;
 
             case 80 :
+                Glide.with(this).load(R.drawable.map_two_4).into(mapview2);
                 break;
 
             case 100 :
+                Glide.with(this).load(R.drawable.map_two_5).into(mapview2);
                 break;
         }
     }
@@ -643,27 +696,32 @@ public class home extends AppCompatActivity {
     public void guthree(){
         int per = 100;
         int i;
-        int tempper ;
-        for(i=5;i<=1;i--){
-            tempper = per/i;
-            if(guNumber_3/21*100<=tempper){
+        int tempper=0 ;
+        for(i=1;i<=5;i++){
+            tempper = 20*i;
+            if(guNumber_3*100/21<=tempper){
                 break;
             }
         }
-        switch (per/i){
+        switch (tempper){
             case 20 :
+                Glide.with(this).load(R.drawable.map_three_1).into(mapview3);
                 break;
 
             case 40 :
+                Glide.with(this).load(R.drawable.map_three_2).into(mapview3);
                 break;
 
             case 60 :
+                Glide.with(this).load(R.drawable.map_three_3).into(mapview3);
                 break;
 
             case 80 :
+                Glide.with(this).load(R.drawable.map_three_4).into(mapview3);
                 break;
 
             case 100 :
+                Glide.with(this).load(R.drawable.map_three_5).into(mapview3);
                 break;
         }
     }
