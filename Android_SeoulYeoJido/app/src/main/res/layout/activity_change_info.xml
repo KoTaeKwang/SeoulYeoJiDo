@@ -11,8 +11,8 @@
     <ImageView
         android:id="@+id/chage_back"
         android:src="@drawable/back"
-        android:layout_width="40dp"
-        android:layout_height="20dp" />
+        android:layout_width="18dp"
+        android:layout_height="18dp" />
     <TextView
         android:textColor="#000000"
         android:textAlignment="center"
