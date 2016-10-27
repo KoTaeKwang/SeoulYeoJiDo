@@ -40,6 +40,7 @@
                         android:layout_height="60dp"
                         />
                     <TextView
+                        android:layout_marginTop="32dp"
                         android:layout_below="@id/my_profile_img"
                         android:id="@+id/down_name"
                         android:layout_marginBottom="12dp"

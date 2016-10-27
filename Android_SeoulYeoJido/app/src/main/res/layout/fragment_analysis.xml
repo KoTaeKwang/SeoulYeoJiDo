@@ -26,41 +26,63 @@
                 android:layout_height="match_parent">
 
                 <ImageView
+                    android:background="#121212"
                     android:scaleType="fitXY"
-                    android:background="@drawable/one"
                     android:layout_alignParentLeft="true"
                     android:id="@+id/location_1"
                     android:layout_marginRight="16dp"
                     android:layout_width="140dp"
                     android:layout_height="117dp" />
 
-                <TextView
-                    android:textAlignment="center"
-                    android:id="@+id/location_1_name"
-                    android:layout_alignParentLeft="true"
+                
+                <RelativeLayout
                     android:layout_below="@+id/location_1"
                     android:layout_marginTop="13dp"
-                    android:textSize="11sp"
                     android:layout_width="140dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    >
+                    <RelativeLayout
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        >
+
+                        <TextView
+                            android:layout_marginRight="16dp"
+                            android:text="hihihi"
+                            android:textAlignment="center"
+                            android:id="@+id/location_1_name"
+                            android:textSize="11sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:textColor="#2b317f"
+                            android:text="36"
+                            android:layout_toRightOf="@+id/location_1_name"
+                            android:textAlignment="center"
+                            android:id="@+id/location_2_name"
+                            android:textSize="11sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+
+
 
                 <ImageView
+                    android:background="#121212"
                     android:scaleType="fitXY"
-                    android:background="@drawable/two"
-                    android:layout_alignParentRight="true"
                     android:id="@+id/location_2"
                     android:layout_width="140dp"
-                    android:layout_height="117dp" />
-
-                <TextView
-                    android:textAlignment="center"
-                    android:id="@+id/location_2_name"
+                    android:layout_height="117dp"
+                    android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@+id/location_2"
-                    android:layout_marginTop="13dp"
-                    android:textSize="11sp"
-                    android:layout_width="140dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_alignParentEnd="true" />
 
             </RelativeLayout>
             <RelativeLayout
@@ -70,7 +92,6 @@
 
                 <ImageView
                     android:scaleType="fitXY"
-                    android:background="@drawable/three"
                     android:layout_alignParentLeft="true"
                     android:id="@+id/location_3"
                     android:layout_marginRight="16dp"
@@ -89,7 +110,6 @@
 
                 <ImageView
                     android:scaleType="fitXY"
-                    android:background="@drawable/four"
                     android:layout_alignParentRight="true"
                     android:id="@+id/location_4"
                     android:layout_width="140dp"
@@ -113,7 +133,6 @@
 
                 <ImageView
                     android:scaleType="fitXY"
-                    android:background="@drawable/five"
                     android:layout_alignParentLeft="true"
                     android:id="@+id/location_5"
                     android:layout_marginRight="16dp"
@@ -132,7 +151,6 @@
 
                 <ImageView
                     android:scaleType="fitXY"
-                    android:background="@drawable/six"
                     android:layout_alignParentRight="true"
                     android:id="@+id/location_6"
                     android:layout_width="140dp"
@@ -156,7 +174,6 @@
 
                 <ImageView
                     android:scaleType="fitXY"
-                    android:background="@drawable/seven"
                     android:layout_alignParentLeft="true"
                     android:id="@+id/location_7"
                     android:layout_marginRight="16dp"
@@ -243,7 +260,6 @@
 
                 <ImageView
                     android:scaleType="fitXY"
-                    android:background="@drawable/eleven"
                     android:layout_alignParentLeft="true"
                     android:id="@+id/location_11"
                     android:layout_marginRight="16dp"
