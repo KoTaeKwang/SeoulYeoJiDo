@@ -49,6 +49,8 @@ public class DetailActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private Double longitude;
     private Double latitude;
+    Intent intentSubActivity;
+    String getreviewarray;
     String number;
     String weburl;
     String description="내용없음";
@@ -64,15 +66,14 @@ public class DetailActivity extends AppCompatActivity {
     JSONArray array;
     JSONArray reviewarray;
     String result =null;
+    String locationTitle;
     private RecyclerView lecyclerView;
-
+    ArrayList<DetailReview> list;
     ListView lv; //리스트
     //DetailListviewAdapter adapter; //listview adapter
-
     ListFragment listFragment;
-
-
-
+    String url;
+    DetailRecyclerAdapter detailRecyclerAdapter;
     public class showDataDetail extends AsyncTask<String, Void, String>{
         @Override
         protected String doInBackground(String... params) {
@@ -98,7 +99,6 @@ public class DetailActivity extends AppCompatActivity {
             return null;
         }
     }
-
 
     public class checkinsuccess extends AsyncTask<String, Void, String>{
         @Override
@@ -128,22 +128,7 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        //requestWindowFeature(Window.FEATURE_NO_TITLE); //타이틀바 삭제
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
-        String url =null;
-        Intent intent = getIntent(); // 보내온 Intent를 얻는다
-        final String locationTitle = intent.getStringExtra("name");
-        gps = new GpsInfo(DetailActivity.this);
-        latitude = gps.getLatitude();
-        longitude = gps.getLongitude();
-
+    public void showdetailinit(){
         showDataDetail showDataDetail = new showDataDetail();
         //{"loca_photo":["http:\/\/contents.visitseoul.net\/file_save\/art_img\/2014\/01\/22\/20140122165615.jpg","http:\/\/contents.visitseoul.net\/file_save\/art_img\/2014\/01\/22\/20140122165635.jpg","http:\/\/contents.visitseoul.net\/file_save\/art_img\/2014\/01\/22\/20140122165650.jpg","http:\/\/contents.visitseoul.net\/file_save\/art_img\/2014\/01\/22\/20140122165707.jpg"],"loca_name":"소공 지하쇼핑센터","loca_address":"서울 중구 소공동 87-1","loca_latitude":"37.5644064","loca_longitude":"126.9796971","loca_tel":"02-775-2234","loca_description":"관광객에게 각광받는 쇼핑명소 서울시청에서 명동으로 이어지는 소공지하상가는 80년대 서울에서 가장 잘나가는 쇼핑 1번지로 꼽혔다. 현재도 인근의 롯데백화점, 프라자호텔과 연결되어 있어 관광객들의 이용도가 높다.소공지하상가의 토산품, 도자기, 민속 공예품 가게에는 아기자기한 저가의 관광상품이 많다. 일본인 관광객이 많아 일본어 가격표를 쉽게 볼 수 있다.통로 역시 넓고 쾌적하다. 롯데백화점 본점, 영플라자, 에비뉴엘 지하와 바로 연결되는 통로가 있어 연계된 쇼핑이 편리하다. ※ 이용 Tip한국은행 본점 옆길로 가서 웨스틴 조선 호텔쪽 입구로 들어가는 방법도 있지만 그 다음 코스를 시청역으로 잡는다면 명동 쪽에서 출발해 지하상가를 계속 따라가 시청으로 가는 방법이 편하다.\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n Address : 서울 중구 소공동 87-1&lt;br&gt; Tel : 02-775-2234&lt;br&gt; HomePage URL : http:\/\/sogongmall.com\/kor\/&lt;br&gt;","loca_checkincount":0,"loca_review":[],"loca_url":"http:\/\/sogongmall.com\/kor\/"}
         try {
@@ -151,24 +136,41 @@ public class DetailActivity extends AppCompatActivity {
             result = showDataDetail.execute(locationTitle).get();
             object = new JSONObject(result);
             number = object.getString("loca_tel");
-            weburl = object.getString("loca_url");
+
             description = object.getString("loca_description");
             address = object.getString("loca_address");
             lat = object.getString("loca_latitude");
             lon = object.getString("loca_longitude");
             checkincount = object.getString("loca_checkincount");
             reviewarray = object.getJSONArray("loca_review");
-             array = object.getJSONArray("loca_photo");
+            array = object.getJSONArray("loca_photo");
             if(array==null)
                 Log.d("list","null"+locationTitle);
             url =array.get(0).toString();
-           //url = array.getJSONObject(0).toString();
+            //url = array.getJSONObject(0).toString();
             Log.d("list","-->"+object);
-
+            weburl = object.getString("loca_url");
         }catch (Exception e){
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        //requestWindowFeature(Window.FEATURE_NO_TITLE); //타이틀바 삭제
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_detail);
+        url =null;
+        Intent intent = getIntent(); // 보내온 Intent를 얻는다
+        locationTitle = intent.getStringExtra("name");
+        gps = new GpsInfo(DetailActivity.this);
+        latitude = gps.getLatitude();
+        longitude = gps.getLongitude();
+
+        showdetailinit();
+        if(url!=null)
         loadBackdrop(url);     //이미지 로드
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -244,7 +246,7 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         if(array!=null){
-            if(array.length()>=3) {
+            if(array.length()>3) {
                 imageView4.setBackgroundColor(new Color().argb(255, 40, 40, 40));
                 imageView4.setAlpha(50);
 
@@ -262,8 +264,8 @@ public class DetailActivity extends AppCompatActivity {
          * 댓글 리사이클뷰
          */
 
-        ArrayList<DetailReview> list = new ArrayList<>();
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        list = new ArrayList<>();
         Log.d("list","reviearray-->"+reviewarray.length());
         for(int i=0; i<reviewarray.length();i++){
             try {
@@ -286,10 +288,10 @@ public class DetailActivity extends AppCompatActivity {
 //            review.setReview("리뷰리뷰 써주세요 " + (i + 1));
             list.add(review);
         }*/
-        mRecyclerView.setAdapter(new DetailRecyclerAdapter(list, R.layout.detail_row));
+        detailRecyclerAdapter = new DetailRecyclerAdapter(list,R.layout.detail_row);
+        mRecyclerView.setAdapter(detailRecyclerAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
 
 
 
@@ -314,12 +316,11 @@ public class DetailActivity extends AppCompatActivity {
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
-            checkinsuccess checkinsuccess = new checkinsuccess();
-
             @Override
             public void onClick(View v) {
                 String result =null;
                 try{
+                    checkinsuccess checkinsuccess = new checkinsuccess();
                     result = checkinsuccess.execute(locationTitle,latitude.toString(),longitude.toString()).get();
                     Log.d("list","result : "+result);
                 }catch (Exception e){
@@ -341,9 +342,12 @@ public class DetailActivity extends AppCompatActivity {
                 case R.id.btn_review:
                     Log.d("OnClickListener", "click session button");
                     // 액티비티 실행
-                    Intent intentSubActivity =
+                     intentSubActivity =
                             new Intent(DetailActivity.this, Dialog.class);
+                   intentSubActivity.putExtra("title",locationTitle);
                     startActivity(intentSubActivity);
+
+
                     break;
 
                 case R.id.btn_more:
@@ -358,7 +362,6 @@ public class DetailActivity extends AppCompatActivity {
             }
         }
     };
-
 
     /**
      * 액션바 뒤로가기
@@ -375,7 +378,6 @@ public class DetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     /**
      * 이미지 로드
      */
@@ -387,7 +389,6 @@ public class DetailActivity extends AppCompatActivity {
     }
 
 }
-
     /**
      *
      */

@@ -409,7 +409,7 @@ public class home extends AppCompatActivity {
         for(int i=0;i<array.length();i++){
             try{
                 JSONObject object = array.getJSONObject(i);
-                Searchitem tempdata = new Searchitem(object.getString("loca_name"),R.drawable.heart2,0);
+                Searchitem tempdata = new Searchitem(object.getString("loca_name"),R.drawable.pointer_small,0);
                 searchdatas.add(tempdata);
             }catch (JSONException e){
                 e.printStackTrace();
@@ -471,7 +471,7 @@ public class home extends AppCompatActivity {
 
         sadapter = new SearchitemAdapter(this,R.layout.searchitem,searchdatas);
         listView1.setAdapter(sadapter);
-
+        listView1.setDivider(null);
         listView1.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

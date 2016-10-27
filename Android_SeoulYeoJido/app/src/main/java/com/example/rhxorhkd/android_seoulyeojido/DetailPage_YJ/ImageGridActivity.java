@@ -82,7 +82,7 @@ public class ImageGridActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(getApplicationContext(), ImageViewPager.class);
 
-                Toast.makeText(getApplicationContext(), (++position)+"번째 이미지 선택", Toast.LENGTH_SHORT).show();
+
 
                 intent.putExtra("id", position);
                 intent.putExtra("title",locationtitle);
