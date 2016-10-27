@@ -21,6 +21,8 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -139,20 +141,7 @@ public class CheckinPopup extends Activity implements View.OnClickListener {
 
                 FirebaseUser user = auth.getCurrentUser();
                 uid = user.getUid();
-                //Intent i = getIntent();
-                //i.getStringExtra("username", user.getUid());
 
-//                i.getStringExtra("title", );
-//                i.getStringExtra("time", );
-//                i.getStringExtra("location", );
-//
-//                intentSubActivity.putExtra("position", marker.getPosition());
-//                intentSubActivity.putExtra("title", marker.getTitle());
-//                intentSubActivity.putExtra("time", time);
-//                //intentSubActivity.putStringArrayListExtra("locaarray",  ArrayList<>  );
-//                //구번호, 위치 , 이미지...
-//                ref.child(user.getUid()+"/checkin").push().setValue();
-                //Toast.makeText(getApplicationContext(), "눌림", Toast.LENGTH_LONG).show();
                 if(result.equals("1")){
                     showDataDetail showDataDetail = new showDataDetail();
                     String getdata;
@@ -167,9 +156,19 @@ public class CheckinPopup extends Activity implements View.OnClickListener {
                         guNumber = object.getString("loca_guNum"); //구넘버
 
                         url =array.get(0).toString(); //사진
-                        // uid  -> id
-                        // dates   -> 날짜
-                        // title  -> 타이틀
+
+
+                        Map<String, Object> chekindb = new HashMap<>();
+
+                        chekindb.put("guNumber", guNumber);
+                        chekindb.put("data", dates);
+                        chekindb.put("img", url);
+                        chekindb.put("lat", lat);
+                        chekindb.put("lon", lon);
+
+                        ref.child(user.getUid()+"/checkin/"+title).setValue(chekindb);
+
+
 
                         Log.d("list"," lat : "+lat+" lon : "+lon+" guNumber : "+guNumber+" url : "+url);
                     }catch (Exception e){

@@ -32,6 +32,14 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ.DetailActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.tsengvn.typekit.Typekit;
 import com.tsengvn.typekit.TypekitContextWrapper;
@@ -51,6 +59,13 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class home extends AppCompatActivity {
+
+    private FirebaseAuth auth;
+    private FirebaseDatabase db;
+    private DatabaseReference ref;
+    private FirebaseUser user;
+
+
     ListviewAdapter adapter; //listview adapter
     SearchitemAdapter sadapter; //search adapter
     RelativeLayout map; //지도
@@ -96,6 +111,12 @@ public class home extends AppCompatActivity {
         client = new OkHttpClient();
         map=(RelativeLayout)findViewById(R.id.map);
         searchlistview=(LinearLayout)findViewById(R.id.searchlistview);
+
+
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseDatabase.getInstance();
+        user = auth.getCurrentUser();
+        ref = db.getReference("member").child(user.getUid()+"/checkin");
 
 
         // 액션바 디자인
@@ -261,6 +282,68 @@ public class home extends AppCompatActivity {
         imageView3.setOnClickListener(new MyListner("3"));
         imageView2.setOnClickListener(new MyListner("2"));
         imageView.setOnClickListener(new MyListner("1"));
+
+        //체크인 기록 불러오기
+        ref.addChildEventListener(new ChildEventListener() {
+
+            int guNumber_1, guNumber_2, guNumber_3, guNumber_4, guNumber_5, guNumber_6, guNumber_7,
+                    guNumber_8, guNumber_9, guNumber_10, guNumber_11;
+
+            @Override
+            public void onChildAdded(DataSnapshot data, String s) {
+                switch (Integer.parseInt(""+data.child("guNumber").getValue())){
+                    case 1 :
+                        guNumber_1++;
+                        break;
+                    case 2 :
+                        guNumber_2++;
+                        break;
+                    case 3 :
+                        guNumber_3++;
+                        break;
+                    case 4 :
+                        guNumber_4++;
+                        break;
+                    case 5 :
+                        guNumber_5++;
+                        break;
+                    case 6 :
+                        guNumber_6++;
+                        break;
+                    case 7 :
+                        guNumber_7++;
+                        break;
+                    case 8 :
+                        guNumber_8++;
+                        break;
+                    case 9 :
+                        guNumber_9++;
+                        break;
+                    case 10 :
+                        guNumber_10++;
+                        break;
+                    case 11 :
+                        guNumber_11++;
+                        break;
+
+                    default: break;
+                }
+                Log.d("영등포구 체크인 수: ", ""+guNumber_10);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
     }
 
 
