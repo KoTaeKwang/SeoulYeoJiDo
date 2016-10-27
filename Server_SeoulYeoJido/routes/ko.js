@@ -92,6 +92,24 @@ router.post('/showCheckin',function(req,res,next){
 	mongodb.showCheckin(user_id,function(success){
 		res.json(success);
 	})
-
+});
+//mongoexcel
+router.get('/mongoexcel',function(req,res,next){
+	mongodb.temp(function(success){
+		res.json(success);
+	})
 })
+
+router.get('/removeLocation',function(req,res,next){
+	mongodb.removeLocation(function(success){
+		res.json(success);
+	})
+})
+
+router.post('/updatepicture',function(req,res,next){
+	var title = req.body.title;
+	mongodb.updatepicture(title,function(success){
+		res.json(success);
+	})
+});
 module.exports = router;
