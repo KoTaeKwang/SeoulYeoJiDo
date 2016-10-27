@@ -20,16 +20,20 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class CheckinPopup extends Activity implements View.OnClickListener {
 
+
     private FirebaseAuth auth;
     private FirebaseDatabase db;
     private DatabaseReference ref;
+
+
+    String result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE); //타이틀바 삭제
         super.onCreate(savedInstanceState);
         setContentView(R.layout.checkinpopup);
-
+        result = getIntent().getStringExtra("result");
         findViewById(R.id.btn_checkincancel).setOnClickListener(this);
         findViewById(R.id.btn_checkin).setOnClickListener(this);
 
@@ -47,6 +51,7 @@ public class CheckinPopup extends Activity implements View.OnClickListener {
                 break;
             case R.id.btn_checkin:
 
+
                 FirebaseUser user = auth.getCurrentUser();
 
                 //Intent i = getIntent();
@@ -62,7 +67,10 @@ public class CheckinPopup extends Activity implements View.OnClickListener {
 //                //intentSubActivity.putStringArrayListExtra("locaarray",  ArrayList<>  );
 //                //구번호, 위치 , 이미지...
 //                ref.child(user.getUid()+"/checkin").push().setValue();
+                //Toast.makeText(getApplicationContext(), "눌림", Toast.LENGTH_LONG).show();
+                if(result.equals("1"))
                 startActivity(new Intent(this, CheckinOK.class));
+                
                 finish();
 
                 break;
