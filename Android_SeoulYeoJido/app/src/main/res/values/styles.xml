@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="SetTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="SetTheme" parent="Theme.AppCompat.Light.NoActionBar">565
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#ffffff</item>
         <item name="colorPrimaryDark">#ffffff</item>

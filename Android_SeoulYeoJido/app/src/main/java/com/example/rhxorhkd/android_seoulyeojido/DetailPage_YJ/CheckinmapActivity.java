@@ -1,12 +1,15 @@
 package com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,7 +51,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener{
+public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
 
     OkHttpClient client;
     JSONObject jsonobject;
@@ -75,8 +78,6 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
     private String time;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,14 +88,13 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
         mapFragment.getMapAsync(this);
 
 
-
         //글꼴 라이브러리
         Typekit.getInstance()
-                .addNormal(Typekit.createFromAsset(this,"NotoSans-Regular.ttf"));
+                .addNormal(Typekit.createFromAsset(this, "NotoSans-Regular.ttf"));
 
         rl = (RelativeLayout) findViewById(R.id.location_detail);
         rl.setVisibility(View.GONE);
-        tv1 = (TextView)findViewById(R.id.location_name);
+        tv1 = (TextView) findViewById(R.id.location_name);
 
         findViewById(R.id.map_back).setOnClickListener(this);
 
@@ -116,7 +116,7 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
 
     }
 
-    public class checkinListGetData extends AsyncTask<String, Void, String>{
+    public class checkinListGetData extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... strings) {
@@ -127,25 +127,25 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
     }
 
 
-    public class searchListGetData extends AsyncTask<String, Void, String>{
+    public class searchListGetData extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
             final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
             JSONObject json = new JSONObject();
             try {
                 json.put("searchtext", params[0]);
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            RequestBody posData = RequestBody.create(JSON,json.toString());
+            RequestBody posData = RequestBody.create(JSON, json.toString());
             request = new Request.Builder()
                     .url("http://211.189.20.136:4389/ko/searchLocaAddress")
                     .post(posData)
                     .build();
-            try{
+            try {
                 response = client.newCall(request).execute();
                 return response.body().string();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             //post gu num
@@ -178,9 +178,19 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
         Bitmap CheckedsmallMarker = Bitmap.createScaledBitmap(b, width, height, false);
 
         LatLng myLocation = new LatLng(latitude, longitude);
-        Log.d("mr", "la: "+latitude);
-        Log.d("mr", "lo: "+longitude);
+        Log.d("mr", "la: " + latitude);
+        Log.d("mr", "lo: " + longitude);
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         mMap.setMyLocationEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 13));
 //        mMap.addMarker(new MarkerOptions()

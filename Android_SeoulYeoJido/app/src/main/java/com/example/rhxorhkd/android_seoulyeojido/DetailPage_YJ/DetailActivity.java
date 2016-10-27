@@ -330,7 +330,7 @@ public class DetailActivity extends AppCompatActivity {
                 intent.putExtra("result",result); //result 가 0 이면 실패 , 1이면 성공
                 startActivity(intent);
                // startActivity(new Intent(getApplicationContext(), CheckinPopup.class));
-                Snackbar.make(v, "Hello World", Snackbar.LENGTH_LONG).show();
+                //Snackbar.make(v, "Hello World", Snackbar.LENGTH_LONG).show();
             }
         });
     }
