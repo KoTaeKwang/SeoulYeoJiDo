@@ -36,7 +36,7 @@ public class CheckinPopup extends Activity implements View.OnClickListener {
                 //Toast.makeText(getApplicationContext(), "눌림", Toast.LENGTH_LONG).show();
                 if(result.equals("1"))
                 startActivity(new Intent(this, CheckinOK.class));
-                
+
                 finish();
                 //Intent i = new Intent(this, CheckinOK.class);
                 //startActivity(i);
