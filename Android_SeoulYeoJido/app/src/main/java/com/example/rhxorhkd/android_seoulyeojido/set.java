@@ -66,9 +66,9 @@ public class set extends AppCompatActivity implements View.OnClickListener{
         ViewPager viewPager = (ViewPager)findViewById(R.id.vp_pager);
 
         Fragment[] fragments = new Fragment[3];
-        fragments[0] = new VisitedFragment();
-        fragments[1] = new BookmarkFragment();
-        fragments[2] = new AnalysisFragment();
+        fragments[0] = new AnalysisFragment();
+        fragments[1] = new VisitedFragment();
+        fragments[2] = new BookmarkFragment();
 
         MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager(), fragments);
 
@@ -191,11 +191,11 @@ public class set extends AppCompatActivity implements View.OnClickListener{
         public CharSequence getPageTitle(int position) {
             switch (position){
                 case 0 :
-                    return  "\n";
+                    return  "28%\n나의 서울";
                 case 1 :
-                    return "담은 서울";
+                    return "52\n체크인";
                 case 2 :
-                    return "나의 서울";
+                    return "37\n담은 서울";
                 default:
                     return "";
             }

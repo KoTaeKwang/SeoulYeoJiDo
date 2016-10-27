@@ -2,12 +2,275 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     tools:context="com.example.rhxorhkd.android_seoulyeojido.SetActivityFragment.AnalysisFragment">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#d7d7d7"
+        >
+    </View>
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <RelativeLayout
+                android:padding="32dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:background="@drawable/one"
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/location_1"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="140dp"
+                    android:layout_height="117dp" />
+
+                <TextView
+                    android:textAlignment="center"
+                    android:id="@+id/location_1_name"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/location_1"
+                    android:layout_marginTop="13dp"
+                    android:textSize="11sp"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:background="@drawable/two"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/location_2"
+                    android:layout_width="140dp"
+                    android:layout_height="117dp" />
+
+                <TextView
+                    android:textAlignment="center"
+                    android:id="@+id/location_2_name"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/location_2"
+                    android:layout_marginTop="13dp"
+                    android:textSize="11sp"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:padding="32dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:background="@drawable/three"
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/location_3"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="140dp"
+                    android:layout_height="117dp" />
+
+                <TextView
+                    android:textAlignment="center"
+                    android:id="@+id/location_3_name"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/location_3"
+                    android:layout_marginTop="13dp"
+                    android:textSize="11sp"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:background="@drawable/four"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/location_4"
+                    android:layout_width="140dp"
+                    android:layout_height="117dp" />
+
+                <TextView
+                    android:textAlignment="center"
+                    android:id="@+id/location_4_name"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/location_4"
+                    android:layout_marginTop="13dp"
+                    android:textSize="11sp"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:padding="32dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:background="@drawable/five"
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/location_5"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="140dp"
+                    android:layout_height="117dp" />
+
+                <TextView
+                    android:textAlignment="center"
+                    android:id="@+id/location_5_name"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/location_5"
+                    android:layout_marginTop="13dp"
+                    android:textSize="11sp"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:background="@drawable/six"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/location_6"
+                    android:layout_width="140dp"
+                    android:layout_height="117dp" />
+
+                <TextView
+                    android:textAlignment="center"
+                    android:id="@+id/location_6_name"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/location_6"
+                    android:layout_marginTop="13dp"
+                    android:textSize="11sp"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:padding="32dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:background="@drawable/seven"
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/location_7"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="140dp"
+                    android:layout_height="117dp" />
+
+                <TextView
+                    android:textAlignment="center"
+                    android:id="@+id/location_7_name"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/location_7"
+                    android:layout_marginTop="13dp"
+                    android:textSize="11sp"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:scaleType="fitXY"
+
+                    android:background="@drawable/eight"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/location_8"
+                    android:layout_width="140dp"
+                    android:layout_height="117dp" />
+
+                <TextView
+                    android:textAlignment="center"
+                    android:id="@+id/location_8_name"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/location_8"
+                    android:layout_marginTop="13dp"
+                    android:textSize="11sp"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:padding="32dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:background="@drawable/nine"
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/location_9"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="140dp"
+                    android:layout_height="117dp" />
+
+                <TextView
+                    android:textAlignment="center"
+                    android:id="@+id/location_9_name"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/location_9"
+                    android:layout_marginTop="13dp"
+                    android:textSize="11sp"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:background="@drawable/ten"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/location_10"
+                    android:layout_width="140dp"
+                    android:layout_height="117dp" />
+
+                <TextView
+                    android:textAlignment="center"
+                    android:id="@+id/location_10_name"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/location_10"
+                    android:layout_marginTop="13dp"
+                    android:textSize="11sp"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:padding="32dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:background="@drawable/eleven"
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/location_11"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="140dp"
+                    android:layout_height="117dp" />
+
+                <TextView
+                    android:textAlignment="center"
+                    android:id="@+id/location_11_name"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/location_11"
+                    android:layout_marginTop="13dp"
+                    android:textSize="11sp"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        
+
+
+
+
+    </ScrollView>
+
 
 </FrameLayout>
