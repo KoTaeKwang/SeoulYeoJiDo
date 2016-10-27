@@ -37,16 +37,13 @@ public class ListviewAdapter extends BaseAdapter {
     public Context context;
     boolean checked[] = new boolean[80];
 
-    HashMap<String, Boolean> hm = new HashMap<String, Boolean>();
+
 
     public ListviewAdapter(Context context, int layout, ArrayList<Listviewitem> data){
         this.inflater=(LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         this.data=data;
         this.layout=layout;
         this.context=context;
-        for(Listviewitem view : data ){
-            hm.put (view.getName(), false);
-        }
     }
 
     @Override
@@ -96,18 +93,25 @@ public class ListviewAdapter extends BaseAdapter {
 
         final CheckBox hearticon = (CheckBox) convertView.findViewById(R.id.default_flag);
 
+        if(!checked[position])
+            hearticon.setChecked(false);
 
+        hearticon.setFocusable(false);
+        hearticon.setClickable(false);
         hearticon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Log.d("list","posi ->"+position);
+                Log.d("list","posi ->"+position+b);
                 String result = ""; // 문자열 초기화는 빈문자열로 하자
 
                 if(checked[position]){
                     checked[position]=false;
+                    Log.d("list","취소"+position);
                     hearticon.setChecked(false);
                 }else{
                     checked[position]=true;
+                    Log.d("list","선택"+position);
                     hearticon.setChecked(true);
                 }
               /*  if(hearticon.isChecked()) {
