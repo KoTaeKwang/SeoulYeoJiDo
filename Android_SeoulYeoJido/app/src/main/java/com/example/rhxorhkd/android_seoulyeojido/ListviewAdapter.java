@@ -96,42 +96,42 @@ public class ListviewAdapter extends BaseAdapter {
         if(!checked[position])
             hearticon.setChecked(false);
 
-        hearticon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Log.d("list","posi ->"+position+b);
-                String result = ""; // 문자열 초기화는 빈문자열로 하자
-
-                if(checked[position]){
-                    checked[position]=false;
-                    Log.d("list","취소"+position);
-                    hearticon.setChecked(false);
-                }else{
-                    checked[position]=true;
-                    Log.d("list","선택"+position);
-                    hearticon.setChecked(true);
-                }
-              /*  if(hearticon.isChecked()) {
-                    hearticon.setChecked(true);
-                   Log.d("checkcheck", "ok@");
-                }
-                if(!hearticon.isChecked()) {
-                    Log.d("checkcheck", "no@");
-                }*/
-               // notifyDataSetChanged();
-            }
-        });
-
-//        ImageView hearticon = (ImageView)convertView.findViewById(R.id.heartimage);
-//        hearticon.setImageResource(listviewitem.getHearticon());
+//        hearticon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //
-//        hearticon.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onClick(View v) {
-//                Log.d("null","clicked");
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                Log.d("list","posi ->"+position+b);
+//                String result = ""; // 문자열 초기화는 빈문자열로 하자
+//
+//                if(checked[position]){
+//                    checked[position]=false;
+//                    Log.d("list","취소"+position);
+//                    hearticon.setChecked(false);
+//                }else{
+//                    checked[position]=true;
+//                    Log.d("list","선택"+position);
+//                    hearticon.setChecked(true);
+//                }
+//              /*  if(hearticon.isChecked()) {
+//                    hearticon.setChecked(true);
+//                   Log.d("checkcheck", "ok@");
+//                }
+//                if(!hearticon.isChecked()) {
+//                    Log.d("checkcheck", "no@");
+//                }*/
+//               // notifyDataSetChanged();
 //            }
 //        });
+
+
+
+
+
+
+
+
+
+
 
         Log.d("layout","position : "+position);
         Log.d("layout",""+listviewitem.getName());

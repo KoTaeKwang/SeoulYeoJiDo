@@ -107,19 +107,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <CheckBox
-        android:layout_marginTop="6dp"
-        android:id="@+id/default_flag"
-        android:background="@drawable/flag_change"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        android:layout_marginRight="16dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:focusable="false"
-        android:button="@null"
-        />
-
 
 </RelativeLayout>
 

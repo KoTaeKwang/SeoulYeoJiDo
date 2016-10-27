@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.rhxorhkd.android_seoulyeojido.R;
@@ -232,12 +233,23 @@ public class DetailActivity extends AppCompatActivity {
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        CollapsingToolbarLayout collapsingToolbar =
-//                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-//        collapsingToolbar.setTitle(locationTitle);
+        ImageView back_btn = (ImageView) findViewById(R.id.back_btn1);
+        back_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                finish();
+               // Toast.makeText(getApplicationContext(), "back",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        CollapsingToolbarLayout collapsingToolbar =
+                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbar.setTitleEnabled(false);
+        //collapsingToolbar.setTitle(locationTitle);
 
         TextView loca_title1 = (TextView)findViewById(R.id.loca_title);
         loca_title1.setText(locationTitle);

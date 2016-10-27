@@ -44,24 +44,13 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="18dp"
-                    android:textSize="14sp"
-                    android:id="@+id/heartCount"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="19dp"
-                    android:text="000"
-                    android:layout_gravity="right"
-                    android:clickable="true"/>
-
                 <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:id="@+id/pinButton"
-                    android:src="@drawable/heart_white"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="8dp"
+                    android:layout_width="19dp"
+                    android:layout_height="19dp"
+                    android:id="@+id/back_btn1"
+                    android:src="@drawable/back_white"
+                    android:layout_gravity="left"
+                    android:layout_marginRight="16dp"
                     android:clickable="true"/>
             </android.support.v7.widget.Toolbar>
 
@@ -140,57 +129,66 @@
                     android:id="@+id/img_address"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="23dp"
                     android:src="@drawable/pointer_small" />
 
                 <TextView
                     android:id="@+id/detailaddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="13sp"
                     android:layout_alignTop="@+id/img_address"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/img_address" />
+                    android:layout_marginLeft="16dp"
+                    android:layout_toRightOf="@+id/img_address"
+                    android:paddingRight="16dp"/>
 
                 <ImageView
                     android:id="@+id/img_description"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_below="@+id/img_address"
-                    android:layout_marginTop="30dp"
-                    android:src="@drawable/ic_info_outline_black_48dp" />
+                    android:layout_alignLeft="@+id/img_address"
+                    android:layout_alignTop="@+id/txt_detail"
+                    android:src="@drawable/info_small" />
 
                 <TextView
                     android:id="@+id/txt_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/img_description"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/img_description" />
+                    android:layout_below="@+id/detailaddress"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_toRightOf="@+id/img_description"
+                    android:paddingRight="16dp"/>
+
 
                 <ImageView
                     android:id="@+id/img_icphoto"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_below="@+id/txt_detail"
-                    android:layout_marginTop="30dp"
-                    android:src="@drawable/ic_info_outline_black_48dp" />
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="16dp"
+                    android:src="@drawable/photo_small" />
 
                 <ImageView
                     android:id="@+id/img_photo1"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
+                    android:layout_width="145dp"
+                    android:layout_height="145dp"
                     android:layout_alignTop="@+id/img_icphoto"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_toRightOf="@+id/img_icphoto"
                     android:scaleType="centerCrop"
                     android:src="@drawable/cheese_4" />
 
                 <ImageView
                     android:id="@+id/img_photo2"
-                    android:layout_width="141dp"
+                    android:layout_width="145dp"
                     android:layout_height="70dp"
                     android:layout_alignTop="@+id/img_icphoto"
                     android:layout_toRightOf="@+id/img_photo1"
-                    android:padding="1dp"
+                    android:layout_marginLeft="5dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/cheese_4" />
 
@@ -199,17 +197,18 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_below="@+id/img_photo2"
-                    android:layout_marginLeft="1dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
                     android:layout_toRightOf="@+id/img_photo1"
-                    android:padding="1dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/cheese_4" />
 
                 <FrameLayout
+                    android:id="@+id/frame_photo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:layout_alignTop="@+id/img_photo3"
-                    android:layout_marginLeft="1dp"
                     android:layout_toRightOf="@+id/img_photo3">
 
                     <ImageView
@@ -217,7 +216,6 @@
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_gravity="center"
-                        android:padding="1dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/cheese_4" />
 
@@ -228,6 +226,22 @@
                         android:layout_gravity="center"
                         android:src="@drawable/ic_keyboard_arrow_down" />
                 </FrameLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#d7d7d7"
+                    android:layout_below="@+id/frame_photo"
+                    android:layout_marginTop="23dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/frame_photo"
+                    android:layout_marginTop="24dp"
+                    android:text="댓글"
+                    android:textSize="13sp"
+                    android:layout_marginLeft="16dp"
+                    android:textColor="#000000"/>
 
             </RelativeLayout>
 
@@ -276,6 +290,8 @@
             android:src="@drawable/falg_checkin2"
             app:backgroundTint="#ffffff"
             app:fabSize="normal"
+            app:elevation="1dp"
+            app:borderWidth="1dp"
             />
 
         <TextView
@@ -286,7 +302,6 @@
             android:text="123"
             android:elevation="16dp"
             android:textColor="@android:color/black" />
-
     </FrameLayout>
 
 
