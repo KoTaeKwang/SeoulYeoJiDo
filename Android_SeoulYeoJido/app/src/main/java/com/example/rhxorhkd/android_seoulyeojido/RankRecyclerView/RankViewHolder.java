@@ -16,11 +16,10 @@ public class RankViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
 
     final View mView;
-    final TextView rank;
-    final ImageView profile;
+    final TextView rank, visited_cnt;
+    final ImageView profile, medal;
     final TextView nickname;
-    final TextView chk_cnt;
-    final TextView ect;
+    final View upline, downline;
     private RankAdapter rankAdapter;
 
 
@@ -28,11 +27,14 @@ public class RankViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     public RankViewHolder(View itemView, RankAdapter rankAdapter) {
         super(itemView);
         mView = itemView;
+        medal = (ImageView)itemView.findViewById(R.id.medal);
+        upline = (View) itemView.findViewById(R.id.view_up_line);
+        downline = (View)itemView.findViewById(R.id.view_down_line);
+
+        visited_cnt = (TextView)itemView.findViewById(R.id.visited_cnt);
         rank = (TextView) itemView.findViewById(R.id.rank_order);
-        nickname = (TextView)itemView.findViewById(R.id.nickname);
-        chk_cnt = (TextView)itemView.findViewById(R.id.chk_cnt);
-        ect = (TextView)itemView.findViewById(R.id.ect);
-        profile = (ImageView)itemView.findViewById(R.id.profile_img);
+        nickname = (TextView)itemView.findViewById(R.id.plain_username);
+        profile = (ImageView)itemView.findViewById(R.id.first_profile_img);
 
         RelativeLayout rl = (RelativeLayout) itemView.findViewById(R.id.rank_list);
         rl.setOnClickListener(this);
