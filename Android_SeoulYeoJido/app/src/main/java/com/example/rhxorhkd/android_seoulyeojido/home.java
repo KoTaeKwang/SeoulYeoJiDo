@@ -331,6 +331,8 @@ public class home extends AppCompatActivity {
 
     public void listInit(JSONArray listarr){
         lv =(ListView) findViewById(R.id.list);
+        lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
         Log.d("list",listarr.toString());
         ArrayList<Listviewitem> data = new ArrayList<>();
 

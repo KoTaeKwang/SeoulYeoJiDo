@@ -14,9 +14,7 @@ public class Listviewitem {
     private int hearticon;
 
 
-    public String getIcon() {
-        return icon;
-    }
+    public String getIcon() { return icon; }
 
     public String getSubname() {
         return subname;
@@ -41,7 +39,7 @@ public class Listviewitem {
     public String getName() {
         return name;
     }
-    public Listviewitem(String icon,String name,String subname, String reviewcount,String thirdname, String fourthname,int hearticon){
+    public Listviewitem(String icon,String name,String subname, String reviewcount,String thirdname, String fourthname, int hearticon){
         this.icon=icon;
         this.name=name;
         this.subname=subname;

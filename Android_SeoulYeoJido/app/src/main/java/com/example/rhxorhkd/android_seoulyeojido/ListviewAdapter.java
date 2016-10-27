@@ -10,14 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by rhxorhkd on 2016-10-15.
@@ -30,11 +35,16 @@ public class ListviewAdapter extends BaseAdapter {
     private View tempview;
     public static int counts=0;
     public Context context;
+    HashMap<String, Boolean> hm = new HashMap<String, Boolean>();
+
     public ListviewAdapter(Context context, int layout, ArrayList<Listviewitem> data){
         this.inflater=(LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         this.data=data;
         this.layout=layout;
         this.context=context;
+        for(Listviewitem view : data ){
+            hm.put (view.getName(), false);
+        }
     }
 
     @Override
@@ -53,7 +63,9 @@ public class ListviewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
+
+        //체크박스 상태를 변경
 
         if(convertView==null)
             convertView = inflater.inflate(layout,parent,false);
@@ -80,15 +92,39 @@ public class ListviewAdapter extends BaseAdapter {
         TextView name4 = (TextView)convertView.findViewById(R.id.lay_textview4); // 장소
         name4.setText(listviewitem.getFourthname());
 
-        ImageView hearticon = (ImageView)convertView.findViewById(R.id.heartimage);
-        hearticon.setImageResource(listviewitem.getHearticon());
+        final CheckBox hearticon = (CheckBox) convertView.findViewById(R.id.default_flag);
 
-        hearticon.setOnClickListener(new View.OnClickListener() {
+
+        hearticon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                Log.d("null","clicked");
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                String result = ""; // 문자열 초기화는 빈문자열로 하자
+
+//        if(isChecked) tv.setText("체크했음");
+//        else tv.setText("체크안했슴");
+
+                if(hearticon.isChecked()) {
+                    //result += checkflag.getText().toString() + ", ";
+                    hearticon.setChecked(true);
+                   Log.d("checkcheck", "ok@");
+                }
+                if(!hearticon.isChecked()) {
+                    Log.d("checkcheck", "no@");
+                    //Toast.makeText(getApplicationContext(), "no Checkin!", Toast.LENGTH_LONG).show();
+                }
             }
         });
+
+//        ImageView hearticon = (ImageView)convertView.findViewById(R.id.heartimage);
+//        hearticon.setImageResource(listviewitem.getHearticon());
+//
+//        hearticon.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("null","clicked");
+//            }
+//        });
 
         Log.d("layout","position : "+position);
         Log.d("layout",""+listviewitem.getName());
