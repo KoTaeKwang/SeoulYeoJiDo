@@ -70,8 +70,8 @@ public class ChangeInfo extends AppCompatActivity implements View.OnClickListene
         Ref.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot data) {
-                nickName.setText(data.child("nickname").getValue().toString());
-                Glide.with(ChangeInfo.this).load(data.child("profile").getValue().toString()).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv1){
+                nickName.setText(""+data.child("nickname").getValue());
+                Glide.with(ChangeInfo.this).load(""+data.child("profile").getValue()).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv1){
                     @Override
                     protected void setResource(Bitmap resource) {
                         super.setResource(resource);
@@ -105,7 +105,6 @@ public class ChangeInfo extends AppCompatActivity implements View.OnClickListene
                 }else{
                     final FirebaseUser user = auth.getCurrentUser();
                     Ref.child(user.getUid()+"/nickname").setValue(nickName.getText().toString());
-
 
                 }
                 break;

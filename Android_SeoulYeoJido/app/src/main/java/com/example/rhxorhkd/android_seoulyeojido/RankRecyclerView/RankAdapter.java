@@ -69,7 +69,7 @@ public class RankAdapter extends RecyclerView.Adapter<RankViewHolder>{
             holder.downline.setBackgroundColor(0xFFd7d7d7);
             holder.upline.setVisibility(View.GONE);
         }
-        holder.rank.setText(item.getRank());
+        holder.rank.setText(""+(position+1));
         holder.nickname.setText(item.getNickname());
 
         Glide.with(mContext).load(item.getImg()).asBitmap().centerCrop().into(new BitmapImageViewTarget(holder.profile){
