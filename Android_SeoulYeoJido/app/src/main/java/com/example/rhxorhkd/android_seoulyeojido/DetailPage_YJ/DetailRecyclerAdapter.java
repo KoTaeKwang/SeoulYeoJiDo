@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.rhxorhkd.android_seoulyeojido.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +20,7 @@ public class DetailRecyclerAdapter extends RecyclerView.Adapter<DetailRecyclerAd
 
     private List<DetailReview> reviewList;
     private int itemLayout;
+
 
     /**
      * 생성자
@@ -79,4 +81,11 @@ public class DetailRecyclerAdapter extends RecyclerView.Adapter<DetailRecyclerAd
         }
 
     }
+
+    public void swap(ArrayList<DetailReview> datas){
+        reviewList.clear();
+        reviewList.addAll(datas);
+        notifyDataSetChanged();
+    }
+
 }
