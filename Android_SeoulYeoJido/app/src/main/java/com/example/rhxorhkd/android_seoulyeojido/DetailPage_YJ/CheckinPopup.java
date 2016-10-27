@@ -2,7 +2,9 @@ package com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
@@ -14,6 +16,18 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 /**
  * Created by hanyoojin on 2016. 10. 27..
  */
@@ -24,24 +38,95 @@ public class CheckinPopup extends Activity implements View.OnClickListener {
     private FirebaseAuth auth;
     private FirebaseDatabase db;
     private DatabaseReference ref;
-
+    private OkHttpClient client = new OkHttpClient();
+    private Request request;
+    private Response response;
 
     String result;
-
+    String title;
+    String uid;
+    String dates;
+    Intent intent;
+    JSONObject object;
+    JSONArray array;
+    String lat;
+    String lon;
+    String url;
+    String guNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE); //타이틀바 삭제
         super.onCreate(savedInstanceState);
         setContentView(R.layout.checkinpopup);
-        result = getIntent().getStringExtra("result");
+         intent = getIntent();
+        result = intent.getStringExtra("result");
+        title = intent.getStringExtra("title");
+
         findViewById(R.id.btn_checkincancel).setOnClickListener(this);
         findViewById(R.id.btn_checkin).setOnClickListener(this);
-
+        Date date = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyymmdd");
+        dates= df.format(date).toString();
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         ref = db.getReference("member");
 
+    }
+
+    public class showDataDetail extends AsyncTask<String, Void, String>{
+        @Override
+        protected String doInBackground(String... params) {
+            final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            JSONObject json = new JSONObject();
+            try {
+                json.put("loca_name", params[0]);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            RequestBody posData = RequestBody.create(JSON,json.toString());
+            request = new Request.Builder()
+                    .url("http://211.189.20.136:4389/ko/showDetailLoca")
+                    .post(posData)
+                    .build();
+            try{
+                response = client.newCall(request).execute();
+                return response.body().string();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            //post gu num
+            return null;
+        }
+    }
+
+
+    public class addcheckin extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            JSONObject json = new JSONObject();
+            try {
+                json.put("user_id", params[0]);
+                json.put("loca_name",params[1]);
+                json.put("date",params[2]);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            RequestBody posData = RequestBody.create(JSON,json.toString());
+            request = new Request.Builder()
+                    .url("http://211.189.20.136:4389/ko/addCheckin")
+                    .post(posData)
+                    .build();
+            try{
+                response = client.newCall(request).execute();
+                return response.body().string();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            //post gu num
+            return null;
+        }
     }
 
     public void onClick(View v){
@@ -53,7 +138,7 @@ public class CheckinPopup extends Activity implements View.OnClickListener {
 
 
                 FirebaseUser user = auth.getCurrentUser();
-
+                uid = user.getUid();
                 //Intent i = getIntent();
                 //i.getStringExtra("username", user.getUid());
 
@@ -68,9 +153,40 @@ public class CheckinPopup extends Activity implements View.OnClickListener {
 //                //구번호, 위치 , 이미지...
 //                ref.child(user.getUid()+"/checkin").push().setValue();
                 //Toast.makeText(getApplicationContext(), "눌림", Toast.LENGTH_LONG).show();
-                if(result.equals("1"))
-                startActivity(new Intent(this, CheckinOK.class));
+                if(result.equals("1")){
+                    showDataDetail showDataDetail = new showDataDetail();
+                    String getdata;
+                    try{
+                        getdata = showDataDetail.execute(title).get();
+                        object = new JSONObject(getdata);
 
+                        lat = object.getString("loca_latitude"); //latitude
+                        lon = object.getString("loca_longitude"); //longitude
+
+                        array = object.getJSONArray("loca_photo");
+                        guNumber = object.getString("loca_guNum"); //구넘버
+
+                        url =array.get(0).toString(); //사진
+                        // uid  -> id
+                        // dates   -> 날짜
+                        // title  -> 타이틀
+
+                        Log.d("list"," lat : "+lat+" lon : "+lon+" guNumber : "+guNumber+" url : "+url);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+
+
+                if(result.equals("1")){
+                    addcheckin addcheckin = new addcheckin();
+                    try{
+                    addcheckin.execute(uid,title,dates).get();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                startActivity(new Intent(this, CheckinOK.class));
+                }
                 else startActivity(new Intent(this, CheckinFail.class));
 
                 finish();
@@ -80,6 +196,7 @@ public class CheckinPopup extends Activity implements View.OnClickListener {
         }
     }
 }
+
 
 //public class Dialog extends Activity implements View.OnClickListener {
 //    @Override
