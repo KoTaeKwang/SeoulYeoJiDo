@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +17,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.rhxorhkd.android_seoulyeojido.ChangeInfo;
 import com.example.rhxorhkd.android_seoulyeojido.R;
+import com.example.rhxorhkd.android_seoulyeojido.home;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -26,10 +29,32 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.tsengvn.typekit.Typekit;
 import com.tsengvn.typekit.TypekitContextWrapper;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener{
+
+    OkHttpClient client;
+    JSONObject jsonobject;
+    JSONArray jsonarray;
+    Response response;
+    Request request;
 
 
     private GoogleMap mMap;
@@ -45,6 +70,13 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
     private String markerId;
 
 
+    private long now;
+    private Date date;
+    private String time;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +85,8 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
 
         //글꼴 라이브러리
         Typekit.getInstance()
@@ -68,6 +102,55 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
 
         latitude = gps.getLatitude();
         longitude = gps.getLongitude();
+
+        //checkinListGetData getData = new checkinListGetData();
+
+        // 시스템으로부터 현재시간(ms) 가져오기
+        now = System.currentTimeMillis();
+        // Data 객체에 시간을 저장한다.
+        date = new Date(now);
+
+        time = new SimpleDateFormat("yyyyMMdd").format(new Date(System.currentTimeMillis()));
+        Toast.makeText(this, time, Toast.LENGTH_SHORT).show();
+
+
+    }
+
+    public class checkinListGetData extends AsyncTask<String, Void, String>{
+
+        @Override
+        protected String doInBackground(String... strings) {
+            OkHttpClient client = new OkHttpClient();
+
+            return null;
+        }
+    }
+
+
+    public class searchListGetData extends AsyncTask<String, Void, String>{
+        @Override
+        protected String doInBackground(String... params) {
+            final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            JSONObject json = new JSONObject();
+            try {
+                json.put("searchtext", params[0]);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            RequestBody posData = RequestBody.create(JSON,json.toString());
+            request = new Request.Builder()
+                    .url("http://211.189.20.136:4389/ko/searchLocaAddress")
+                    .post(posData)
+                    .build();
+            try{
+                response = client.newCall(request).execute();
+                return response.body().string();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            //post gu num
+            return null;
+        }
     }
 
 
@@ -100,10 +183,10 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
 
         mMap.setMyLocationEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 13));
-        mMap.addMarker(new MarkerOptions()
-                .title("현재 위치")
-                .snippet("innoaus.")
-                .position(myLocation));
+//        mMap.addMarker(new MarkerOptions()
+//                .title("현재 위치")
+//                .snippet("innoaus.")
+//                .position(myLocation));
 
         mMap.addCircle(new CircleOptions()
                 .center(new LatLng(latitude, longitude))
@@ -156,7 +239,21 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
                 markerId = marker.getId().toString();
                 Toast.makeText(getApplicationContext(), " == "+markerId, 1).show();
 
+
+
                 Intent intentSubActivity = new Intent(CheckinmapActivity.this, CheckinPopup.class);
+                intentSubActivity.putExtra("position", marker.getPosition());
+                intentSubActivity.putExtra("title", marker.getTitle());
+                intentSubActivity.putExtra("time", time);
+                //intentSubActivity.putStringArrayListExtra("locaarray",  ArrayList<e>  );
+
+
+                //intentSubActivity.putExtra("userid",user.getUid());
+//                intentSubActivity.putExtra("location",);
+//                intentSubActivity.putExtra("time",);
+//                intentSubActivity.putExtra("gunum",);
+
+//서버에서 읽어와야함
                 startActivity(intentSubActivity);
 
                 return false;
@@ -164,7 +261,6 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
         });
 
         mMap.getUiSettings().setRotateGesturesEnabled(false);
-
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
@@ -185,7 +281,7 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
             default: break;
         }
     }
-    
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
