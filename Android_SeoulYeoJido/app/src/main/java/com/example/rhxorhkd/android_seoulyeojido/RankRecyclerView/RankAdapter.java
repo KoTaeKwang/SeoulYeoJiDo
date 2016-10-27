@@ -46,6 +46,7 @@ public class RankAdapter extends RecyclerView.Adapter<RankViewHolder>{
         RankItem item = list.get(position);
         holder.visited_cnt.setText(item.getChk_cnt());
         if(position == 0){
+            holder.profile.setBackgroundResource(R.drawable.rank_item_border);
             holder.upline.setVisibility(View.VISIBLE);
             holder.upline.setBackgroundColor(0xFF000000);
             holder.downline.setVisibility(View.VISIBLE);
@@ -53,10 +54,12 @@ public class RankAdapter extends RecyclerView.Adapter<RankViewHolder>{
             holder.visited_cnt.setTextColor(0xFF3f51b5);
             Glide.with(mContext).load(R.drawable.rank_one).into(holder.medal);
         }else if(position == 1){
+            holder.profile.setBackgroundResource(R.drawable.rank_item_border);
             holder.downline.setBackgroundColor(0xFFd7d7d7);
             holder.upline.setVisibility(View.GONE);
             Glide.with(mContext).load(R.drawable.rank_two).into(holder.medal);
         }else if(position == 2){
+            holder.profile.setBackgroundResource(R.drawable.rank_item_border);
             holder.downline.setBackgroundColor(0xFFd7d7d7);
             holder.upline.setVisibility(View.GONE);
             Glide.with(mContext).load(R.drawable.rank_three).into(holder.medal);

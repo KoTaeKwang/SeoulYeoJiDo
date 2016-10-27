@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.rhxorhkd.android_seoulyeojido.Model.RankItem;
 import com.example.rhxorhkd.android_seoulyeojido.RankRecyclerView.RankAdapter;
@@ -46,17 +47,30 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
 
         findViewById(R.id.find_myRank).setOnClickListener(this);
 
-        ArrayList<RankItem> list = new ArrayList<>();
+        final ArrayList<RankItem> list = new ArrayList<>();
         mRecyclerView = (RecyclerView) findViewById(R.id.rank_rc);
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot data) {
+                int cnt = 0;
                 for (DataSnapshot post: data.getChildren()) {
-                    Log.d("내꺼!!!!", ""+post.child("nickname").getValue());
 
+                    String nick = ""+post.child("nickname").getValue();
+                    String chk_cnt = ""+post.child("checkin").getChildrenCount();
+                    String img = ""+post.child("profile").getValue();
+
+                    RankItem item = new RankItem(
+                           ""+(cnt+1), nick , chk_cnt , "", img
+                    );
+                    list.add(cnt, item);
+                    cnt++;
+
+                    mAdapter = new RankAdapter(rank.this, list);
+                    mLayoutManager = new LinearLayoutManager(rank.this, LinearLayoutManager.VERTICAL, false);
+                    mRecyclerView.setLayoutManager(mLayoutManager);
+                    mRecyclerView.setAdapter(mAdapter);
                 }
-
             }
 
             @Override
@@ -65,22 +79,7 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
             }
         });
 
-        for (int i = 0; i < 100; i++) {
-            int tmp = i % 3 + 1;
-            int profile = 0;
-            if (tmp == 1) profile = R.drawable.irene1;
-            else if (tmp == 2) profile = R.drawable.irene2;
-            else if (tmp == 3) profile = R.drawable.irene3;
 
-            RankItem item = new RankItem(
-                    "" + (i+1), "아이린" + i, "" + (100 - i), "여긴뭐적지", profile
-            );
-            list.add(i, item);
-        }
-        mAdapter = new RankAdapter(this, list);
-        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
 
     }
 
