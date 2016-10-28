@@ -9,9 +9,9 @@ public class RankItem {
     String nickname;
     String chk_cnt;
     String ect;
-    int img;
+    String img;
 
-    public RankItem(String rank, String nickname, String chk_cnt, String ect, int img) {
+    public RankItem(String rank, String nickname, String chk_cnt, String ect, String img) {
         this.rank = rank;
         this.nickname = nickname;
         this.chk_cnt = chk_cnt;
@@ -27,6 +27,10 @@ public class RankItem {
         return nickname;
     }
 
+    public String getImg() {
+        return img;
+    }
+
     public String getChk_cnt() {
         return chk_cnt;
     }
@@ -35,7 +39,5 @@ public class RankItem {
         return ect;
     }
 
-    public int getImg() {
-        return img;
-    }
+
 }

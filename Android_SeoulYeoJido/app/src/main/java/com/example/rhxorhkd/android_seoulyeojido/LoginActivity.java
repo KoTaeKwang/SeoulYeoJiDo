@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.rhxorhkd.android_seoulyeojido.Validator.EmailValidator;
+import com.example.rhxorhkd.android_seoulyeojido.Validator.PasswordValidator;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -70,20 +72,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(new Intent(this, JoinActivity.class));
                 break;
             case R.id.submit :
-                auth.signInWithEmailAndPassword(email.getText().toString(), pw.getText().toString())
-                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (!task.isSuccessful()) {
-                                    Toast.makeText(LoginActivity.this, "회원정보가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
-                                }else{
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//                                    finish();
+                if(!EmailValidator.getInstance().isValid(email.getText().toString())){
+                    Toast.makeText(this, "이메일 형식이 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
+
+                }else if(!PasswordValidator.getInstance().tvtalkValidate(pw.getText().toString())){
+                    Toast.makeText(this, "비밀번호 형식이 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
+                }else{
+                    auth.signInWithEmailAndPassword(email.getText().toString(), pw.getText().toString())
+                            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (!task.isSuccessful()) {
+                                        Toast.makeText(LoginActivity.this, "회원정보가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                        finish();
+                                    }
                                 }
-                            }
-                        });
-
-
+                            });
+                }
                 break;
             case R.id.login_btn_back :
                 finish();

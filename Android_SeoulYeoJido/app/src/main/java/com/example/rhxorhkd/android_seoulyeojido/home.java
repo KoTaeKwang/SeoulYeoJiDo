@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
@@ -20,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -31,6 +33,14 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ.DetailActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.tsengvn.typekit.Typekit;
 import com.tsengvn.typekit.TypekitContextWrapper;
@@ -41,10 +51,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -53,6 +60,25 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class home extends AppCompatActivity {
+
+    private FirebaseAuth auth;
+    private FirebaseDatabase db;
+    private DatabaseReference ref;
+    private FirebaseUser user;
+
+    ImageView mapview1;
+    ImageView mapview2;
+    ImageView mapview3;
+    ImageView mapview4;
+    ImageView mapview5;
+    ImageView mapview6;
+    ImageView mapview7;
+    ImageView mapview8;
+    ImageView mapview9;
+    ImageView mapview10;
+    ImageView mapview11;
+    ImageView mapview12;
+
     ListviewAdapter adapter; //listview adapter
     SearchitemAdapter sadapter; //search adapter
     RelativeLayout map; //지도
@@ -70,26 +96,13 @@ public class home extends AppCompatActivity {
     Response response;
     Request request;
     public static String guNum;
-
+    int guNumber_1, guNumber_2, guNumber_3, guNumber_4, guNumber_5, guNumber_6, guNumber_7,
+            guNumber_8, guNumber_9, guNumber_10, guNumber_11;
+    ImageView tempmapview1;
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
     }
-/*
-    public void button2clicked(View v){ //용산구
-        guListGetData getData = new guListGetData();
-        String result = null;
-        try{
-            result = getData.execute("2").get();
-            jsonobject = new JSONObject(result);
-            jsonarray = jsonobject.getJSONArray("location");
-            listInit(jsonarray);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,29 +112,44 @@ public class home extends AppCompatActivity {
         map=(RelativeLayout)findViewById(R.id.map);
         searchlistview=(LinearLayout)findViewById(R.id.searchlistview);
 
-        ImageView mapview1 = (ImageView)findViewById(R.id.mapone);
-        ImageView mapview2= (ImageView)findViewById(R.id.maptwo);
-        ImageView mapview3= (ImageView)findViewById(R.id.mapthree);
-        ImageView mapview4= (ImageView)findViewById(R.id.mapfour);
-        ImageView mapview5= (ImageView)findViewById(R.id.mapfive);
-        ImageView mapview6= (ImageView)findViewById(R.id.mapsix);
-        ImageView mapview7= (ImageView)findViewById(R.id.mapseven);
-        ImageView mapview8= (ImageView)findViewById(R.id.mapeight);
-        ImageView mapview9= (ImageView)findViewById(R.id.mapnine);
-        ImageView mapview10= (ImageView)findViewById(R.id.mapten);
-        ImageView mapview11= (ImageView)findViewById(R.id.mapeleven);
-        ImageView mapview12= (ImageView)findViewById(R.id.mapriver);
-        Glide.with(this).load(R.drawable.map_one_clear).into(mapview1);
-        Glide.with(this).load(R.drawable.map_two_clear).into(mapview2);
-        Glide.with(this).load(R.drawable.map_three_clear).into(mapview3);
-        Glide.with(this).load(R.drawable.map_four_clear).into(mapview4);
-        Glide.with(this).load(R.drawable.map_five_clear).into(mapview5);
-        Glide.with(this).load(R.drawable.map_six_clear).into(mapview6);
-        Glide.with(this).load(R.drawable.map_seven_clear).into(mapview7);
-        Glide.with(this).load(R.drawable.map_eight_clear).into(mapview8);
-        Glide.with(this).load(R.drawable.map_nine_clear).into(mapview9);
-        Glide.with(this).load(R.drawable.map_ten_clear).into(mapview10);
-        Glide.with(this).load(R.drawable.map_eleven_clear).into(mapview11);
+
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseDatabase.getInstance();
+        user = auth.getCurrentUser();
+        ref = db.getReference("member").child(user.getUid()+"/checkin");
+
+
+        // 액션바 디자인
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setElevation(0); // 그림자 없애기
+        actionBar.setCustomView(R.layout.hometitle);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+
+         mapview1 = (ImageView)findViewById(R.id.mapone);
+         mapview2= (ImageView)findViewById(R.id.maptwo);
+         mapview3= (ImageView)findViewById(R.id.mapthree);
+         mapview4= (ImageView)findViewById(R.id.mapfour);
+         mapview5= (ImageView)findViewById(R.id.mapfive);
+         mapview6= (ImageView)findViewById(R.id.mapsix);
+         mapview7= (ImageView)findViewById(R.id.mapseven);
+         mapview8= (ImageView)findViewById(R.id.mapeight);
+         mapview9= (ImageView)findViewById(R.id.mapnine);
+         mapview10= (ImageView)findViewById(R.id.mapten);
+         mapview11= (ImageView)findViewById(R.id.mapeleven);
+         mapview12= (ImageView)findViewById(R.id.mapriver);
+
+        Glide.with(this).load(R.drawable.map_one_1).into(mapview1);
+        Glide.with(this).load(R.drawable.map_two_1).into(mapview2);
+        Glide.with(this).load(R.drawable.map_three_1).into(mapview3);
+        Glide.with(this).load(R.drawable.map_four_1).into(mapview4);
+        Glide.with(this).load(R.drawable.map_five_1).into(mapview5);
+        Glide.with(this).load(R.drawable.map_six_1).into(mapview6);
+        Glide.with(this).load(R.drawable.map_seven_1).into(mapview7);
+        Glide.with(this).load(R.drawable.map_eight_1).into(mapview8);
+        Glide.with(this).load(R.drawable.map_nine_1).into(mapview9);
+        Glide.with(this).load(R.drawable.map_ten_1).into(mapview10);
+        Glide.with(this).load(R.drawable.map_eleven_1).into(mapview11);
         Glide.with(this).load(R.drawable.map).into(mapview12);
 
     //6 유적지 5 랜드마크  4 전통시장 3  공원 2 문화 1 쇼핑
@@ -132,7 +160,7 @@ public class home extends AppCompatActivity {
         final ImageView imageView2 = (ImageView)findViewById(R.id.imageView2);
         final ImageView imageView = (ImageView)findViewById(R.id.imageView);
 
-        Glide.with(this).load(R.drawable.oldbuild).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView6){
+        Glide.with(this).load(R.drawable.history).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView6){
             @Override
             protected void setResource(Bitmap resource) {
                 super.setResource(resource);
@@ -143,7 +171,7 @@ public class home extends AppCompatActivity {
             }
         });
 
-        Glide.with(this).load(R.drawable.oldbuild).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView5){
+        Glide.with(this).load(R.drawable.landmark).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView5){
             @Override
             protected void setResource(Bitmap resource) {
                 super.setResource(resource);
@@ -154,7 +182,7 @@ public class home extends AppCompatActivity {
             }
         });
 
-        Glide.with(this).load(R.drawable.market).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView4){
+        Glide.with(this).load(R.drawable.markets).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView4){
             @Override
             protected void setResource(Bitmap resource) {
                 super.setResource(resource);
@@ -165,7 +193,7 @@ public class home extends AppCompatActivity {
             }
         });
 
-        Glide.with(this).load(R.drawable.park).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView3){
+        Glide.with(this).load(R.drawable.parks).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView3){
             @Override
             protected void setResource(Bitmap resource) {
                 super.setResource(resource);
@@ -176,7 +204,7 @@ public class home extends AppCompatActivity {
             }
         });
 
-        Glide.with(this).load(R.drawable.culture).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView2){
+        Glide.with(this).load(R.drawable.cultures).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView2){
             @Override
             protected void setResource(Bitmap resource) {
                 super.setResource(resource);
@@ -187,7 +215,7 @@ public class home extends AppCompatActivity {
             }
         });
 
-        Glide.with(this).load(R.drawable.culture).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView){
+        Glide.with(this).load(R.drawable.shoping).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView){
             @Override
             protected void setResource(Bitmap resource) {
                 super.setResource(resource);
@@ -197,20 +225,6 @@ public class home extends AppCompatActivity {
                 imageView.setImageDrawable(circularBitmapDrawable);
             }
         });
-
-        Glide.with(this).load(R.drawable.culture).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView6){
-            @Override
-            protected void setResource(Bitmap resource) {
-                super.setResource(resource);
-                RoundedBitmapDrawable circularBitmapDrawable =
-                        RoundedBitmapDrawableFactory.create(getResources(), resource);
-                circularBitmapDrawable.setCircular(true);
-                imageView6.setImageDrawable(circularBitmapDrawable);
-            }
-        });
-
-
-
 
         //searchInit(); //서치리스트 초기화
         Typekit.getInstance()
@@ -263,12 +277,453 @@ public class home extends AppCompatActivity {
         mapview10.setOnClickListener(new guListner("10"));
         mapview11.setOnClickListener(new guListner("11"));
 
+
         imageView6.setOnClickListener(new MyListner("6"));
         imageView5.setOnClickListener(new MyListner("5"));
         imageView4.setOnClickListener(new MyListner("4"));
         imageView3.setOnClickListener(new MyListner("3"));
         imageView2.setOnClickListener(new MyListner("2"));
         imageView.setOnClickListener(new MyListner("1"));
+
+        //체크인 기록 불러오기
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot data, String s) {
+                if(data.child("guNumber").getValue()!=null)
+                {
+                    switch (Integer.parseInt(""+data.child("guNumber").getValue())){
+                        case 1 :
+                            guNumber_1++;
+                            break;
+                        case 2 :
+                            guNumber_2++;
+                            break;
+                        case 3 :
+                            guNumber_3++;
+                            break;
+                        case 4 :
+                            guNumber_4++;
+                            break;
+                        case 5 :
+                            guNumber_5++;
+                            break;
+                        case 6 :
+                            guNumber_6++;
+                            break;
+                        case 7 :
+                            guNumber_7++;
+                            break;
+                        case 8 :
+                            guNumber_8++;
+                            break;
+                        case 9 :
+                            guNumber_9++;
+                            break;
+                        case 10 :
+                            guNumber_10++;
+                            break;
+                        case 11 :
+                            guNumber_11++;
+                            break;
+
+                        default: break;
+                    }
+                }
+              gustage();
+                Log.d("영등포구 체크인 수: ", ""+guNumber_10);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+        //
+    }
+//1.은평 1   ,  2.마포 4   3.종로 21   4.성북 1  5.강북 1    6. 중랑0    7.송파 2   8. 서초3   9.관악 0  10.영등포  5,  11.강서 0
+    public void gustage(){
+        Log.d("list","gggggg");
+       guone();
+        gutwo();
+        guthree();
+        gufour();
+        gufive();
+        gusix();
+        guseven();
+        gueight();
+        gunine();
+        guten();
+        gueleven();
+    }
+
+    public void gueleven(){
+
+        int i;
+        int tempper=0 ;
+        for(i=1;i<=5;i++){
+            tempper =20*i;
+            if(guNumber_11*100/1<=tempper){
+                break;
+            }
+        }
+        switch (tempper){
+            case 20 :
+                Glide.with(this).load(R.drawable.map_eleven_1).into(mapview11);
+                break;
+
+            case 40 :
+                Glide.with(this).load(R.drawable.map_eleven_2).into(mapview11);
+                break;
+
+            case 60 :
+                Glide.with(this).load(R.drawable.map_eleven_3).into(mapview11);
+                break;
+
+            case 80 :
+                Glide.with(this).load(R.drawable.map_eleven_4).into(mapview11);
+                break;
+
+            case 100 :
+                Glide.with(this).load(R.drawable.map_eleven_5).into(mapview11);
+                break;
+        }
+    }
+    public void guten(){
+        int i;
+        int tempper=0 ;
+
+        for(i=1;i<=5;i++){
+            tempper = 20*i;
+            Log.d("list","tempper -->"+tempper);
+            if((guNumber_10*100/5)<=tempper){
+                break;
+            }
+        }
+        Log.d("list","tempper"+tempper);
+
+        switch (tempper){
+            case 20 :
+                Glide.with(this).load(R.drawable.map_ten_1).into(mapview10);
+                break;
+
+            case 40 :
+                Glide.with(this).load(R.drawable.map_ten_2).into(mapview10);
+                break;
+
+            case 60 :
+                Glide.with(this).load(R.drawable.map_ten_3).into(mapview10);
+                break;
+
+            case 80 :
+                Glide.with(this).load(R.drawable.map_ten_4).into(mapview10);
+                break;
+
+            case 100 :
+                Glide.with(this).load(R.drawable.map_ten_5).into(mapview10);
+                break;
+        }
+    }
+
+    public void gunine(){
+
+        int i;
+        int tempper=0 ;
+        for(i=1;i<=5;i++){
+            tempper = 20*i;
+            if(guNumber_9*100/1<=tempper){
+                break;
+            }
+        }
+        switch (tempper){
+            case 20 :
+                Glide.with(this).load(R.drawable.map_nine_1).into(mapview9);
+                break;
+
+            case 40 :
+                Glide.with(this).load(R.drawable.map_nine_2).into(mapview9);
+                break;
+
+            case 60 :
+                Glide.with(this).load(R.drawable.map_nine_3).into(mapview9);
+                break;
+
+            case 80 :
+                Glide.with(this).load(R.drawable.map_nine_4).into(mapview9);
+                break;
+
+            case 100 :
+                Glide.with(this).load(R.drawable.map_nine_5).into(mapview9);
+                break;
+        }
+    }
+
+    public void gueight(){
+
+        int i;
+        int tempper=0 ;
+        for(i=1;i<=5;i++){
+            tempper =20*i;
+            if(guNumber_8*100/3<=tempper){
+                break;
+            }
+        }
+        switch (tempper){
+            case 20 :
+                Glide.with(this).load(R.drawable.map_eight_1).into(mapview8);
+                break;
+
+            case 40 :
+                Glide.with(this).load(R.drawable.map_eight_2).into(mapview8);
+                break;
+
+            case 60 :
+                Glide.with(this).load(R.drawable.map_eight_3).into(mapview8);
+                break;
+
+            case 80 :
+                Glide.with(this).load(R.drawable.map_eight_4).into(mapview8);
+                break;
+
+            case 100 :
+                Glide.with(this).load(R.drawable.map_eight_5).into(mapview8);
+                break;
+        }
+    }
+    public void guseven(){
+
+        int i;
+        int tempper =0;
+        for(i=1;i<=5;i++){
+            tempper = 20*i;
+            if(guNumber_7*100/2<=tempper){
+                break;
+            }
+        }
+        switch (tempper){
+            case 20 :
+                Glide.with(this).load(R.drawable.map_seven_1).into(mapview7);
+                break;
+
+            case 40 :
+                Glide.with(this).load(R.drawable.map_seven_2).into(mapview7);
+                break;
+
+            case 60 :
+                Glide.with(this).load(R.drawable.map_seven_3).into(mapview7);
+                break;
+
+            case 80 :
+                Glide.with(this).load(R.drawable.map_seven_4).into(mapview7);
+                break;
+
+            case 100 :
+                Glide.with(this).load(R.drawable.map_seven_5).into(mapview7);
+                break;
+        }
+    }
+    public void gusix(){
+
+        int i;
+        int tempper =0;
+        for(i=1;i<=5;i++){
+            tempper = 20*i;
+            if(guNumber_6*100/1<=tempper){
+                break;
+            }
+        }
+        switch (tempper){
+            case 20 :
+                Glide.with(this).load(R.drawable.map_six_1).into(mapview6);
+                break;
+
+            case 40 :
+                Glide.with(this).load(R.drawable.map_six_2).into(mapview6);
+                break;
+
+            case 60 :
+                Glide.with(this).load(R.drawable.map_six_3).into(mapview6);
+                break;
+
+            case 80 :
+                Glide.with(this).load(R.drawable.map_six_4).into(mapview6);
+                break;
+
+            case 100 :
+                Glide.with(this).load(R.drawable.map_six_5).into(mapview6);
+                break;
+        }
+    }
+
+    public void gufive(){
+
+        int i;
+        int tempper=0 ;
+        for(i=1;i<=5;i++){
+            tempper =20*i;
+            if(guNumber_5*100/1<=tempper){
+                break;
+            }
+        }
+        switch (tempper){
+            case 20 :
+                Glide.with(this).load(R.drawable.map_five_1).into(mapview5);
+                break;
+
+            case 40 :
+                Glide.with(this).load(R.drawable.map_five_2).into(mapview5);
+                break;
+
+            case 60 :
+                Glide.with(this).load(R.drawable.map_five_3).into(mapview5);
+                break;
+
+            case 80 :
+                Glide.with(this).load(R.drawable.map_five_4).into(mapview5);
+                break;
+
+            case 100 :
+                Glide.with(this).load(R.drawable.map_five_5).into(mapview5);
+                break;
+        }
+    }
+
+    public void gufour(){
+
+        int i;
+        int tempper =0;
+        for(i=1;i<=5;i++){
+            tempper = 20*i;
+            if(guNumber_4*100/1<=tempper){
+                break;
+            }
+        }
+        switch (tempper){
+            case 20 :
+                Glide.with(this).load(R.drawable.map_four_1).into(mapview4);
+                break;
+
+            case 40 :
+                Glide.with(this).load(R.drawable.map_four_2).into(mapview4);
+                break;
+
+            case 60 :
+                Glide.with(this).load(R.drawable.map_four_3).into(mapview4);
+                break;
+
+            case 80 :
+                Glide.with(this).load(R.drawable.map_four_4).into(mapview4);
+                break;
+
+            case 100 :
+                Glide.with(this).load(R.drawable.map_four_5).into(mapview4);
+                break;
+        }
+    }
+
+    public void guone(){
+
+        int i;
+        int tempper=0 ;
+        for(i=1;i<=5;i++){
+            tempper = 20*i;
+            if(guNumber_1*100/1<=tempper){
+                break;
+            }
+        }
+        switch (tempper){
+            case 20 :
+                Glide.with(this).load(R.drawable.map_one_1).into(mapview1);
+                break;
+
+            case 40 :
+                Glide.with(this).load(R.drawable.map_one_2).into(mapview1);
+                break;
+
+            case 60 :
+                Glide.with(this).load(R.drawable.map_one_3).into(mapview1);
+                break;
+
+            case 80 :
+                Glide.with(this).load(R.drawable.map_one_4).into(mapview1);
+                break;
+
+            case 100 :
+                Glide.with(this).load(R.drawable.map_one_5).into(mapview1);
+                break;
+        }
+    }
+
+    public void gutwo(){
+
+        int i;
+        int tempper=0 ;
+        for(i=1;i<=5;i++){
+            tempper = 20*i;
+            if(guNumber_2*100/4<=tempper){
+                break;
+            }
+        }
+        switch (tempper){
+            case 20 :
+                Glide.with(this).load(R.drawable.map_two_1).into(mapview2);
+                break;
+
+            case 40 :
+                Glide.with(this).load(R.drawable.map_two_2).into(mapview2);
+                break;
+
+            case 60 :
+                Glide.with(this).load(R.drawable.map_two_3).into(mapview2);
+                break;
+
+            case 80 :
+                Glide.with(this).load(R.drawable.map_two_4).into(mapview2);
+                break;
+
+            case 100 :
+                Glide.with(this).load(R.drawable.map_two_5).into(mapview2);
+                break;
+        }
+    }
+
+    public void guthree(){
+        int per = 100;
+        int i;
+        int tempper=0 ;
+        for(i=1;i<=5;i++){
+            tempper = 20*i;
+            if(guNumber_3*100/21<=tempper){
+                break;
+            }
+        }
+        switch (tempper){
+            case 20 :
+                Glide.with(this).load(R.drawable.map_three_1).into(mapview3);
+                break;
+
+            case 40 :
+                Glide.with(this).load(R.drawable.map_three_2).into(mapview3);
+                break;
+
+            case 60 :
+                Glide.with(this).load(R.drawable.map_three_3).into(mapview3);
+                break;
+
+            case 80 :
+                Glide.with(this).load(R.drawable.map_three_4).into(mapview3);
+                break;
+
+            case 100 :
+                Glide.with(this).load(R.drawable.map_three_5).into(mapview3);
+                break;
+        }
     }
 
 
@@ -321,13 +776,15 @@ public class home extends AppCompatActivity {
 
     public void listInit(JSONArray listarr){
         lv =(ListView) findViewById(R.id.list);
+        lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
         Log.d("list",listarr.toString());
         ArrayList<Listviewitem> data = new ArrayList<>();
 
         for(int i=0;i<listarr.length();i++){
             try{
             JSONObject object = listarr.getJSONObject(i);
-             Listviewitem tempdata = new Listviewitem(object.getString("loca_photo"),object.getString("loca_name"),object.getString("loca_checkincount"),object.getString("loca_reviewcount"),object.getString("loca_categorynum"),object.getString("loca_guNum"),R.drawable.heart);
+             Listviewitem tempdata = new Listviewitem(object.getString("loca_photo"),object.getString("loca_name"),object.getString("loca_checkincount"),object.getString("loca_reviewcount"),object.getString("loca_categorynum"),object.getString("loca_guNum"));
              data.add(tempdata);
             }catch (JSONException e){
                 e.printStackTrace();
@@ -399,7 +856,7 @@ public class home extends AppCompatActivity {
         for(int i=0;i<array.length();i++){
             try{
                 JSONObject object = array.getJSONObject(i);
-                Searchitem tempdata = new Searchitem(object.getString("loca_name"),R.drawable.heart2,0);
+                Searchitem tempdata = new Searchitem(object.getString("loca_name"),R.drawable.pointer_small,0);
                 searchdatas.add(tempdata);
             }catch (JSONException e){
                 e.printStackTrace();
@@ -461,7 +918,7 @@ public class home extends AppCompatActivity {
 
         sadapter = new SearchitemAdapter(this,R.layout.searchitem,searchdatas);
         listView1.setAdapter(sadapter);
-
+        listView1.setDivider(null);
         listView1.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -568,6 +1025,7 @@ public class home extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.action_view,menu);
         MenuItem mSearch = menu.findItem(R.id.search);
+
         mSearch.setIcon(resizeImage(R.drawable.search,150,150));
         SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
         MenuItemCompat.setOnActionExpandListener(mSearch, new MenuItemCompat.OnActionExpandListener() {
@@ -623,9 +1081,10 @@ public class home extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                if(newText!=null){
                 sadapter.filter(newText);
                 Log.d("text",""+newText);
-                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);}
                 return false;
             }
 

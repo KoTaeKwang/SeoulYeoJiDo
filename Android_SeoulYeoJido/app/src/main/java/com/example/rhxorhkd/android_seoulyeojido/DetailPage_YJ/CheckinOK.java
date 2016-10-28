@@ -49,36 +49,6 @@ public class CheckinOK extends Activity {
 
     }
 
-//    private TimerTask mTask;
-//    private Timer mTimer;
-//
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.main);
-//
-//        mTask = new TimerTask() {
-//            @Override
-//            public void run() {
-//                Intent intent = new Intent(getApplicationContext()
-//                        , ResultPage.class);
-//                startActivity(intent);
-//            }
-//        };
-//
-//        mTimer = new Timer();
-//
-//        mTimer.schedule(mTask, 5000);
-////      mTimer.schedule(mTask, 3000, 5000);
-//    }
-//
-//    @Override
-//    protected void onDestroy() {
-//        Log.i("test", "onDstory()");
-//        mTimer.cancel();
-//        super.onDestroy();
-//    }
-
         @Override
     protected void onDestroy() {
         Log.i("test", "onDstory()");
@@ -87,13 +57,4 @@ public class CheckinOK extends Activity {
     }
 
 
-//
-//    public void onClick(View v){
-//        switch (v.getId()){
-//            case R.id.btn_checkincancel:
-//                this.finish();
-//                break;
-//            case R.id.btn_checkin:
-//        }
-//    }
 }
