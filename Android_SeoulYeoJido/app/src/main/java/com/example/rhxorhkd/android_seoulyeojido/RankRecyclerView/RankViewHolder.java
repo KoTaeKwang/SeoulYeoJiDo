@@ -36,6 +36,7 @@ public class RankViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         nickname = (TextView)itemView.findViewById(R.id.plain_username);
         profile = (ImageView)itemView.findViewById(R.id.first_profile_img);
 
+
         RelativeLayout rl = (RelativeLayout) itemView.findViewById(R.id.rank_list);
         rl.setOnClickListener(this);
 

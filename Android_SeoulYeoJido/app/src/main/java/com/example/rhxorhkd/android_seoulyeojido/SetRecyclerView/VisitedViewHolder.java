@@ -23,9 +23,9 @@ public class VisitedViewHolder extends RecyclerView.ViewHolder implements View.O
     public VisitedViewHolder(View itemView, VisitedAdapter visitedAdapter) {
         super(itemView);
         mView = itemView;
-        photo = (ImageView)itemView.findViewById(R.id.visit_background);
-        name = (TextView)itemView.findViewById(R.id.visit_name);
-        cnt = (TextView)itemView.findViewById(R.id.visit_cnt);
+        photo = (ImageView)itemView.findViewById(R.id.visited_img);
+        name = (TextView)itemView.findViewById(R.id.visited_name);
+        cnt = (TextView)itemView.findViewById(R.id.visited_cnt);
 
     }
 
