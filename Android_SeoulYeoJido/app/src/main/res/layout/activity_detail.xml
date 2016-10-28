@@ -54,8 +54,6 @@
                     android:clickable="true"/>
             </android.support.v7.widget.Toolbar>
 
-
-
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
@@ -73,11 +71,12 @@
             android:paddingTop="24dp">
             
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="328dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="어디게"
                 android:textSize="19sp"
+                android:gravity="center"
                 android:layout_gravity="center"
                 android:id="@+id/loca_title"
                 android:textColor="#000000"/>
@@ -123,7 +122,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/relLayout01">
+                android:layout_below="@+id/relLayout01"
+                android:paddingBottom="45dp">
 
                 <ImageView
                     android:id="@+id/img_address"
@@ -189,8 +189,7 @@
                     android:layout_alignTop="@+id/img_icphoto"
                     android:layout_toRightOf="@+id/img_photo1"
                     android:layout_marginLeft="5dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/cheese_4" />
+                    android:scaleType="centerCrop" />
 
                 <ImageView
                     android:id="@+id/img_photo3"
@@ -200,8 +199,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_toRightOf="@+id/img_photo1"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/cheese_4" />
+                    android:scaleType="centerCrop" />
 
                 <FrameLayout
                     android:id="@+id/frame_photo"
@@ -216,93 +214,87 @@
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_gravity="center"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/cheese_4" />
+                        android:scaleType="centerCrop" />
 
-                    <ImageView
-                        android:id="@+id/img_plus"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                    <TextView
+                        android:id="@+id/txt_imgplus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_keyboard_arrow_down" />
+                        android:text="+"
+                        android:textColor="#ffffff"
+                        android:textSize="13sp" />
+
+                    <!--<ImageView-->
+                        <!--android:id="@+id/img_plus"-->
+                        <!--android:layout_width="30dp"-->
+                        <!--android:layout_height="30dp"-->
+                        <!--android:layout_gravity="center"-->
+                        <!--android:src="@drawable/ic_keyboard_arrow_down" />-->
                 </FrameLayout>
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#d7d7d7"
-                    android:layout_below="@+id/frame_photo"
-                    android:layout_marginTop="23dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/frame_photo"
-                    android:layout_marginTop="24dp"
-                    android:text="댓글"
-                    android:textSize="13sp"
-                    android:layout_marginLeft="16dp"
-                    android:textColor="#000000"/>
+                <!--<ImageView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:background="#d7d7d7"-->
+                    <!--android:layout_below="@+id/frame_photo"-->
+                    <!--android:layout_marginTop="23dp"/>-->
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_below="@+id/frame_photo"-->
+                    <!--android:layout_marginTop="24dp"-->
+                    <!--android:text="댓글"-->
+                    <!--android:textSize="13sp"-->
+                    <!--android:layout_marginLeft="16dp"-->
+                    <!--android:textColor="#000000"/>-->
 
             </RelativeLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="240dp"></android.support.v7.widget.RecyclerView>
+            <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:id="@+id/recyclerView"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="240dp"></android.support.v7.widget.RecyclerView>-->
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="20dp">
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:padding="20dp">-->
 
-                <Button
-                    android:id="@+id/btn_review"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="댓글쓰기" />
+                <!--<Button-->
+                    <!--android:id="@+id/btn_review"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:text="댓글쓰기" />-->
 
-                <Button
-                    android:id="@+id/btn_more"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="전체 댓글" />
-            </LinearLayout>
+                <!--<Button-->
+                    <!--android:id="@+id/btn_more"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:text="전체 댓글" />-->
+            <!--</LinearLayout>-->
 
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/frame_fab"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="bottom|center">
+        app:layout_anchorGravity="bottom|center"
+        android:src="@drawable/detail_flag_selector"
+        app:backgroundTint="#ffffff"
+        app:fabSize="normal"
+        app:elevation="1dp"
+        app:borderWidth="1dp">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/falg_checkin2"
-            app:backgroundTint="#ffffff"
-            app:fabSize="normal"
-            app:elevation="1dp"
-            app:borderWidth="1dp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="14dp"
-            android:text="123"
-            android:elevation="16dp"
-            android:textColor="@android:color/black" />
-    </FrameLayout>
+    </android.support.design.widget.FloatingActionButton>
 
 
 

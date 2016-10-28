@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
 
@@ -27,6 +28,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ImageViewPager extends AppCompatActivity {
+
+    ImageView back;
 
     int position;
     OkHttpClient client = new OkHttpClient();
@@ -70,11 +73,19 @@ public class ImageViewPager extends AppCompatActivity {
         setContentView(R.layout.activity_image_view_pager);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.hide();
+      //  actionBar.setDisplayHomeAsUpEnabled(true);
+       // actionBar.setDisplayShowTitleEnabled(false);
 
 //        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        back = (ImageView)findViewById(R.id.back_btn1);
+        back.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) { finish(); }
+        });
 
         Intent p = getIntent();
         position = p.getExtras().getInt("id");
@@ -91,7 +102,7 @@ public class ImageViewPager extends AppCompatActivity {
 
         for(int i=0; i<imageGridAdapter.getCount(); i++){
             ImageView imageView = new ImageView(this);
-            Glide.with(this).load( imageGridAdapter.mThumblds.get(i)).into(imageView);
+            Glide.with(this).load( imageGridAdapter.mThumblds.get(i)).centerCrop().into(imageView);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             //imageView.setScaleType(ImageView.ScaleType.CENTER);
             images.add(imageView);

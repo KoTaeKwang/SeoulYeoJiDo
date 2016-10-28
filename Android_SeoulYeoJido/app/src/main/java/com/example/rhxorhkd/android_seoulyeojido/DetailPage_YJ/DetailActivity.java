@@ -27,6 +27,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.rhxorhkd.android_seoulyeojido.ChangeInfo;
+import com.example.rhxorhkd.android_seoulyeojido.MapsActivity;
 import com.example.rhxorhkd.android_seoulyeojido.R;
 import com.example.rhxorhkd.android_seoulyeojido.RankRecyclerView.RankAdapter;
 import com.google.android.gms.appindexing.Action;
@@ -49,14 +51,13 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity implements View.OnClickListener {
     private GpsInfo gps;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private Double longitude;
     private Double latitude;
-    Intent intentSubActivity;
     String getreviewarray;
     String number;
     String weburl;
@@ -78,7 +79,6 @@ public class DetailActivity extends AppCompatActivity {
     private RecyclerView lecyclerView;
     ArrayList<DetailReview> list;
     ListView lv; //리스트
-    //DetailListviewAdapter adapter; //listview adapter
     ListFragment listFragment;
     String url;
     DetailRecyclerAdapter detailRecyclerAdapter;
@@ -122,6 +122,28 @@ public class DetailActivity extends AppCompatActivity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         AppIndex.AppIndexApi.end(client2, getIndexApiAction());
         client2.disconnect();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.img_photo1 :
+                Intent intent = new Intent(DetailActivity.this, ImageGridActivity.class);
+                intent.putExtra("title", locationTitle);
+                startActivity(intent);
+                break;
+            case R.id.img_photo2 :
+                Intent intent1 = new Intent(DetailActivity.this, ImageGridActivity.class);
+                intent1.putExtra("title", locationTitle);
+                startActivity(intent1);
+                break;
+            case R.id.img_photo3 :
+                Intent intent2 = new Intent(DetailActivity.this, ImageGridActivity.class);
+                intent2.putExtra("title", locationTitle);
+                startActivity(intent2);
+                break;
+            default: break;
+        }
     }
 
     public class showDataDetail extends AsyncTask<String, Void, String> {
@@ -234,7 +256,6 @@ public class DetailActivity extends AppCompatActivity {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ImageView back_btn = (ImageView) findViewById(R.id.back_btn1);
@@ -242,7 +263,6 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
-               // Toast.makeText(getApplicationContext(), "back",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -273,10 +293,43 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String result = null;
+//                try {
+//                    checkinsuccess checkinsuccess = new checkinsuccess();
+//                    result = checkinsuccess.execute(locationTitle, latitude.toString(), longitude.toString()).get();
+//                    Log.d("list", "result : " + result);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                Intent intent = new Intent(getApplicationContext(), CheckinPopup.class);
+//                intent.putExtra("result", result); //result 가 0 이면 실패 , 1이면 성공
+//                intent.putExtra("title", locationTitle);
+//
+//                startActivity(intent);
+//                // startActivity(new Intent(getApplicationContext(), CheckinPopup.class));
+//                //Snackbar.make(v, "Hello World", Snackbar.LENGTH_LONG).show();
+//            }
+//        });
+
         imgMap.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Toast.makeText(getContext(), "map 연결",Toast.LENGTH_LONG).show();
-                startActivity(new Intent(DetailActivity.this, DetailMapsActivity.class));
+//                String result = null;
+//                try{
+//                    showDataDetail showDataDetail1 = new showDataDetail();
+//                    result = showDataDetail1.execute(locationTitle, lat, lon, checkincount, guNumber).get();
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+                Intent mapintent = new Intent(DetailActivity.this, DetailMapsActivity.class);
+                mapintent.putExtra("title", locationTitle);
+                mapintent.putExtra("latitude", lat);
+                mapintent.putExtra("longitude", lon);
+                Log.d("intent", "la: " + lat);
+                startActivity(mapintent);
+               // startActivity(new Intent(DetailActivity.this, DetailMapsActivity.class));
             }
         });
 
@@ -288,11 +341,19 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
-
+        /**
+         *
+         */
         ImageView imageView1 = (ImageView) findViewById(R.id.img_photo1);
         ImageView imageView2 = (ImageView) findViewById(R.id.img_photo2);
         ImageView imageView3 = (ImageView) findViewById(R.id.img_photo3);
         ImageView imageView4 = (ImageView) findViewById(R.id.img_photo4);
+
+        imageView1.setOnClickListener(this);
+        imageView2.setOnClickListener(this);
+        imageView3.setOnClickListener(this);
+        imageView4.setOnClickListener(this);
+
 
         if (array != null) {
             for (int i = 0; i < array.length(); i++) {
@@ -316,8 +377,11 @@ public class DetailActivity extends AppCompatActivity {
 
         if (array != null) {
             if (array.length() > 3) {
-                imageView4.setBackgroundColor(new Color().argb(255, 40, 40, 40));
-                imageView4.setAlpha(50);
+                imageView4.setBackgroundColor(new Color().argb(255, 0, 0, 0));
+                imageView4.setAlpha(179);
+
+                TextView t1 = (TextView)findViewById(R.id.txt_imgplus);
+                t1.setText("+ "+array.length());
 
                 imageView4.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -329,56 +393,50 @@ public class DetailActivity extends AppCompatActivity {
                 });
             }
         }
-        /**
-         * 댓글 리사이클뷰
-         */
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        list = new ArrayList<>();
-        Log.d("list", "reviearray-->" + reviewarray.length());
-        for (int i = 0; i < reviewarray.length(); i++) {
-            try {
-                JSONObject object = reviewarray.getJSONObject(i);
-                String user_id = object.getString("user_id");
-                String review_content = object.getString("review_content");
-                String date = object.getString("date");
-                DetailReview review = new DetailReview(user_id, review_content, date, R.drawable.irene3);
-                list.add(review);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-       /* for (int i = 0; i < 3; i++) {
-
-            DetailReview review = new DetailReview("사용자명 " + (i + 1),"리뷰리뷰 써주세요 " + (i + 1),R.drawable.irene3);
-//            review.setImage(R.drawable.irene3);
-//            review.setTitle("사용자명 " + (i + 1));
-//            review.setReview("리뷰리뷰 써주세요 " + (i + 1));
-            list.add(review);
-        }*/
-        detailRecyclerAdapter = new DetailRecyclerAdapter(list, R.layout.detail_row);
-        mRecyclerView.setAdapter(detailRecyclerAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-
-        // listInit(); //리스트 초기화
-
-        //initLayout();       //댓글 초기화
-        //initData();         //댓글
-
-        /**
-         * 댓글 입력
-         */
-        Button btnReview = (Button) findViewById(R.id.btn_review);
-        btnReview.setOnClickListener(mClickListener);
-
-        /**
-         * 전체 댓글보기
-         */
-        Button btnMore = (Button) findViewById(R.id.btn_more);
-        btnMore.setOnClickListener(mClickListener);
+//        /**
+//         * 댓글 리사이클뷰
+//         */
+//
+//        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+//        list = new ArrayList<>();
+//        Log.d("list", "reviearray-->" + reviewarray.length());
+//        for (int i = 0; i < reviewarray.length(); i++) {
+//            try {
+//                JSONObject object = reviewarray.getJSONObject(i);
+//                String user_id = object.getString("user_id");
+//                String review_content = object.getString("review_content");
+//                String date = object.getString("date");
+//                DetailReview review = new DetailReview(user_id, review_content, date, R.drawable.irene3);
+//                list.add(review);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//
+//        detailRecyclerAdapter = new DetailRecyclerAdapter(list, R.layout.detail_row);
+//        mRecyclerView.setAdapter(detailRecyclerAdapter);
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+//        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+//
+//
+//        // listInit(); //리스트 초기화
+//
+//        //initLayout();       //댓글 초기화
+//        //initData();         //댓글
+//
+//        /**
+//         * 댓글 입력
+//         */
+//        Button btnReview = (Button) findViewById(R.id.btn_review);
+//        btnReview.setOnClickListener(mClickListener);
+//
+//        /**
+//         * 전체 댓글보기
+//         */
+//        Button btnMore = (Button) findViewById(R.id.btn_more);
+//        btnMore.setOnClickListener(mClickListener);
 
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -409,36 +467,28 @@ public class DetailActivity extends AppCompatActivity {
     }
 
 
-    Button.OnClickListener mClickListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.btn_review:
-                    Log.d("OnClickListener", "click session button");
-                    // 액티비티 실행
-                    intentSubActivity =
-                            new Intent(DetailActivity.this, Dialog.class);
-                    intentSubActivity.putExtra("title", locationTitle);
-                    startActivity(intentSubActivity);
-
-
-                    break;
-
-                case R.id.btn_more:
-                    Log.d("OnClickListener", "click session button");
-                    // 액티비티 실행
-                    Intent intentSubActivity2 =
-                            new Intent(DetailActivity.this, AllreviewActivity.class);
-
-                    intentSubActivity2.putExtra("result", result);
-                    startActivity(intentSubActivity2);
-                    break;
-            }
-        }
-    };
+//    Button.OnClickListener mClickListener = new View.OnClickListener() {
+//        public void onClick(View v) {
+//            switch (v.getId()) {
+//                case R.id.btn_review:
+//                    // 액티비티 실행
+//                    Intent intentSubActivity = new Intent(DetailActivity.this, Dialog.class);
+//                    intentSubActivity.putExtra("title", locationTitle);
+//                    startActivity(intentSubActivity);
+//                    break;
+//
+//                case R.id.btn_more:
+//                    // 액티비티 실행
+//                    Intent intentSubActivity2 = new Intent(DetailActivity.this, AllreviewActivity.class);
+//                    intentSubActivity2.putExtra("result", result);
+//                    startActivity(intentSubActivity2);
+//                    break;
+//            }
+//        }
+//    };
 
     /**
      * 액션바 뒤로가기
-     *
      * @param item
      * @return
      */
@@ -457,15 +507,14 @@ public class DetailActivity extends AppCompatActivity {
      */
     private void loadBackdrop(String url) {
         final ImageView imageview = (ImageView) findViewById(R.id.backdrop);
-
         //Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
-        Glide.with(this).load(url).into(imageview);
+        Glide.with(this).load(url).centerCrop().into(imageview);
+        imageview.setBackgroundColor(new Color().argb(255, 0, 0, 0));
+        imageview.setAlpha(179);
     }
-
 }
-    /**
-     *
-     */
+
+
 //    private void initLayout(){
 //
 //        lecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
