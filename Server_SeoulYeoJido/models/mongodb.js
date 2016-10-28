@@ -158,7 +158,7 @@ exports.showLoca = function(callback){  //location 정보   첫화면 list
 	var arr=[];
 	async.waterfall([
 		function(callback){
-			LocationMongo.find({},{_id:0,loca_name:1,loca_category:1,loca_photo:1,loca_checkin:1,loca_guNum:1,loca_review:1,loca_address:1},function(err,result){
+			LocationMongo.find({},{_id:0,loca_name:1,loca_category:1,loca_photo:1,loca_checkin:1,loca_guNum:1,loca_review:1,loca_address:1,loca_latitude:1,loca_longitude:1},function(err,result){
 				callback(null,result);
 			})
 		},function(result,callback){
@@ -174,6 +174,8 @@ exports.showLoca = function(callback){  //location 정보   첫화면 list
 				obj.loca_categorynum =0;
 				obj.loca_guNum=0;
 				obj.loca_address=item.loca_address;
+				obj.loca_lon = item.loca_longitude;
+				obj.loca_lat = item.loca_latitude;
 				if(item.loca_category[0]!=null){
 				obj.loca_categorynum = item.loca_category[0].loca_categorynum;
 				category(obj);
@@ -366,11 +368,12 @@ exports.showCategoryLoca = function(data,callback){
 }
 
 exports.showDetailLoca = function(data,callback){
-
+	console.log(data);
 	LocationMongo.findOne({loca_name:data},{},function(err,result){
 		var obj ={};
 		var arr=[];
-		if(result.loca_photo[0]!=null){
+
+		if(result.loca_photo!=null){
 			async.each(result.loca_photo,function(item,cb){
 					arr.push(item.photo_url);
 					cb();
@@ -387,7 +390,7 @@ exports.showDetailLoca = function(data,callback){
 		obj.loca_checkincount = result.loca_checkin.length;
 		obj.loca_review = result.loca_review;
 		obj.loca_url = result.loca_url;
-
+		obj.loca_guNum = result.loca_guNum;
 
 		callback(obj);
 

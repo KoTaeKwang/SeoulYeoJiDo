@@ -75,7 +75,7 @@ router.post('/addReview',function(req,res,next){
 		res.json(success);
 	})
 })
-/*
+
 router.post('/addCheckin',function(req,res,next){
 	var data = {};
 	data.loca_name = req.body.loca_name;
@@ -85,7 +85,7 @@ router.post('/addCheckin',function(req,res,next){
 	mongodb.addCheckin(data,function(success){
 		res.json(success);
 	})
-})*/
+})
 
 router.post('/showCheckin',function(req,res,next){
 	var user_id = req.body.user_id;
