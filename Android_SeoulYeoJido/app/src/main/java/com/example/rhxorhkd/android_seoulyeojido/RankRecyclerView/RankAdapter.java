@@ -94,6 +94,11 @@ public class RankAdapter extends RecyclerView.Adapter<RankViewHolder>{
 
         Intent i = new Intent(this.mContext, set.class);
         i.putExtra("name", item.getNickname());
+        i.putExtra("profile", item.getImg());
+        i.putExtra("uid", item.getEct());
+        i.putExtra("cnt", item.getChk_cnt());
+
+
         this.mContext.startActivity(i);
 
     }
