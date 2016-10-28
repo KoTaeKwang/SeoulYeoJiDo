@@ -263,13 +263,6 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
                 intentSubActivity.putExtra("result", results);
 
 
-                //intentSubActivity.putStringArrayListExtra("locaarray",  ArrayList<e>  );
-                //intentSubActivity.putExtra("userid",user.getUid());
-//                intentSubActivity.putExtra("location",);
-//                intentSubActivity.putExtra("time",);
-//                intentSubActivity.putExtra("gunum",);
-
-//서버에서 읽어와야함
                 startActivity(intentSubActivity);
 
                 return false;
