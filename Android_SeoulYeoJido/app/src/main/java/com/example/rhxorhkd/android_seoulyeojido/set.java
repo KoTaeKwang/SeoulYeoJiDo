@@ -70,10 +70,10 @@ public class set extends AppCompatActivity implements View.OnClickListener{
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tl_tab);
         ViewPager viewPager = (ViewPager)findViewById(R.id.vp_pager);
 
-        Fragment[] fragments = new Fragment[3];
+        Fragment[] fragments = new Fragment[2];
         fragments[0] = new AnalysisFragment();
         fragments[1] = new VisitedFragment();
-        fragments[2] = new BookmarkFragment();
+//        fragments[2] = new BookmarkFragment();
 
         MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager(), fragments);
 
@@ -156,44 +156,7 @@ public class set extends AppCompatActivity implements View.OnClickListener{
                     cnt++;
 
 
-//                    if(data.child("guNumber").getValue()!=null){
-//                        switch (Integer.parseInt(""+data.child("guNumber").getValue())){
-//                            case 1 :
-//                                guNumber_1++;
-//                                break;
-//                            case 2 :
-//                                guNumber_2++;
-//                                break;
-//                            case 3 :
-//                                guNumber_3++;
-//                                break;
-//                            case 4 :
-//                                guNumber_4++;
-//                                break;
-//                            case 5 :
-//                                guNumber_5++;
-//                                break;
-//                            case 6 :
-//                                guNumber_6++;
-//                                break;
-//                            case 7 :
-//                                guNumber_7++;
-//                                break;
-//                            case 8 :
-//                                guNumber_8++;
-//                                break;
-//                            case 9 :
-//                                guNumber_9++;
-//                                break;
-//                            case 10 :
-//                                guNumber_10++;
-//                                break;
-//                            case 11 :
-//                                guNumber_11++;
-//                                break;
-//
-//                            default: break;
-//                        }
+
 //
 //                    }
                     if(cnt == data.getChildrenCount()){
