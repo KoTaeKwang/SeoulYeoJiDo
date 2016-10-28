@@ -253,11 +253,13 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         if (url != null)
             loadBackdrop(url);     //이미지 로드
 
+// 툴바
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+// 뒤로 가기 버튼
         ImageView back_btn = (ImageView) findViewById(R.id.back_btn1);
         back_btn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -274,6 +276,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         TextView loca_title1 = (TextView)findViewById(R.id.loca_title);
         loca_title1.setText(locationTitle);
 
+
         /**
          * 상세 버튼, 설명 etc...
          */
@@ -285,6 +288,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         txt_address.setText(address);
         TextView txt_description = (TextView) findViewById(R.id.txt_detail);
         txt_description.setText(description);
+        TextView check_count = (TextView)findViewById(R.id.check_count);
+        check_count.setText(checkincount);
 
         imgTel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -293,43 +298,16 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
 
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String result = null;
-//                try {
-//                    checkinsuccess checkinsuccess = new checkinsuccess();
-//                    result = checkinsuccess.execute(locationTitle, latitude.toString(), longitude.toString()).get();
-//                    Log.d("list", "result : " + result);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                Intent intent = new Intent(getApplicationContext(), CheckinPopup.class);
-//                intent.putExtra("result", result); //result 가 0 이면 실패 , 1이면 성공
-//                intent.putExtra("title", locationTitle);
-//
-//                startActivity(intent);
-//                // startActivity(new Intent(getApplicationContext(), CheckinPopup.class));
-//                //Snackbar.make(v, "Hello World", Snackbar.LENGTH_LONG).show();
-//            }
-//        });
 
         imgMap.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-//                String result = null;
-//                try{
-//                    showDataDetail showDataDetail1 = new showDataDetail();
-//                    result = showDataDetail1.execute(locationTitle, lat, lon, checkincount, guNumber).get();
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                }
+
                 Intent mapintent = new Intent(DetailActivity.this, DetailMapsActivity.class);
                 mapintent.putExtra("title", locationTitle);
                 mapintent.putExtra("latitude", lat);
                 mapintent.putExtra("longitude", lon);
                 Log.d("intent", "la: " + lat);
                 startActivity(mapintent);
-               // startActivity(new Intent(DetailActivity.this, DetailMapsActivity.class));
             }
         });
 
@@ -341,9 +319,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
 
-        /**
-         *
-         */
+
+// 장소 사진
         ImageView imageView1 = (ImageView) findViewById(R.id.img_photo1);
         ImageView imageView2 = (ImageView) findViewById(R.id.img_photo2);
         ImageView imageView3 = (ImageView) findViewById(R.id.img_photo3);
@@ -394,6 +371,35 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             }
         }
 
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String result = null;
+                try {
+                    checkinsuccess checkinsuccess = new checkinsuccess();
+                    result = checkinsuccess.execute(locationTitle, latitude.toString(), longitude.toString()).get();
+                    Log.d("list", "result : " + result);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent(getApplicationContext(), CheckinPopup.class);
+                intent.putExtra("result", result); //result 가 0 이면 실패 , 1이면 성공
+                intent.putExtra("title", locationTitle);
+
+                startActivity(intent);
+                // startActivity(new Intent(getApplicationContext(), CheckinPopup.class));
+                //Snackbar.make(v, "Hello World", Snackbar.LENGTH_LONG).show();
+            }
+        });
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client2 = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+
+
 //        /**
 //         * 댓글 리사이클뷰
 //         */
@@ -437,35 +443,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 //         */
 //        Button btnMore = (Button) findViewById(R.id.btn_more);
 //        btnMore.setOnClickListener(mClickListener);
-
-
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String result = null;
-                try {
-                    checkinsuccess checkinsuccess = new checkinsuccess();
-                    result = checkinsuccess.execute(locationTitle, latitude.toString(), longitude.toString()).get();
-                    Log.d("list", "result : " + result);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                Intent intent = new Intent(getApplicationContext(), CheckinPopup.class);
-                intent.putExtra("result", result); //result 가 0 이면 실패 , 1이면 성공
-                intent.putExtra("title", locationTitle);
-
-                startActivity(intent);
-                // startActivity(new Intent(getApplicationContext(), CheckinPopup.class));
-                //Snackbar.make(v, "Hello World", Snackbar.LENGTH_LONG).show();
-            }
-        });
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client2 = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-    }
-
 
 //    Button.OnClickListener mClickListener = new View.OnClickListener() {
 //        public void onClick(View v) {

@@ -44,14 +44,36 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
 
-                <ImageView
-                    android:layout_width="19dp"
-                    android:layout_height="19dp"
-                    android:id="@+id/back_btn1"
-                    android:src="@drawable/back_white"
-                    android:layout_gravity="left"
-                    android:layout_marginRight="16dp"
-                    android:clickable="true"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="19dp"
+                        android:layout_height="19dp"
+                        android:id="@+id/back_btn1"
+                        android:src="@drawable/back_white"
+                        android:layout_gravity="left"
+                        android:layout_marginRight="16dp"
+                        android:clickable="true"/>
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="32dp"
+                        android:src="@drawable/before_check_in_flag"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/check_count"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="16dp"/>
+                </RelativeLayout>
+
+
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
