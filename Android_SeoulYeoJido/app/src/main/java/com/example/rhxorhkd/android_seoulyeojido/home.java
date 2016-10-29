@@ -1,5 +1,6 @@
 package com.example.rhxorhkd.android_seoulyeojido;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -21,9 +22,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -40,7 +39,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.tsengvn.typekit.Typekit;
 import com.tsengvn.typekit.TypekitContextWrapper;
@@ -83,7 +81,6 @@ public class home extends AppCompatActivity {
     SearchitemAdapter sadapter; //search adapter
     RelativeLayout map; //지도
     LinearLayout searchlistview; //검색창누르면 나오는 리스트뷰
-    Button button; // 지도 안의 버튼
     SearchView searchView; //서치뷰
     ListView lv; //리스트
     ArrayList<Searchitem> searchdatas; //서치 데이터들
@@ -95,10 +92,11 @@ public class home extends AppCompatActivity {
     JSONArray jsonarray;
     Response response;
     Request request;
-    public static String guNum;
     int guNumber_1, guNumber_2, guNumber_3, guNumber_4, guNumber_5, guNumber_6, guNumber_7,
             guNumber_8, guNumber_9, guNumber_10, guNumber_11;
-    ImageView tempmapview1;
+
+
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
@@ -108,6 +106,7 @@ public class home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         client = new OkHttpClient();
         map=(RelativeLayout)findViewById(R.id.map);
         searchlistview=(LinearLayout)findViewById(R.id.searchlistview);
@@ -117,6 +116,9 @@ public class home extends AppCompatActivity {
         db = FirebaseDatabase.getInstance();
         user = auth.getCurrentUser();
         ref = db.getReference("member").child(user.getUid()+"/checkin");
+
+        CheckTypesTask task = new CheckTypesTask();
+        task.execute();
 
 
         // 액션바 디자인
@@ -430,7 +432,6 @@ public class home extends AppCompatActivity {
                 break;
         }
     }
-
     public void gunine(){
 
         int i;
@@ -463,7 +464,6 @@ public class home extends AppCompatActivity {
                 break;
         }
     }
-
     public void gueight(){
 
         int i;
@@ -560,7 +560,6 @@ public class home extends AppCompatActivity {
                 break;
         }
     }
-
     public void gufive(){
 
         int i;
@@ -593,7 +592,6 @@ public class home extends AppCompatActivity {
                 break;
         }
     }
-
     public void gufour(){
 
         int i;
@@ -626,7 +624,6 @@ public class home extends AppCompatActivity {
                 break;
         }
     }
-
     public void guone(){
 
         int i;
@@ -659,7 +656,6 @@ public class home extends AppCompatActivity {
                 break;
         }
     }
-
     public void gutwo(){
 
         int i;
@@ -692,7 +688,6 @@ public class home extends AppCompatActivity {
                 break;
         }
     }
-
     public void guthree(){
         int per = 100;
         int i;
@@ -748,7 +743,6 @@ public class home extends AppCompatActivity {
             mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
         }
     }
-
 
     class MyListner implements View.OnClickListener{
         String categoryNum;
@@ -1093,7 +1087,6 @@ public class home extends AppCompatActivity {
     }
 
     public class firstListGetData extends AsyncTask<String, Void, String>{
-        String listResult;
 
         @Override
         protected String doInBackground(String... params) {
@@ -1181,6 +1174,46 @@ public class home extends AppCompatActivity {
             }
             //post gu num
             return null;
+        }
+    }
+
+    private class CheckTypesTask extends AsyncTask<Void, Void, Void>{
+        ProgressDialog asyncDialog = new ProgressDialog(home.this);
+        //customprogressdialog customprogressdialog;
+
+        @Override
+        protected void onPreExecute() {
+            //customprogressdialog = new customprogressdialog(home.this);
+            Log.d("list","execute");
+            /*customprogressdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            customprogressdialog.show();*/
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            asyncDialog.setMessage("로딩중");
+            asyncDialog.setCanceledOnTouchOutside(false); //진행되는 동안 바깥족을 눌러 종료하는것 금지
+            asyncDialog.show();
+
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            Log.d("list","back"); //리스트들이 꽉차면 return
+            try{
+                Thread.sleep(5000);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            Log.d("list","post");
+        //    customprogressdialog.dismiss();
+
+            asyncDialog.dismiss();
+            asyncDialog=null;
+            super.onPostExecute(aVoid);
         }
     }
 
