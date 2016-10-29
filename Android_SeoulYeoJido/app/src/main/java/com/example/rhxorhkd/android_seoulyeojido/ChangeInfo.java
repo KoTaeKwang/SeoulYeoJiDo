@@ -38,7 +38,7 @@ import com.google.firebase.storage.UploadTask;
 public class ChangeInfo extends AppCompatActivity implements View.OnClickListener {
 
     private EditText nickName;
-    private ImageView iv1, iv2;
+    private ImageView iv1, background;
 
     private FirebaseAuth auth;
     private FirebaseDatabase db;
@@ -55,6 +55,8 @@ public class ChangeInfo extends AppCompatActivity implements View.OnClickListene
         ActionBar ab = getSupportActionBar();
         ab.hide();
 
+
+
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         Ref = db.getReference("member");
@@ -62,10 +64,13 @@ public class ChangeInfo extends AppCompatActivity implements View.OnClickListene
         storageReference = storage.getReferenceFromUrl("gs://seoulmap-db7e1.appspot.com");
 
         iv1 = (ImageView)findViewById(R.id.change_img);
+        background = (ImageView)findViewById(R.id.change_info_back);
         nickName = (EditText)findViewById(R.id.change_nickname);
         findViewById(R.id.chage_back).setOnClickListener(this);
         findViewById(R.id.change_img).setOnClickListener(this);
         findViewById(R.id.logout).setOnClickListener(this);
+
+        Glide.with(this).load(R.drawable.loginactivity).into(background);
 
         FirebaseUser user = auth.getCurrentUser();
         Ref.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {

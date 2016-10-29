@@ -1,5 +1,7 @@
 package com.example.rhxorhkd.android_seoulyeojido;
 
+import android.app.LocalActivityManager;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 import com.example.rhxorhkd.android_seoulyeojido.Model.RankItem;
@@ -31,7 +34,6 @@ import java.util.Comparator;
 
 public class rank extends AppCompatActivity implements View.OnClickListener {
 
-    static int my ;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -71,17 +73,17 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
 
 
 
+
+
+
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            int cnt = 0;
 
             @Override
             public void onDataChange(DataSnapshot data) {
                 for (DataSnapshot post: data.getChildren()) {
 
+                    int cnt = list.size();
 
-                    if(post.getKey().toString().equals(user.getUid().toString())){
-                        my = cnt;
-                    }
 
                     String nick = "" + post.child("nickname").getValue();
                     String chk_cnt = "" + post.child("checkin").getChildrenCount();
@@ -101,7 +103,6 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
                         mAdapter = new RankAdapter(rank.this, list);
                         mRecyclerView.setAdapter(mAdapter);
                     }
-                    cnt++;
                 }
             }
 
@@ -115,20 +116,26 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
 
             @Override
             public void onChildChanged(DataSnapshot data, String s) {//내 닉네임 변경 감지
-                Toast.makeText(rank.this, ""+data.getValue(), Toast.LENGTH_SHORT).show();
 
                 if(data.getKey().toString().equals("nickname")){
-                    Toast.makeText(rank.this, ""+data.getKey() , Toast.LENGTH_SHORT).show();
-                    list.set(my, new RankItem(""+list.get(my).getRank(),""+data.getValue(), ""+list.get(my).getChk_cnt(), ""+list.get(my).getEct(), ""+list.get(my).getImg()));
-                    Toast.makeText(rank.this, ""+my, Toast.LENGTH_SHORT).show();
+                    for(int i = 0 ; i<list.size();  i++){
+                        if(list.get(i).getEct().equals(user.getUid().toString())){
+                            list.set(i, new RankItem(""+list.get(i).getRank(),""+data.getValue(), ""+list.get(i).getChk_cnt(), ""+list.get(i).getEct(), ""+list.get(i).getImg()));
+                            mAdapter.notifyDataSetChanged();
+                            break;
+                        }
+                    }
+
                 }
                 else if(data.getKey().toString().equals("profile")){
-                    list.set(my, new RankItem(""+list.get(my).getRank(),""+list.get(my).getNickname(), ""+list.get(my).getChk_cnt(), ""+list.get(my).getEct(), ""+data.getValue()));
+                    for(int i = 0 ; i<list.size();  i++){
+                        if(list.get(i).getEct().equals(user.getUid().toString())){
+                            list.set(i, new RankItem(""+list.get(i).getRank(),""+list.get(i).getNickname(), ""+list.get(i).getChk_cnt(), ""+list.get(i).getEct(), ""+data.getValue()));
+                            mAdapter.notifyDataSetChanged();
+                            break;
+                        }
+                    }
                 }
-
-
-                mAdapter = new RankAdapter(rank.this, list);
-                mAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -141,28 +148,6 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
             public void onCancelled(DatabaseError databaseError) {}
         });
 
-//        ref.child(user.getUid()+"/profile").addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {}
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot data, String s) {//내 사진 변경 감지
-//                Toast.makeText(rank.this, ""+data.getValue(), Toast.LENGTH_SHORT).show();
-//
-//                list.set(my, new RankItem(""+list.get(my).getRank(),""+list.get(my).getNickname(), ""+list.get(my).getChk_cnt(), ""+list.get(my).getEct(), ""+data.getValue()));
-//                mAdapter = new RankAdapter(rank.this, list);
-//                mAdapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {}
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {}
-//        });
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -172,9 +157,18 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+
+
             case R.id.find_myRank:
-                    mLayoutManager.scrollToPosition(my);
-//                mLayoutManager.smoothScrollToPosition(mRecyclerView, null, 95);
+                FirebaseUser user = auth.getCurrentUser();
+                for(int i = 0; i <list.size(); i++){
+                    if(list.get(i).getEct().equals(user.getUid().toString())){
+                        mLayoutManager.smoothScrollToPosition(mRecyclerView, null, i);
+//                        mLayoutManager.scrollToPosition(i);
+                        break;
+                    }
+                }
+
                 break;
             default:
                 break;
@@ -196,6 +190,7 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
                 .setActionStatus(Action.STATUS_TYPE_COMPLETED)
                 .build();
     }
+
 
 
 }
