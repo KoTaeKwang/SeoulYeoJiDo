@@ -82,11 +82,11 @@
         <activity android:name=".FindPwActivity" />
         <activity android:name=".ChangePw" />
         <activity android:name=".StartActivity">
-            <intent-filter>
+        <!--    <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".DetailPage_YJ.DetailMapsActivity"
@@ -94,7 +94,15 @@
         <activity
             android:name=".DetailPage_YJ.CheckinmapActivity"
             android:label="@string/title_activity_checkinmap" />
-        <activity android:name=".customprogressdialog"></activity>
+        <activity android:name=".customprogressdialog" />
+        <activity android:name=".LaunchSplash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
     </application>
 
 </manifest>
