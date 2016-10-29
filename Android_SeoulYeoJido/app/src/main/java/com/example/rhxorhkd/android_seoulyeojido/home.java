@@ -69,7 +69,7 @@ public class home extends AppCompatActivity {
     private DatabaseReference ref;
     private FirebaseUser user;
 
-    ImageView mapview1;
+    ImageView mapview1; //맵 이미지
     ImageView mapview2;
     ImageView mapview3;
     ImageView mapview4;
@@ -83,7 +83,7 @@ public class home extends AppCompatActivity {
     ImageView mapview12;
 
 
-    ImageView imageView6;
+    ImageView imageView6; //카테고리 이미지
     ImageView imageView5;
     ImageView imageView4;
     ImageView imageView3;
