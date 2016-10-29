@@ -58,7 +58,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class home extends AppCompatActivity {
-
+    ArrayList<Listviewitem> data;
     private FirebaseAuth auth;
     private FirebaseDatabase db;
     private DatabaseReference ref;
@@ -773,7 +773,7 @@ public class home extends AppCompatActivity {
         lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         Log.d("list",listarr.toString());
-        ArrayList<Listviewitem> data = new ArrayList<>();
+        data = new ArrayList<>();
 
         for(int i=0;i<listarr.length();i++){
             try{
@@ -1198,11 +1198,11 @@ public class home extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             Log.d("list","back"); //리스트들이 꽉차면 return
-            try{
-                Thread.sleep(5000);
+           /* try{
+                Thread.sleep(500);
             }catch (Exception e){
                 e.printStackTrace();
-            }
+            }*/
             return null;
         }
 
