@@ -49,7 +49,7 @@ public class RankViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
         switch (view.getId()){
             case R.id.rank_list :
-                rankAdapter.clickEvent(position);
+                rankAdapter.clickEvent(position, view);
                 break;
             default: break;
         }

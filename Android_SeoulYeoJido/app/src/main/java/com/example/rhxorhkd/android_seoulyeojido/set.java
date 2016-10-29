@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.example.rhxorhkd.android_seoulyeojido.Model.RankItem;
 import com.example.rhxorhkd.android_seoulyeojido.SetActivityFragment.AnalysisFragment;
 import com.example.rhxorhkd.android_seoulyeojido.SetActivityFragment.BookmarkFragment;
 import com.example.rhxorhkd.android_seoulyeojido.SetActivityFragment.VisitedFragment;
@@ -81,7 +82,6 @@ public class set extends AppCompatActivity implements View.OnClickListener{
         tabLayout.setupWithViewPager(viewPager);
 
         findViewById(R.id.gotoMap).setOnClickListener(this);
-        findViewById(R.id.my_profile_img).setOnClickListener(this);
 
         iv = (ImageView)findViewById(R.id.my_profile_img);
         iv2 = (ImageView)findViewById(R.id.back_btn);
@@ -90,26 +90,17 @@ public class set extends AppCompatActivity implements View.OnClickListener{
 
         Intent i = getIntent();
         if(i.getStringExtra("uid") == null){//탭으로 본 마이페이지
-            iv2.setImageDrawable(null);
+            findViewById(R.id.my_profile_img).setOnClickListener(this);//
+            iv2.setImageDrawable(null);//백버튼 없애기
 
-            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            ref.child(user.getUid()).addChildEventListener(new ChildEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot data) {
-                    String nickName = ""+data.child(user.getUid()+"/nickname").getValue();
-                    tv.setText(nickName);
-                    if(data.child(user.getUid()+"/nickname").getValue() != null){
-                        Glide.with(set.this).load(data.child(user.getUid()+"/profile").getValue()).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv){
-                            @Override
-                            protected void setResource(Bitmap resource) {
-                                super.setResource(resource);
-                                RoundedBitmapDrawable circularBitmapDrawable =
-                                        RoundedBitmapDrawableFactory.create(this.getView().getResources(), resource);
-                                circularBitmapDrawable.setCircular(true);
-                                iv.setImageDrawable(circularBitmapDrawable);
-                            }
-                        });
-                    }else{
-                        Glide.with(set.this).load(R.drawable.profile).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv){
+                public void onChildAdded(DataSnapshot data, String s) {
+                    if(data.getKey().toString().equals("nickname")){
+                        tv.setText(""+data.getValue());
+                    }
+                    else if(data.getKey().toString().equals("profile")){
+                        Glide.with(set.this).load(data.getValue()).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv){
                             @Override
                             protected void setResource(Bitmap resource) {
                                 super.setResource(resource);
@@ -123,12 +114,33 @@ public class set extends AppCompatActivity implements View.OnClickListener{
                 }
 
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
-
+                public void onChildChanged(DataSnapshot data, String s) {
+                    if(data.getKey().toString().equals("nickname")){
+                        tv.setText(""+data.getValue());
+                    }
+                    else if(data.getKey().toString().equals("profile")){
+                        Glide.with(set.this).load(data.getValue()).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv){
+                            @Override
+                            protected void setResource(Bitmap resource) {
+                                super.setResource(resource);
+                                RoundedBitmapDrawable circularBitmapDrawable =
+                                        RoundedBitmapDrawableFactory.create(this.getView().getResources(), resource);
+                                circularBitmapDrawable.setCircular(true);
+                                iv.setImageDrawable(circularBitmapDrawable);
+                            }
+                        });
+                    }
                 }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {}
             });
-
-
 
         }else{//랭킹에서 넘어온경우
             findViewById(R.id.back_btn).setOnClickListener(this);
