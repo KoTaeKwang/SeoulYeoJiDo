@@ -13,6 +13,8 @@
         android:layout_marginBottom="14dp"
         android:id="@+id/lay_textview"
         android:textColor="#000000"
+        android:ellipsize="marquee"
+        android:singleLine="true"
         android:text="장소이름"
         android:textAlignment="center"
         android:textSize="20sp"
@@ -41,25 +43,7 @@
         android:layout_toRightOf="@+id/checkin_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <TextView
-        android:textColor="#9e9e9e"
-        android:layout_marginRight="9dp"
-        android:layout_toRightOf="@+id/lay_textcheckcount"
-        android:layout_below="@id/lay_textview"
-        android:textSize="13sp"
-        android:text="댓글"
-        android:id="@+id/location_reply"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:layout_toRightOf="@+id/location_reply"
-        android:layout_below="@id/lay_textview"
-        android:textColor="#000000"
-        android:textSize="13sp"
-        android:text="163"
-        android:id="@+id/lay_reviewcheckcount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
     <TextView
         android:textColor="#9e9e9e"
         android:layout_marginTop="14dp"

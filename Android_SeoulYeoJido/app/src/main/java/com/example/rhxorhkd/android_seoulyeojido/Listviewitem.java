@@ -8,7 +8,7 @@ public class Listviewitem {
     private String icon;
     private String name;
     private String subname;
-    private String reviewcount;
+
     private String thirdname;
     private String fourthname;
 
@@ -23,9 +23,7 @@ public class Listviewitem {
         return thirdname;
     }
 
-    public String getReviewcount() {
-        return reviewcount;
-    }
+
 
     public String getFourthname() {
         return fourthname;
@@ -34,12 +32,12 @@ public class Listviewitem {
     public String getName() {
         return name;
     }
-    public Listviewitem(String icon,String name,String subname, String reviewcount,String thirdname, String fourthname){
+    public Listviewitem(String icon,String name,String subname, String thirdname, String fourthname){
         this.icon=icon;
         this.name=name;
         this.subname=subname;
         this.thirdname=thirdname;
-        this.reviewcount=reviewcount;
+
         this.fourthname=fourthname;
     }
 

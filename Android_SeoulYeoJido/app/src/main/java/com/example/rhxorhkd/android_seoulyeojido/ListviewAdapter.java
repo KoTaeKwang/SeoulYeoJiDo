@@ -1,28 +1,18 @@
 package com.example.rhxorhkd.android_seoulyeojido;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by rhxorhkd on 2016-10-15.
@@ -35,7 +25,7 @@ public class ListviewAdapter extends BaseAdapter {
     private View tempview;
     public static int counts=0;
     public Context context;
-    boolean checked[] = new boolean[80];
+
 
 
 
@@ -82,8 +72,6 @@ public class ListviewAdapter extends BaseAdapter {
         TextView name2 = (TextView)convertView.findViewById(R.id.lay_textcheckcount); //checkin 카운트
         name2.setText(listviewitem.getSubname());
 
-        TextView name23 = (TextView)convertView.findViewById(R.id.lay_reviewcheckcount); //review 카운트
-        name23.setText(listviewitem.getReviewcount());
 
         TextView name3 = (TextView)convertView.findViewById(R.id.lay_textview3);  //카테고리
         name3.setText(listviewitem.getThirdname());
