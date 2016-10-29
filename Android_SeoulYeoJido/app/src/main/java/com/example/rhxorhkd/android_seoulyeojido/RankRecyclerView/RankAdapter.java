@@ -45,6 +45,8 @@ public class RankAdapter extends RecyclerView.Adapter<RankViewHolder>{
     public void onBindViewHolder(final RankViewHolder holder, int position) {
         RankItem item = list.get(position);
         holder.visited_cnt.setText(item.getChk_cnt());
+
+
         if(position == 0){
             holder.profile.setBackgroundResource(R.drawable.rank_item_border);
             holder.upline.setVisibility(View.VISIBLE);

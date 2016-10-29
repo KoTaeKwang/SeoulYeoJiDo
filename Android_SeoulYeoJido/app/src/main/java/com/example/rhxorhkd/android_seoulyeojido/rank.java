@@ -39,6 +39,8 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth auth;
     private FirebaseDatabase db;
     private DatabaseReference ref;
+
+    private final ArrayList<RankItem> list = new ArrayList<>();
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -60,7 +62,7 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
 
         findViewById(R.id.find_myRank).setOnClickListener(this);
 
-        final ArrayList<RankItem> list = new ArrayList<>();
+
         final Comparator<RankItem> sort = new Comparator<RankItem>() {
             public int compare(RankItem r1, RankItem r2) {
                 return r1.getChk_cnt().compareTo(r2.getChk_cnt())>0 ? -1: 1;
@@ -70,13 +72,15 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
 
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            int cnt = 0;
+
             @Override
             public void onDataChange(DataSnapshot data) {
                 for (DataSnapshot post: data.getChildren()) {
-                    int cnt = list.size();
+
 
                     if(post.getKey().toString().equals(user.getUid().toString())){
-                        my = cnt+1;
+                        my = cnt;
                     }
 
                     String nick = "" + post.child("nickname").getValue();
@@ -97,7 +101,7 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
                         mAdapter = new RankAdapter(rank.this, list);
                         mRecyclerView.setAdapter(mAdapter);
                     }
-
+                    cnt++;
                 }
             }
 
@@ -105,7 +109,60 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
             public void onCancelled(DatabaseError databaseError) {}
         });
 
+        ref.child(user.getUid()).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {}
 
+            @Override
+            public void onChildChanged(DataSnapshot data, String s) {//내 닉네임 변경 감지
+                Toast.makeText(rank.this, ""+data.getValue(), Toast.LENGTH_SHORT).show();
+
+                if(data.getKey().toString().equals("nickname")){
+                    Toast.makeText(rank.this, ""+data.getKey() , Toast.LENGTH_SHORT).show();
+                    list.set(my, new RankItem(""+list.get(my).getRank(),""+data.getValue(), ""+list.get(my).getChk_cnt(), ""+list.get(my).getEct(), ""+list.get(my).getImg()));
+                    Toast.makeText(rank.this, ""+my, Toast.LENGTH_SHORT).show();
+                }
+                else if(data.getKey().toString().equals("profile")){
+                    list.set(my, new RankItem(""+list.get(my).getRank(),""+list.get(my).getNickname(), ""+list.get(my).getChk_cnt(), ""+list.get(my).getEct(), ""+data.getValue()));
+                }
+
+
+                mAdapter = new RankAdapter(rank.this, list);
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+//        ref.child(user.getUid()+"/profile").addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {}
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot data, String s) {//내 사진 변경 감지
+//                Toast.makeText(rank.this, ""+data.getValue(), Toast.LENGTH_SHORT).show();
+//
+//                list.set(my, new RankItem(""+list.get(my).getRank(),""+list.get(my).getNickname(), ""+list.get(my).getChk_cnt(), ""+list.get(my).getEct(), ""+data.getValue()));
+//                mAdapter = new RankAdapter(rank.this, list);
+//                mAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {}
+//        });
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -140,23 +197,5 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
                 .build();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
-    }
 }
