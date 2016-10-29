@@ -1,15 +1,22 @@
 package com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.Settings;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -31,6 +38,7 @@ import com.example.rhxorhkd.android_seoulyeojido.ChangeInfo;
 import com.example.rhxorhkd.android_seoulyeojido.MapsActivity;
 import com.example.rhxorhkd.android_seoulyeojido.R;
 import com.example.rhxorhkd.android_seoulyeojido.RankRecyclerView.RankAdapter;
+import com.example.rhxorhkd.android_seoulyeojido.home;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -173,6 +181,31 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
+    public class showCheckin extends AsyncTask<String, Void, String>{
+        @Override
+        protected String doInBackground(String... params) {
+            final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            JSONObject json = new JSONObject();
+            try {
+                json.put("user_id", params[0]);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            RequestBody posData = RequestBody.create(JSON, json.toString());
+            request = new Request.Builder()
+                    .url("http://211.189.20.136:4389/ko/showCheckin")
+                    .post(posData)
+                    .build();
+            try{
+                response = client.newCall(request).execute();
+                return response.body().string();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
     public class checkinsuccess extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
@@ -200,6 +233,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             return null;
         }
     }
+
 
     public void showdetailinit() {
         showDataDetail showDataDetail = new showDataDetail();
@@ -372,6 +406,23 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
+//유저 체크인시 플로팅버튼 색칠
+        showCheckin showCheckin = new showCheckin();
+        try{
+            Log.d("list", "aaa" + locationTitle);
+            result = showCheckin.execute(locationTitle).get();
+            object = new JSONObject(result);
+            number = object.getString("loca_tel");
+
+            for(int i=0; i<object.length(); i++){
+                if(locationTitle.equals(object.getString("loca_name"))){
+                    fab.setSelected(true);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+//유저 체크인시 플로팅버튼 색칠----
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -384,18 +435,57 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
+
                 Intent intent = new Intent(getApplicationContext(), CheckinPopup.class);
                 intent.putExtra("result", result); //result 가 0 이면 실패 , 1이면 성공
                 intent.putExtra("title", locationTitle);
 
                 startActivity(intent);
-                // startActivity(new Intent(getApplicationContext(), CheckinPopup.class));
-                //Snackbar.make(v, "Hello World", Snackbar.LENGTH_LONG).show();
             }
         });
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client2 = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+        LocationManager locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE); //gps 사용 유/무 파악하려고
+        if(!locManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){ //gps 꺼져있을 시 앱이 수행할 코드
+            Log.d("list","gps 연결 X");
+            new AlertDialog.Builder(DetailActivity.this)
+                    .setMessage("GPS가 꺼져있습니다. \n 'Google 위치 서비스' 를 체크해주세요")
+                    .setPositiveButton("설정", new DialogInterface.OnClickListener() { //설정 버튼 누를때
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS); //설정페이지 이동
+                            startActivity(intent);
+                        }
+                    }).setNegativeButton("취소",null).show();
+
+        }
+
+
+        ConnectivityManager manager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mobile = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        NetworkInfo wifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
+        // wifi 또는 모바일 네트워크 어느 하나라도 연결이 되어있다면,
+        if (wifi.isConnected() || mobile.isConnected()) {
+           // Log.i("연결됨" , "연결이 되었습니다.);
+           //         setContentView(R.layout.activity_logo);
+        } else {
+            new AlertDialog.Builder(DetailActivity.this)
+                    .setMessage("'인터넷 연결을 체크해주세요")
+                    .setPositiveButton("설정", new DialogInterface.OnClickListener() { //설정 버튼 누를때
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS); //설정페이지 이동
+                            startActivity(intent);
+                        }
+                    }).setNegativeButton("취소",null).show();
+
+            //Log.i("연결 안 됨" , "연결이 다시 한번 확인해주세요);
+        }
     }
 
 
@@ -493,7 +583,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
 
 //    private void initLayout(){
-//
 //        lecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
 //    }
 

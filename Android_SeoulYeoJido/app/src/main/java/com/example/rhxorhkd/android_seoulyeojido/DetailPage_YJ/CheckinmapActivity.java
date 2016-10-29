@@ -2,16 +2,21 @@ package com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -126,7 +131,6 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
         rl.setVisibility(View.GONE);
         tv1 = (TextView) findViewById(R.id.location_name);
 
-      //  findViewById(R.id.map_back).setOnClickListener(this);
 
         gps = new GpsInfo(CheckinmapActivity.this);
 
@@ -142,6 +146,43 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
 
         time = new SimpleDateFormat("yyyyMMdd").format(new Date(System.currentTimeMillis()));
         Toast.makeText(this, time, Toast.LENGTH_SHORT).show();
+
+        LocationManager locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE); //gps 사용 유/무 파악하려고
+        if(!locManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){ //gps 꺼져있을 시 앱이 수행할 코드
+            Log.d("list","gps 연결 X");
+            new AlertDialog.Builder(CheckinmapActivity.this)
+                    .setMessage("GPS가 꺼져있습니다. \n 'Google 위치 서비스' 를 체크해주세요")
+                    .setPositiveButton("설정", new DialogInterface.OnClickListener() { //설정 버튼 누를때
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS); //설정페이지 이동
+                            startActivity(intent);
+                        }
+                    }).setNegativeButton("취소",null).show();
+
+        }
+
+        ConnectivityManager manager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mobile = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        NetworkInfo wifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
+        // wifi 또는 모바일 네트워크 어느 하나라도 연결이 되어있다면,
+        if (wifi.isConnected() || mobile.isConnected()) {
+            // Log.i("연결됨" , "연결이 되었습니다.);
+            //         setContentView(R.layout.activity_logo);
+        } else {
+            new AlertDialog.Builder(CheckinmapActivity.this)
+                    .setMessage("인터넷 연결을 체크해주세요")
+                    .setPositiveButton("설정", new DialogInterface.OnClickListener() { //설정 버튼 누를때
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS); //설정페이지 이동
+                            startActivity(intent);
+                        }
+                    }).setNegativeButton("취소",null).show();
+
+            //Log.i("연결 안 됨" , "연결이 다시 한번 확인해주세요);
+        }
 
 
     }
@@ -231,7 +272,6 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
             @Override
             public boolean onMarkerClick(Marker marker) {
 
-//                Log.d("OnClickListener", "click session button");
                 tv1.setText(marker.getTitle());
                 showlocainfo(marker.getTitle());
                 showcheckincounttext.setText(showcheckincount);
@@ -243,8 +283,6 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
                 rl.setVisibility(View.VISIBLE);
 
                 markerId = marker.getId().toString();
-              //  Toast.makeText(getApplicationContext(), " == "+markerId, 1).show();
-
 
                 String results =null;
                 Log.d("list","showtitle : "+showtitle);
@@ -262,16 +300,7 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
                 intentSubActivity.putExtra("time", time);
                 intentSubActivity.putExtra("result", results);
 
-
-                //intentSubActivity.putStringArrayListExtra("locaarray",  ArrayList<e>  );
-                //intentSubActivity.putExtra("userid",user.getUid());
-//                intentSubActivity.putExtra("location",);
-//                intentSubActivity.putExtra("time",);
-//                intentSubActivity.putExtra("gunum",);
-
-//서버에서 읽어와야함
                 startActivity(intentSubActivity);
-
                 return false;
             }
         });

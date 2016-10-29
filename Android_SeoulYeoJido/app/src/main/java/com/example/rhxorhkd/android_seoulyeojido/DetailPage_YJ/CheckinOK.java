@@ -33,7 +33,7 @@ public class CheckinOK extends Activity {
 
         ImageView okgif = (ImageView)findViewById(R.id.img_checkinGIF);
         GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(okgif);
-        Glide.with(this).load(R.raw.check_in_fail).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(imageViewTarget);
+        Glide.with(this).load(R.raw.check_in_success).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(imageViewTarget);
 
         mTask = new TimerTask() {
             @Override
@@ -44,12 +44,7 @@ public class CheckinOK extends Activity {
 
         mTimer.schedule(mTask, 4000);
        // mTimer.schedule(mTask, 3000, 5000);
-
-
         //findViewById(R.id.btn_checkincancel).setOnClickListener(this);
-
-
-
     }
 
         @Override
@@ -58,6 +53,4 @@ public class CheckinOK extends Activity {
         mTimer.cancel();
         super.onDestroy();
     }
-
-
 }
