@@ -1,13 +1,17 @@
 package com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ;
 
+import android.Manifest;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.app.ActivityCompat;
+import android.widget.Toast;
 
 import static android.content.Context.LOCATION_SERVICE;
 
@@ -28,38 +32,46 @@ public class GpsInfo extends Service implements LocationListener {
 
     protected LocationManager locationManager;
 
-    public GpsInfo(Context context){
+    public GpsInfo(Context context) {
         this.mContext = context;
         getLocation();
     }
-    public Location getLocation(){
-        try{
+
+    public Location getLocation() {
+        try {
             locationManager = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
             isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
             isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-            if(!isGPSEnabled && ! isNetworkEnabled){
+            if (!isGPSEnabled && !isNetworkEnabled) {
                 //GPS와 네트워크사용이 가능하지 않을때 소스구현
-            }else{
-//네트워크 정보로부터 위치값 가져오기
-                this.isGetLocation = true;
-                if(isNetworkEnabled){
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10, 60000, this);
-                    if(locationManager != null){
-                        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        if(location != null){
-                            lat = location.getLatitude();
-                            lon = location.getLongitude();
-                        }
-                    }
+            } else {
+                location = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
+                if (location != null){
+                    lat = location.getLatitude();
+                    lon = location.getLongitude();
+
+                    Toast.makeText(getApplicationContext(), "Last Known Location : " + "Latitude : " + lat +"\nLongitude : " + lon, Toast.LENGTH_LONG).show();
                 }
-                if(isGPSEnabled){
-                    if(location==null){
+//네트워크 정보로부터 위치값 가져오기
+//                this.isGetLocation = true;
+//                if (isNetworkEnabled) {
+//                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10, 60000, this);
+//                    if (locationManager != null) {
+//                        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+//                        if (location != null) {
+//                            lat = location.getLatitude();
+//                            lon = location.getLongitude();
+//                        }
+//                    }
+//                }
+                if (isGPSEnabled) {
+                    if (location == null) {
 //GPS정보로 위치값 가져오기
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 60000, this);
-                        if(locationManager != null){
+                        if (locationManager != null) {
                             location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                            if(location != null){
+                            if (location != null) {
                                 lat = location.getLatitude();
                                 lon = location.getLongitude();
                             }
@@ -68,14 +80,24 @@ public class GpsInfo extends Service implements LocationListener {
                 }
 
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return location;
     }
 
-    public void stopUsingGPS(){
-        if(locationManager!=null){
+    public void stopUsingGPS() {
+        if (locationManager != null) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             locationManager.removeUpdates(GpsInfo.this);
         }
     }
