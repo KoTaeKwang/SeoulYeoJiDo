@@ -27,6 +27,7 @@ import com.example.rhxorhkd.android_seoulyeojido.SetActivityFragment.BookmarkFra
 import com.example.rhxorhkd.android_seoulyeojido.SetActivityFragment.VisitedFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,6 +44,10 @@ public class set extends AppCompatActivity implements View.OnClickListener{
 
     private ImageView iv, iv2;
     private TextView tv, tv2;
+
+    private static String total_checkin ="0";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +70,10 @@ public class set extends AppCompatActivity implements View.OnClickListener{
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tl_tab);
         ViewPager viewPager = (ViewPager)findViewById(R.id.vp_pager);
 
-        Fragment[] fragments = new Fragment[3];
+        Fragment[] fragments = new Fragment[2];
         fragments[0] = new AnalysisFragment();
         fragments[1] = new VisitedFragment();
-        fragments[2] = new BookmarkFragment();
+//        fragments[2] = new BookmarkFragment();
 
         MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager(), fragments);
 
@@ -84,7 +89,7 @@ public class set extends AppCompatActivity implements View.OnClickListener{
         tv2 = (TextView)findViewById(R.id.up_name);
 
         Intent i = getIntent();
-        if(i.getStringExtra("name") == null){//탭으로 본 마이페이지
+        if(i.getStringExtra("uid") == null){//탭으로 본 마이페이지
             iv2.setImageDrawable(null);
 
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -128,8 +133,9 @@ public class set extends AppCompatActivity implements View.OnClickListener{
         }else{//랭킹에서 넘어온경우
             findViewById(R.id.back_btn).setOnClickListener(this);
             tv.setText(i.getStringExtra("name"));
+//            total_checkin = i.getStringExtra("cnt");
 
-            Glide.with(this).load(R.drawable.irene1).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv){
+            Glide.with(this).load(i.getStringExtra("profile")).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv){
                 @Override
                 protected void setResource(Bitmap resource) {
                     super.setResource(resource);
@@ -139,6 +145,46 @@ public class set extends AppCompatActivity implements View.OnClickListener{
                     iv.setImageDrawable(circularBitmapDrawable);
                 }
             });
+
+            ref.child(i.getStringExtra("uid")).child("checkin").addChildEventListener(new ChildEventListener() {
+                int guNumber_1, guNumber_2, guNumber_3, guNumber_4, guNumber_5, guNumber_6, guNumber_7,
+                        guNumber_8, guNumber_9, guNumber_10, guNumber_11;
+                int cnt = 0;
+
+                @Override
+                public void onChildAdded(DataSnapshot data, String s) {
+                    cnt++;
+
+
+
+//
+//                    }
+                    if(cnt == data.getChildrenCount()){
+//                        total_checkin = ""+data.getChildrenCount();
+                    }
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
         }
 
 
@@ -191,11 +237,11 @@ public class set extends AppCompatActivity implements View.OnClickListener{
         public CharSequence getPageTitle(int position) {
             switch (position){
                 case 0 :
-                    return  "28%\n나의 서울";
+                    return  "나의 서울";
                 case 1 :
-                    return "52\n체크인";
+                    return "체크인";
                 case 2 :
-                    return "37\n담은 서울";
+                    return "담은 서울";
                 default:
                     return "";
             }

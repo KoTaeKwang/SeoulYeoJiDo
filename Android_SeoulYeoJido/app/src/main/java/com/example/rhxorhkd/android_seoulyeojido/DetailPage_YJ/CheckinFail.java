@@ -4,7 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.model.ImageVideoWrapperEncoder;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.example.rhxorhkd.android_seoulyeojido.R;
 
 import java.util.Timer;
@@ -25,19 +30,17 @@ public class CheckinFail extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.checkinfail);
 
+        ImageView failgif = (ImageView)findViewById(R.id.img_failGIF);
+        GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(failgif);
+        Glide.with(this).load(R.raw.check_in_fail).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(imageViewTarget);
+
         mTask = new TimerTask() {
             @Override
-            public void run() {
-                /*Intent intent = new Intent(getApplicationContext()
-                        , DetailActivity.class);
-                startActivity(intent);*/
-                finish();
+            public void run() { finish();
             }
         };
-
         mTimer = new Timer();
-
-        mTimer.schedule(mTask, 2000);
+        mTimer.schedule(mTask, 4000);
         // mTimer.schedule(mTask, 3000, 5000);
 
 

@@ -84,7 +84,7 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
                     String img = "" + post.child("profile").getValue();
 
                     RankItem item = new RankItem(
-                            "" + cnt , nick, chk_cnt, "", img
+                            "" + cnt , nick, chk_cnt, ""+post.getKey(), img
                     );
                     list.add(cnt, item);
                     Collections.sort(list, sort);

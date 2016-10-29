@@ -23,9 +23,9 @@ public class BookmarkViewHolder extends RecyclerView.ViewHolder implements View.
     public BookmarkViewHolder(View itemView, BookmarkAdapter bookmarkAdapter) {
         super(itemView);
         mView = itemView;
-        photo = (ImageView)itemView.findViewById(R.id.visit_background);
-        name = (TextView)itemView.findViewById(R.id.visit_name);
-        cnt = (TextView)itemView.findViewById(R.id.visit_cnt);
+        photo = (ImageView)itemView.findViewById(R.id.visited_img);
+        name = (TextView)itemView.findViewById(R.id.visited_name);
+        cnt = (TextView)itemView.findViewById(R.id.visited_cnt);
     }
 
     @Override
