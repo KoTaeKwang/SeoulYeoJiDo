@@ -106,6 +106,8 @@ public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCa
 
         latitude = gps.getLatitude();
         longitude = gps.getLongitude();
+        Log.d("gps", "latitude: " + latitude);
+
 
         Intent intent = getIntent();
         locationtitle = intent.getStringExtra("title");

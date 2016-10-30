@@ -52,6 +52,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
+    RelativeLayout relativeLayout;
 
     OkHttpClient client = new OkHttpClient();
     JSONObject jsonobject;
@@ -133,9 +134,14 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
 
 
         gps = new GpsInfo(CheckinmapActivity.this);
+// GPS 사용유무 가져오기
+        if (gps.isGetLocation()) {
 
+        }
         latitude = gps.getLatitude();
         longitude = gps.getLongitude();
+        Log.d("gps","latitude : "+latitude);
+
 
         //checkinListGetData getData = new checkinListGetData();
 
@@ -180,7 +186,6 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
                             startActivity(intent);
                         }
                     }).setNegativeButton("취소",null).show();
-
             //Log.i("연결 안 됨" , "연결이 다시 한번 확인해주세요);
         }
 
@@ -305,14 +310,16 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
             }
         });
 
+        relativeLayout = (RelativeLayout)findViewById(R.id.location_detail);
+
         mMap.getUiSettings().setRotateGesturesEnabled(false);
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
 
-                Intent intent = new Intent(getApplicationContext(),DetailActivity.class);
-                intent.putExtra("name",showtitle);
-                startActivity(intent);
+                //Intent intent = new Intent(getApplicationContext(),DetailActivity.class);
+                //intent.putExtra("name",showtitle);
+                //startActivity(intent);
             }
         });
     }
