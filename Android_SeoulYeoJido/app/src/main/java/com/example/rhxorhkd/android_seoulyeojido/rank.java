@@ -1,5 +1,7 @@
 package com.example.rhxorhkd.android_seoulyeojido;
 
+import android.app.LocalActivityManager;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 import com.example.rhxorhkd.android_seoulyeojido.Model.RankItem;
@@ -31,7 +34,6 @@ import java.util.Comparator;
 
 public class rank extends AppCompatActivity implements View.OnClickListener {
 
-    static int my ;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -39,6 +41,8 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth auth;
     private FirebaseDatabase db;
     private DatabaseReference ref;
+
+    private final ArrayList<RankItem> list = new ArrayList<>();
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -60,7 +64,7 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
 
         findViewById(R.id.find_myRank).setOnClickListener(this);
 
-        final ArrayList<RankItem> list = new ArrayList<>();
+
         final Comparator<RankItem> sort = new Comparator<RankItem>() {
             public int compare(RankItem r1, RankItem r2) {
                 return r1.getChk_cnt().compareTo(r2.getChk_cnt())>0 ? -1: 1;
@@ -69,15 +73,17 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
 
 
 
+
+
+
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot data) {
                 for (DataSnapshot post: data.getChildren()) {
+
                     int cnt = list.size();
 
-                    if(post.getKey().toString().equals(user.getUid().toString())){
-                        my = cnt+1;
-                    }
 
                     String nick = "" + post.child("nickname").getValue();
                     String chk_cnt = "" + post.child("checkin").getChildrenCount();
@@ -97,7 +103,6 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
                         mAdapter = new RankAdapter(rank.this, list);
                         mRecyclerView.setAdapter(mAdapter);
                     }
-
                 }
             }
 
@@ -105,6 +110,43 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
             public void onCancelled(DatabaseError databaseError) {}
         });
 
+        ref.child(user.getUid()).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onChildChanged(DataSnapshot data, String s) {//내 닉네임 변경 감지
+
+                if(data.getKey().toString().equals("nickname")){
+                    for(int i = 0 ; i<list.size();  i++){
+                        if(list.get(i).getEct().equals(user.getUid().toString())){
+                            list.set(i, new RankItem(""+list.get(i).getRank(),""+data.getValue(), ""+list.get(i).getChk_cnt(), ""+list.get(i).getEct(), ""+list.get(i).getImg()));
+                            mAdapter.notifyDataSetChanged();
+                            break;
+                        }
+                    }
+
+                }
+                else if(data.getKey().toString().equals("profile")){
+                    for(int i = 0 ; i<list.size();  i++){
+                        if(list.get(i).getEct().equals(user.getUid().toString())){
+                            list.set(i, new RankItem(""+list.get(i).getRank(),""+list.get(i).getNickname(), ""+list.get(i).getChk_cnt(), ""+list.get(i).getEct(), ""+data.getValue()));
+                            mAdapter.notifyDataSetChanged();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
 
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -115,9 +157,18 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+
+
             case R.id.find_myRank:
-                    mLayoutManager.scrollToPosition(my);
-//                mLayoutManager.smoothScrollToPosition(mRecyclerView, null, 95);
+                FirebaseUser user = auth.getCurrentUser();
+                for(int i = 0; i <list.size(); i++){
+                    if(list.get(i).getEct().equals(user.getUid().toString())){
+                        mLayoutManager.smoothScrollToPosition(mRecyclerView, null, i);
+//                        mLayoutManager.scrollToPosition(i);
+                        break;
+                    }
+                }
+
                 break;
             default:
                 break;
@@ -140,23 +191,6 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
                 .build();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
-    }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
-    }
 }

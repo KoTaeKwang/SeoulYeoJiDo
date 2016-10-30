@@ -75,14 +75,10 @@ public class AnalysisFragment extends Fragment {
 
         ref.child(user.getUid()+"/checkin").addChildEventListener(new ChildEventListener() {
 
-            int guNumber_1, guNumber_2, guNumber_3, guNumber_4, guNumber_5, guNumber_6, guNumber_7,
-                    guNumber_8, guNumber_9, guNumber_10, guNumber_11;
-
             int index;
             int chk_cnt;
             @Override
             public void onChildAdded(DataSnapshot data, String s) {
-
 
 
                 if(data.child("guNumber") != null) {
@@ -90,48 +86,7 @@ public class AnalysisFragment extends Fragment {
                     chk_cnt = list.get(index);
                     list.set(index, chk_cnt+1);
                     mAdapter.notifyDataSetChanged();
-//                    switch (Integer.parseInt("" + data.child("guNumber").getValue())) {
-//                        case 1:
-//                            guNumber_1++;
-//                            break;
-//                        case 2:
-//                            guNumber_2++;
-//                            break;
-//                        case 3:
-//                            guNumber_3++;
-//                            break;
-//                        case 4:
-//                            guNumber_4++;
-//                            break;
-//                        case 5:
-//                            guNumber_5++;
-//                            break;
-//                        case 6:
-//                            guNumber_6++;
-//                            break;
-//                        case 7:
-//                            guNumber_7++;
-//                            break;
-//                        case 8:
-//                            guNumber_8++;
-//                            break;
-//                        case 9:
-//                            guNumber_9++;
-//                            break;
-//                        case 10:
-//                            guNumber_10++;
-//                            break;
-//                        case 11:
-//                            guNumber_11++;
-//                            break;
-//
-//                        default:
-//                            break;
-//                    }//switch
                 }
-
-
-
             }
 
             @Override

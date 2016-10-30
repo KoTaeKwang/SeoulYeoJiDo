@@ -14,12 +14,14 @@ import com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ.CheckinmapActivit
 
 public class MainActivity extends ActivityGroup {
 
+    private TabHost tabHost;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent intent;
-        TabHost tabHost = (TabHost)findViewById(R.id.tabhost);
+        tabHost = (TabHost)findViewById(R.id.tabhost);
         tabHost.setup(getLocalActivityManager()); //intent를 content로 하기 위해서 getlocalActivitymanager 필요
         TabHost.TabSpec spec;
         Resources res= getResources();
@@ -78,5 +80,9 @@ public class MainActivity extends ActivityGroup {
 
 
         tabHost.setCurrentTab(0); //첫 시작
+    }
+
+    public void switchTab(int i){
+        tabHost.setCurrentTab(i);
     }
 }
