@@ -43,6 +43,13 @@ public class CheckinOK extends Activity {
         mTimer = new Timer();
 
         mTimer.schedule(mTask, 4000);
+        Intent i = getIntent(); // 보내온 Intent를 얻는다
+        String title = i.getStringExtra("name");
+
+        Intent intent = new Intent(this, DetailMapsActivity.class);
+        intent.putExtra("name",title);
+        startActivity(intent);
+       // startActivity(new Intent(getApplicationContext(), DetailMapsActivity.class));
        // mTimer.schedule(mTask, 3000, 5000);
         //findViewById(R.id.btn_checkincancel).setOnClickListener(this);
     }

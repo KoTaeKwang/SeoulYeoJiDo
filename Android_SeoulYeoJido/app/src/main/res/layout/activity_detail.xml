@@ -49,19 +49,11 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:layout_width="19dp"
-                        android:layout_height="19dp"
-                        android:id="@+id/back_btn1"
-                        android:src="@drawable/back_white"
-                        android:layout_gravity="left"
-                        android:layout_marginRight="16dp"
-                        android:clickable="true"/>
-                    <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="32dp"
-                        android:src="@drawable/before_check_in_flag"
+                        android:src="@drawable/falg_white"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -69,17 +61,40 @@
                         android:id="@+id/check_count"
                         android:textColor="#ffffff"
                         android:textSize="14sp"
+                        android:text="0"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="16dp"/>
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="5dp"/>
                 </RelativeLayout>
 
 
             </android.support.v7.widget.Toolbar>
 
+            <ImageView
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:id="@+id/back_white"
+                android:src="@drawable/back_white"
+                android:clickable="true"/>
+
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
 
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_anchor="@id/appbar"
+        app:layout_anchorGravity="bottom|center"
+        android:src="@drawable/detail_flag_selector"
+        app:backgroundTint="#ffffff"
+        app:fabSize="normal"
+        app:elevation="1dp"
+        app:borderWidth="1dp">
+
+    </android.support.design.widget.FloatingActionButton>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -91,7 +106,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingTop="24dp">
-            
+
             <TextView
                 android:layout_width="328dp"
                 android:layout_height="wrap_content"
@@ -134,7 +149,7 @@
                     android:layout_alignBottom="@+id/img_frg2"
                     android:layout_marginLeft="70dp" />
             </RelativeLayout>
-            
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -303,21 +318,6 @@
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="bottom|center"
-        android:src="@drawable/detail_flag_selector"
-        app:backgroundTint="#ffffff"
-        app:fabSize="normal"
-        app:elevation="1dp"
-        app:borderWidth="1dp">
-
-    </android.support.design.widget.FloatingActionButton>
-
 
 
 </android.support.design.widget.CoordinatorLayout>
