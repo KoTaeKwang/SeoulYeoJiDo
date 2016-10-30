@@ -186,10 +186,10 @@ public class CheckinPopup extends Activity implements View.OnClickListener {
                     }catch (Exception e){
                         e.printStackTrace();
                     }
-                    Intent i = new Intent(this, CheckinOK.class);
-                    i.putExtra("name", title);
-                    startActivity(i);
-                //startActivity(new Intent(this, CheckinOK.class));
+//                    Intent i = new Intent(this, CheckinOK.class);
+//                    i.putExtra("name", title);
+//                    startActivity(i);
+                startActivity(new Intent(this, CheckinOK.class));
                 }
                 else startActivity(new Intent(this, CheckinFail.class));
 

@@ -32,7 +32,8 @@ public class CheckinFail extends Activity {
 
         ImageView failgif = (ImageView)findViewById(R.id.img_failGIF);
         GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(failgif);
-        Glide.with(this).load(R.raw.check_in_fail).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(imageViewTarget);
+        Glide.with(this).load(R.raw.check_in_fail).diskCacheStrategy(DiskCacheStrategy.SOURCE).skipMemoryCache(true).into(imageViewTarget);
+
 
         mTask = new TimerTask() {
             @Override

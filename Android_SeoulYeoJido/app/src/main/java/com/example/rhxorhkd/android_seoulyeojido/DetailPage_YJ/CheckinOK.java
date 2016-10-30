@@ -33,7 +33,7 @@ public class CheckinOK extends Activity {
 
         ImageView okgif = (ImageView)findViewById(R.id.img_checkinGIF);
         GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(okgif);
-        Glide.with(this).load(R.raw.check_in_success).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(imageViewTarget);
+        Glide.with(this).load(R.raw.check_in_success).diskCacheStrategy(DiskCacheStrategy.SOURCE).skipMemoryCache(true).into(imageViewTarget);
 
         mTask = new TimerTask() {
             @Override
@@ -43,13 +43,8 @@ public class CheckinOK extends Activity {
         mTimer = new Timer();
 
         mTimer.schedule(mTask, 4000);
-        Intent i = getIntent(); // 보내온 Intent를 얻는다
-        String title = i.getStringExtra("name");
 
-        Intent intent = new Intent(this, DetailMapsActivity.class);
-        intent.putExtra("name",title);
-        startActivity(intent);
-       // startActivity(new Intent(getApplicationContext(), DetailMapsActivity.class));
+
        // mTimer.schedule(mTask, 3000, 5000);
         //findViewById(R.id.btn_checkincancel).setOnClickListener(this);
     }
