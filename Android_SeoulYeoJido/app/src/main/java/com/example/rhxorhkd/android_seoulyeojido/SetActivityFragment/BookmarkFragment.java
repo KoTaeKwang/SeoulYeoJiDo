@@ -42,13 +42,13 @@ public class BookmarkFragment extends Fragment {
 
 
         ArrayList<VisitedItem> list = new ArrayList<>();
-        for(int i = 0; i<10; i++){
-
-            VisitedItem item = new VisitedItem(
-                    "", "장소"+i, ""+i
-            );
-            list.add(i, item);
-        }
+//        for(int i = 0; i<10; i++){
+//
+//            VisitedItem item = new VisitedItem(
+//                    "", "장소"+i, ""+i
+//            );
+//            list.add(i, item);
+//        }
         mAdapter = new BookmarkAdapter(this.getContext(), list);
         mRecyclerView.setAdapter(mAdapter);
 

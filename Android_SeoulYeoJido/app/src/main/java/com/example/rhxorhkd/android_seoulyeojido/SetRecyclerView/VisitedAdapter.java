@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.example.rhxorhkd.android_seoulyeojido.Model.VisitedItem;
 import com.example.rhxorhkd.android_seoulyeojido.R;
 
@@ -35,9 +36,10 @@ public class VisitedAdapter extends RecyclerView.Adapter<VisitedViewHolder>{
     @Override
     public void onBindViewHolder(VisitedViewHolder holder, int position) {
         VisitedItem item = list.get(position);
-//        holder.photo.setImageURI();
         holder.cnt.setText(item.getCnt());
-        holder.name.setText(item.getName());
+        holder.name.setText(item.getTitle());
+        holder.cate_guName.setText(item.getCategory()+"·"+item.getGuName());
+        Glide.with(mContext).load(item.getPhoto()).into(holder.photo);
     }
 
     @Override

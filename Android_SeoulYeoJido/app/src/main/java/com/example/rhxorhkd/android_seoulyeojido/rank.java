@@ -153,13 +153,16 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
+    public  void goMypage(){
+        TabHost host = (TabHost) this.getParent().findViewById(R.id.tabhost);
+        host.setCurrentTab(3);
+    }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-
-
             case R.id.find_myRank:
+
                 FirebaseUser user = auth.getCurrentUser();
                 for(int i = 0; i <list.size(); i++){
                     if(list.get(i).getEct().equals(user.getUid().toString())){

@@ -30,6 +30,7 @@
 
 
     <EditText
+        android:singleLine="true"
         android:layout_marginTop="30dp"
         android:background="@drawable/blank"
         android:textColor="#9e9e9e"
@@ -44,6 +45,7 @@
         android:id="@+id/email" />
 
     <EditText
+        android:singleLine="true"
         android:background="@drawable/blank"
         android:textSize="11sp"
         android:padding="8dp"

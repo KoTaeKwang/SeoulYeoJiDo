@@ -55,6 +55,7 @@ public class CheckinPopup extends Activity implements View.OnClickListener {
     String lon;
     String url;
     String guNumber;
+    String category_num;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE); //타이틀바 삭제
@@ -154,14 +155,15 @@ public class CheckinPopup extends Activity implements View.OnClickListener {
 
                         array = object.getJSONArray("loca_photo");
                         guNumber = object.getString("loca_guNum"); //구넘버
-
+                        category_num = object.getString("loca_categorynum"); //카테고리
+                        Log.d("list",""+category_num);
                         url =array.get(0).toString(); //사진
 
 
                         Map<String, Object> chekindb = new HashMap<>();
-
+                        chekindb.put("category","");
                         chekindb.put("guNumber", guNumber);
-                        chekindb.put("data", dates);
+                        chekindb.put("date", dates);
                         chekindb.put("img", url);
                         chekindb.put("lat", lat);
                         chekindb.put("lon", lon);
