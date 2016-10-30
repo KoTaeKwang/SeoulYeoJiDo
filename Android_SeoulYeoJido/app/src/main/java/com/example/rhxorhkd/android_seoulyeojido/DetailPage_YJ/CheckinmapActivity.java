@@ -35,6 +35,13 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.tsengvn.typekit.Typekit;
 import com.tsengvn.typekit.TypekitContextWrapper;
 
@@ -52,6 +59,14 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
+    private DatabaseReference ref;
+    private FirebaseAuth auth;
+    private FirebaseDatabase db;
+    String uid;
+    JSONArray locationarray;
+    JSONObject object;
+    int markercheck[] = new int[100];
+    private Marker m;
     RelativeLayout relativeLayout;
 
     OkHttpClient client = new OkHttpClient();
@@ -186,6 +201,7 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
                             startActivity(intent);
                         }
                     }).setNegativeButton("취소",null).show();
+
             //Log.i("연결 안 됨" , "연결이 다시 한번 확인해주세요);
         }
 
@@ -215,7 +231,7 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
         Bitmap noCheck = bitmapdraw2.getBitmap();
 
         Bitmap noChecksmallMarker = Bitmap.createScaledBitmap(noCheck, width, height, false);
-        Bitmap CheckedsmallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+        final Bitmap CheckedsmallMarker = Bitmap.createScaledBitmap(b, width, height, false);
 
         LatLng myLocation = new LatLng(latitude, longitude);
         Log.d("mr", "la: " + latitude);
@@ -255,22 +271,75 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
             e.printStackTrace();
         }
 
-
         if(jsonArray!=null){
             for(int i=0;i<jsonArray.length();i++) {
                 try{
-                JSONObject object = jsonArray.getJSONObject(i);
-                String lat = object.getString("loca_lat");
-                String lon = object.getString("loca_lon");
-                String title = object.getString("loca_name");
-                 LatLng temp = new LatLng(Double.parseDouble(lat),Double.parseDouble(lon));
-                mMap.addMarker(new MarkerOptions().position(temp).title(title).icon(BitmapDescriptorFactory.fromBitmap(CheckedsmallMarker)));
+                    JSONObject object1 = jsonArray.getJSONObject(i);
+                    String lat = object1.getString("loca_lat");
+                    String lon = object1.getString("loca_lon");
+                    String title = object1.getString("loca_name");
+                    LatLng temp = new LatLng(Double.parseDouble(lat),Double.parseDouble(lon));
+
+                    m = mMap.addMarker(new MarkerOptions().position(temp).title(title).icon(BitmapDescriptorFactory.fromBitmap(noChecksmallMarker)));
 
                 }catch (Exception e){
                     e.printStackTrace();
                 }
             }
         }
+
+
+//
+        //유저 체크인시 플로팅버튼 색칠
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseDatabase.getInstance();
+        ref = db.getReference("member");
+
+        FirebaseUser user = auth.getCurrentUser();
+        uid = user.getUid();
+        Log.d("list", "uid-->" + uid);
+
+        ref.child(uid+"/checkin").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot data) {
+                for (DataSnapshot post: data.getChildren()) {
+                    m.remove();
+
+                    Marker checked = mMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(Double.valueOf(""+post.child("lat").getValue()).doubleValue(), Double.valueOf(""+post.child("lon").getValue()).doubleValue()))
+                            .title(""+post.getKey())
+                            .icon(BitmapDescriptorFactory.fromBitmap(CheckedsmallMarker))
+                    );
+                    String num = checked.getId().substring(1);
+                    Log.d("what","-->"+num);
+                    markercheck[Integer.parseInt(num)]=1;
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) { }
+        });
+
+
+
+
+
+//
+//        if(jsonArray!=null){
+//            for(int i=0;i<jsonArray.length();i++) {
+//                try{
+//                JSONObject object = jsonArray.getJSONObject(i);
+//                String lat = object.getString("loca_lat");
+//                String lon = object.getString("loca_lon");
+//                String title = object.getString("loca_name");
+//                 LatLng temp = new LatLng(Double.parseDouble(lat),Double.parseDouble(lon));
+//
+//                mMap.addMarker(new MarkerOptions().position(temp).title(title).icon(BitmapDescriptorFactory.fromBitmap(CheckedsmallMarker)));
+//
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
 
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -299,6 +368,9 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
                     e.printStackTrace();
                 }
 
+               // if(m.getId)
+                String num = marker.getId().substring(1);
+                if(markercheck[Integer.parseInt(num)]==0){
                 Intent intentSubActivity = new Intent(CheckinmapActivity.this, CheckinPopup.class);
                 intentSubActivity.putExtra("position", marker.getPosition());
                 intentSubActivity.putExtra("title", marker.getTitle());
@@ -306,12 +378,12 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
                 intentSubActivity.putExtra("result", results);
 
                 startActivity(intentSubActivity);
+                }
                 return false;
             }
         });
 
         relativeLayout = (RelativeLayout)findViewById(R.id.location_detail);
-
         mMap.getUiSettings().setRotateGesturesEnabled(false);
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -322,6 +394,32 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
                 //startActivity(intent);
             }
         });
+    }
+
+
+    public class showCheckin extends AsyncTask<String, Void, String>{
+        @Override
+        protected String doInBackground(String... params) {
+            final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            JSONObject json = new JSONObject();
+            try {
+                json.put("user_id", params[0]);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            RequestBody posData = RequestBody.create(JSON, json.toString());
+            request = new Request.Builder()
+                    .url("http://211.189.20.136:4389/ko/showCheckin")
+                    .post(posData)
+                    .build();
+            try{
+                response = client.newCall(request).execute();
+                return response.body().string();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 
 

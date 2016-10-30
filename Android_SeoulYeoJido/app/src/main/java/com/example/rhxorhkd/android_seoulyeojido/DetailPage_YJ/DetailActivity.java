@@ -12,33 +12,22 @@ import android.os.AsyncTask;
 import android.provider.Settings;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.rhxorhkd.android_seoulyeojido.ChangeInfo;
-import com.example.rhxorhkd.android_seoulyeojido.MapsActivity;
 import com.example.rhxorhkd.android_seoulyeojido.R;
-import com.example.rhxorhkd.android_seoulyeojido.RankRecyclerView.RankAdapter;
-import com.example.rhxorhkd.android_seoulyeojido.home;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -53,9 +42,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -315,7 +302,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitleEnabled(false);
-        //collapsingToolbar.setTitle(locationTitle);
 
         TextView loca_title1 = (TextView)findViewById(R.id.loca_title);
         loca_title1.setText(locationTitle);
@@ -437,7 +423,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 //            Log.d("list", "object-->" + object);
 //            Log.d("list", "object.getString(loca_name)-->" +locationarray.getJSONObject(0));
 //            Log.d("list", "locationarray.length()-->" +locationarray.length());
-
 
             for(int i=0; i<locationarray.length(); i++){
                 if(locationTitle.equals(locationarray.getJSONObject(i).getString("loca_name"))){
