@@ -21,6 +21,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -594,6 +595,7 @@ public class home extends AppCompatActivity {
         mapview11= (ImageView)findViewById(R.id.mapeleven);
         mapview12= (ImageView)findViewById(R.id.mapriver);
 
+
         Glide.with(this).load(R.drawable.map_one_1).into(mapview1);
         Glide.with(this).load(R.drawable.map_two_1).into(mapview2);
         Glide.with(this).load(R.drawable.map_three_1).into(mapview3);
@@ -605,6 +607,8 @@ public class home extends AppCompatActivity {
         Glide.with(this).load(R.drawable.map_nine_1).into(mapview9);
         Glide.with(this).load(R.drawable.map_ten_1).into(mapview10);
         Glide.with(this).load(R.drawable.map_eleven_1).into(mapview11);
+
+
         Glide.with(this).load(R.drawable.map).into(mapview12);
 
         //6 유적지 5 랜드마크  4 전통시장 3  공원 2 문화 1 쇼핑
