@@ -62,7 +62,7 @@ import okhttp3.Response;
 
 public class home extends AppCompatActivity {
 
-
+    ActionBar actionBar;
     ArrayList<Listviewitem> data;
     private FirebaseAuth auth;
     private FirebaseDatabase db;
@@ -133,7 +133,7 @@ public class home extends AppCompatActivity {
 
 
         // 액션바 디자인
-        final ActionBar actionBar = getSupportActionBar();
+        actionBar = getSupportActionBar();
         actionBar.setElevation(0); // 그림자 없애기
         actionBar.setCustomView(R.layout.hometitle);
         actionBar.setDisplayShowTitleEnabled(false);
@@ -695,6 +695,10 @@ public class home extends AppCompatActivity {
 
 
         }
+    }
+
+    public void actionbarchanged(int gunum){
+
     }
 
     public void imageinit(){
