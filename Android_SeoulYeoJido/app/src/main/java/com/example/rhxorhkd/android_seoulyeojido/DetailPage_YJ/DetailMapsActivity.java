@@ -44,7 +44,7 @@ import okhttp3.Response;
 import static android.R.attr.id;
 import static com.example.rhxorhkd.android_seoulyeojido.R.id.map;
 
-public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
 
     OkHttpClient client = new OkHttpClient();
     JSONObject jsonobject;
@@ -97,8 +97,8 @@ public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCa
         tv1 = (TextView) findViewById(R.id.location_name);
 
 
-        checkflag = (CheckBox) findViewById(R.id.default_flag);
-        checkflag.setOnCheckedChangeListener(this);
+        //checkflag = (CheckBox) findViewById(R.id.default_flag);
+        //checkflag.setOnCheckedChangeListener(this);
 
         findViewById(R.id.map_back).setOnClickListener(this);
 
@@ -261,8 +261,8 @@ public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCa
         }
     }
 
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+   /* public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         if (checkflag.isChecked()) {
             //result += checkflag.getText().toString() + ", ";
             //  Toast.makeText(getApplicationContext(), "checkin!", Toast.LENGTH_LONG).show();
@@ -270,5 +270,5 @@ public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCa
         if (!checkflag.isChecked()) {
             //   Toast.makeText(getApplicationContext(), "no Checkin!", Toast.LENGTH_LONG).show();
         }
-    }
+    }*/
 }

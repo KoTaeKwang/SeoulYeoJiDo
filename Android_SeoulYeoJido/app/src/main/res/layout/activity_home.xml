@@ -238,7 +238,7 @@
             android:text="명소 카테고리"/>
         <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_height="123dp"
             >
             <LinearLayout
                 android:layout_marginTop="16dp"

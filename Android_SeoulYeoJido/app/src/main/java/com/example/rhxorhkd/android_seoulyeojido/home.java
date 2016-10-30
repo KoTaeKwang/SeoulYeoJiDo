@@ -226,6 +226,7 @@ public class home extends AppCompatActivity {
                     }
                 }
               gustage();
+
                 Log.d("영등포구 체크인 수: ", ""+guNumber_10);
             }
 
