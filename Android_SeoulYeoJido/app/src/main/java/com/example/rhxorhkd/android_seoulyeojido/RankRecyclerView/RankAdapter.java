@@ -82,6 +82,8 @@ public class RankAdapter extends RecyclerView.Adapter<RankViewHolder>{
         }
         holder.rank.setText(""+(position+1));
         holder.nickname.setText(item.getNickname());
+//        holder.nickname.setText("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+        holder.nickname.setLines(1);
 
         Glide.with(mContext).load(item.getImg()).asBitmap().centerCrop().into(new BitmapImageViewTarget(holder.profile){
             @Override
