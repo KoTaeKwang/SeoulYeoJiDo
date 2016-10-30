@@ -6,6 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.v4.view.ViewPager
+        android:id="@+id/other_vp_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/other_appBar"
         android:background="#ffffff"
@@ -64,36 +70,36 @@
                 app:popupTheme="@style/Theme.Design.NoActionBar"
                 app:layout_collapseMode="pin">
 
-                <RelativeLayout
-                    android:layout_marginRight="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="19dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/other_back_btn"
-                        android:src="@drawable/back"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp" />
-                    <TextView
-                        android:id="@+id/other_up_name"
-                        android:layout_centerHorizontal="true"
-                        android:text=""
-                        android:textSize="20sp"
-                        android:textColor="#000000"
-                        android:textAlignment="center"
-                        android:layout_width="60dp"
-                        android:layout_height="25dp" />
-
-                    <ImageView
-                        android:id="@+id/other_gotoMap"
-                        android:src="@drawable/pointer"
-                        android:layout_alignParentRight="true"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp" />
-                </RelativeLayout>
-
             </android.support.v7.widget.Toolbar>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_marginLeft="4dp"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/other_back_btn"
+                    android:background="@drawable/back"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp" />
+                <TextView
+                    android:id="@+id/other_up_name"
+                    android:layout_centerHorizontal="true"
+                    android:text=""
+                    android:textSize="20sp"
+                    android:textColor="#000000"
+                    android:textAlignment="center"
+                    android:layout_width="60dp"
+                    android:layout_height="25dp" />
+
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/other_gotoMap"
+                    android:src="@drawable/pointer"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp" />
+            </RelativeLayout>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -104,11 +110,6 @@
             android:layout_height="?android:attr/actionBarSize"/>
 
     </android.support.design.widget.AppBarLayout>
-    <android.support.v4.view.ViewPager
-        android:id="@+id/other_vp_pager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 
 </android.support.design.widget.CoordinatorLayout>

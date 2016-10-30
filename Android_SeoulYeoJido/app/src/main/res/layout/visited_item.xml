@@ -5,6 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#d7d7d7d7"
+        >
+
+    </View>
+
 
     <RelativeLayout
         android:background="#ffffff"
@@ -105,12 +113,7 @@
             />
 
     </RelativeLayout>
-    <View
-        android:background="#ebebeb"
-        android:layout_width="match_parent"
-        android:layout_height="1dp">
 
-    </View>
 
     <!--<RelativeLayout-->
         <!--android:layout_marginBottom="16dp"-->

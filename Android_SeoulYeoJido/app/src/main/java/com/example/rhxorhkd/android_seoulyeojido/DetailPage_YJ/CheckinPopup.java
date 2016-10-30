@@ -161,7 +161,7 @@ public class CheckinPopup extends Activity implements View.OnClickListener {
 
 
                         Map<String, Object> chekindb = new HashMap<>();
-                        chekindb.put("category","");
+                        chekindb.put("category",category_num);
                         chekindb.put("guNumber", guNumber);
                         chekindb.put("date", dates);
                         chekindb.put("img", url);

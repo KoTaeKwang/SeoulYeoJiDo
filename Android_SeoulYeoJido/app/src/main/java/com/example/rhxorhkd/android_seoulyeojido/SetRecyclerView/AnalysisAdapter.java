@@ -50,18 +50,18 @@ public class AnalysisAdapter extends RecyclerView.Adapter<AnlaysisViewHolder> {
                 holder.gu_img.getLayoutParams().width =140;
                 holder.gu_img.getLayoutParams().height =117;
 
-                holder.gu_name.setText("서대문.은평");
+                holder.gu_name.setText("중구.종로");
                 holder.percent.setText(""+getPercent(chk_cnt, 21)+"%");
                 if(getImgNum(getPercent(chk_cnt, 21)) == 1){
-                    photo = R.drawable.one_1;
+                    photo = R.drawable.three_1;
                 }else if( getImgNum(getPercent(chk_cnt, 21)) == 2 ){
-                    photo =R.drawable.one_2;
+                    photo =R.drawable.three_2;
                 }else if(getImgNum(getPercent(chk_cnt, 21)) == 3){
-                    photo =R.drawable.one_3;
+                    photo =R.drawable.three_3;
                 }else if(getImgNum(getPercent(chk_cnt, 21)) == 4){
-                    photo =R.drawable.one_4;
+                    photo =R.drawable.three_4;
                 }else{
-                    photo =R.drawable.one_5;
+                    photo =R.drawable.three_5;
                 }
                 Glide
                     .with(mContext)
@@ -71,6 +71,80 @@ public class AnalysisAdapter extends RecyclerView.Adapter<AnlaysisViewHolder> {
             case 1 :
                 holder.gu_img.getLayoutParams().width =140;
                 holder.gu_img.getLayoutParams().height =117;
+
+                holder.gu_name.setText("성북.동대문.성동");
+                holder.percent.setText(""+getPercent(chk_cnt, 5)+"%");
+
+                if(getImgNum(getPercent(chk_cnt, 5)) == 1){
+                    photo = R.drawable.four_1;
+                }else if( getImgNum(getPercent(chk_cnt, 5)) == 2 ){
+                    photo =R.drawable.four_2;
+                }else if(getImgNum(getPercent(chk_cnt, 5)) == 3){
+                    photo =R.drawable.four_3;
+                }else if(getImgNum(getPercent(chk_cnt, 5)) == 4){
+                    photo =R.drawable.four_4;
+                }else{
+                    photo =R.drawable.four_5;
+                }
+                Glide
+                        .with(mContext)
+                        .load(photo)
+                        .into(holder.gu_img);
+                break;
+
+
+            case 2 :
+                holder.gu_img.getLayoutParams().width =140;
+                holder.gu_img.getLayoutParams().height =98;
+
+
+                holder.gu_name.setText("서초.강남");
+                holder.percent.setText(""+getPercent(chk_cnt, 5)+"%");
+
+                if(getImgNum(getPercent(chk_cnt, 5)) == 1){
+                    photo = R.drawable.eight_1;
+                }else if( getImgNum(getPercent(chk_cnt, 5)) == 2 ){
+                    photo =R.drawable.eight_2;
+                }else if(getImgNum(getPercent(chk_cnt, 5)) == 3){
+                    photo =R.drawable.eight_3;
+                }else if(getImgNum(getPercent(chk_cnt, 5)) == 4){
+                    photo =R.drawable.eight_4;
+                }else{
+                    photo =R.drawable.eight_5;
+                }
+                Glide
+                        .with(mContext)
+                        .load(photo)
+                        .into(holder.gu_img);
+                break;
+            case 3 :
+                holder.gu_img.getLayoutParams().width =140;
+                holder.gu_img.getLayoutParams().height =98;
+
+
+                holder.gu_name.setText("송파.강동");
+                holder.percent.setText(""+getPercent(chk_cnt, 5)+"%");
+
+                if(getImgNum(getPercent(chk_cnt, 5)) == 1){
+                    photo = R.drawable.seven_1;
+                }else if( getImgNum(getPercent(chk_cnt, 5)) == 2 ){
+                    photo =R.drawable.seven_2;
+                }else if(getImgNum(getPercent(chk_cnt, 5)) == 3){
+                    photo =R.drawable.seven_3;
+                }else if(getImgNum(getPercent(chk_cnt, 5)) == 4){
+                    photo =R.drawable.seven_4;
+                }else{
+                    photo =R.drawable.seven_5;
+                }
+                Glide
+                    .with(mContext)
+                    .load(photo)
+                    .into(holder.gu_img);
+                break;
+
+            case 4 :
+                holder.gu_img.getLayoutParams().width =140;
+                holder.gu_img.getLayoutParams().height =90;
 
                 holder.gu_name.setText("마포.용산");
                 holder.percent.setText(""+getPercent(chk_cnt, 5)+"%");
@@ -93,159 +167,9 @@ public class AnalysisAdapter extends RecyclerView.Adapter<AnlaysisViewHolder> {
                 break;
 
 
-            case 2 :
-                holder.gu_img.getLayoutParams().width =140;
-                holder.gu_img.getLayoutParams().height =98;
-
-
-                holder.gu_name.setText("중구.종로");
-                holder.percent.setText(""+getPercent(chk_cnt, 5)+"%");
-
-                if(getImgNum(getPercent(chk_cnt, 5)) == 1){
-                    photo = R.drawable.three_1;
-                }else if( getImgNum(getPercent(chk_cnt, 5)) == 2 ){
-                    photo =R.drawable.three_2;
-                }else if(getImgNum(getPercent(chk_cnt, 5)) == 3){
-                    photo =R.drawable.three_3;
-                }else if(getImgNum(getPercent(chk_cnt, 5)) == 4){
-                    photo =R.drawable.three_4;
-                }else{
-                    photo =R.drawable.three_5;
-                }
-                Glide
-                        .with(mContext)
-                        .load(photo)
-                        .into(holder.gu_img);
-                break;
-            case 3 :
-                holder.gu_img.getLayoutParams().width =140;
-                holder.gu_img.getLayoutParams().height =98;
-
-
-                holder.gu_name.setText("성북.동대문.성동");
-                holder.percent.setText(""+getPercent(chk_cnt, 5)+"%");
-
-                if(getImgNum(getPercent(chk_cnt, 5)) == 1){
-                    photo = R.drawable.four_1;
-                }else if( getImgNum(getPercent(chk_cnt, 5)) == 2 ){
-                    photo =R.drawable.four_2;
-                }else if(getImgNum(getPercent(chk_cnt, 5)) == 3){
-                    photo =R.drawable.four_3;
-                }else if(getImgNum(getPercent(chk_cnt, 5)) == 4){
-                    photo =R.drawable.four_4;
-                }else{
-                    photo =R.drawable.four_5;
-                }
-                Glide
-                    .with(mContext)
-                    .load(photo)
-                    .into(holder.gu_img);
-                break;
-
-            case 4 :
-                holder.gu_img.getLayoutParams().width =140;
-                holder.gu_img.getLayoutParams().height =90;
-
-                holder.gu_name.setText("강북.도봉.노원");
-                holder.percent.setText(""+getPercent(chk_cnt, 5)+"%");
-
-                if(getImgNum(getPercent(chk_cnt, 5)) == 1){
-                    photo = R.drawable.five_1;
-                }else if( getImgNum(getPercent(chk_cnt, 5)) == 2 ){
-                    photo =R.drawable.five_2;
-                }else if(getImgNum(getPercent(chk_cnt, 5)) == 3){
-                    photo =R.drawable.five_3;
-                }else if(getImgNum(getPercent(chk_cnt, 5)) == 4){
-                    photo =R.drawable.five_4;
-                }else{
-                    photo =R.drawable.five_5;
-                }
-                Glide
-                        .with(mContext)
-                        .load(photo)
-                        .into(holder.gu_img);
-                break;
-
-
             case 5 :
                 holder.gu_img.getLayoutParams().width =140;
                 holder.gu_img.getLayoutParams().height =90;
-
-                holder.gu_name.setText("중랑.광진");
-
-                holder.percent.setText(""+getPercent(chk_cnt, 5)+"%");
-
-                if(getImgNum(getPercent(chk_cnt, 5)) == 1){
-                    photo = R.drawable.six_1;
-                }else if( getImgNum(getPercent(chk_cnt, 5)) == 2 ){
-                    photo =R.drawable.six_2;
-                }else if(getImgNum(getPercent(chk_cnt, 5)) == 3){
-                    photo =R.drawable.six_3;
-                }else if(getImgNum(getPercent(chk_cnt, 5)) == 4){
-                    photo =R.drawable.six_4;
-                }else{
-                    photo =R.drawable.six_5;
-                }
-                Glide
-                        .with(mContext)
-                        .load(photo)
-                        .into(holder.gu_img);
-                break;
-
-
-
-            case 6 :
-                holder.gu_img.getLayoutParams().width =140;
-                holder.gu_img.getLayoutParams().height =85;
-
-                holder.gu_name.setText("송파.강동");
-                holder.percent.setText(""+getPercent(chk_cnt, 5)+"%");
-
-                if(getImgNum(getPercent(chk_cnt, 5)) == 1){
-                    photo = R.drawable.seven_1;
-                }else if( getImgNum(getPercent(chk_cnt, 5)) == 2 ){
-                    photo =R.drawable.seven_2;
-                }else if(getImgNum(getPercent(chk_cnt, 5)) == 3){
-                    photo =R.drawable.seven_3;
-                }else if(getImgNum(getPercent(chk_cnt, 5)) == 4){
-                    photo =R.drawable.seven_4;
-                }else{
-                    photo =R.drawable.seven_5;
-                }
-                Glide
-                        .with(mContext)
-                        .load(photo)
-                        .into(holder.gu_img);
-
-                break;
-            case 7 :
-                holder.gu_img.getLayoutParams().width =140;
-                holder.gu_img.getLayoutParams().height =85;
-
-                holder.gu_name.setText("서초.강남");
-                holder.percent.setText(""+getPercent(chk_cnt, 5)+"%");
-
-                if(getImgNum(getPercent(chk_cnt, 5)) == 1){
-                    photo = R.drawable.eight_1;
-                }else if( getImgNum(getPercent(chk_cnt, 5)) == 2 ){
-                    photo =R.drawable.eight_2;
-                }else if(getImgNum(getPercent(chk_cnt, 5)) == 3){
-                    photo =R.drawable.eight_3;
-                }else if(getImgNum(getPercent(chk_cnt, 5)) == 4){
-                    photo =R.drawable.eight_4;
-                }else{
-                    photo =R.drawable.eight_5;
-                }
-                Glide
-                        .with(mContext)
-                        .load(photo)
-                        .into(holder.gu_img);
-
-                break;
-
-            case 8 :
-                holder.gu_img.getLayoutParams().width =140;
-                holder.gu_img.getLayoutParams().height =94;
 
                 holder.gu_name.setText("관악.금천");
 
@@ -266,13 +190,37 @@ public class AnalysisAdapter extends RecyclerView.Adapter<AnlaysisViewHolder> {
                         .with(mContext)
                         .load(photo)
                         .into(holder.gu_img);
-
                 break;
 
-            case 9 :
-                holder.gu_img.getLayoutParams().width =140;
-                holder.gu_img.getLayoutParams().height =94;
 
+
+            case 6 :
+                holder.gu_img.getLayoutParams().width =140;
+                holder.gu_img.getLayoutParams().height =85;
+
+                holder.gu_name.setText("강서.양천.구로");
+                holder.percent.setText(""+getPercent(chk_cnt, 5)+"%");
+
+                if(getImgNum(getPercent(chk_cnt, 5)) == 1){
+                    photo = R.drawable.eleven_1;
+                }else if( getImgNum(getPercent(chk_cnt, 5)) == 2 ){
+                    photo =R.drawable.eleven_2;
+                }else if(getImgNum(getPercent(chk_cnt, 5)) == 3){
+                    photo =R.drawable.eleven_3;
+                }else if(getImgNum(getPercent(chk_cnt, 5)) == 4){
+                    photo =R.drawable.eleven_4;
+                }else{
+                    photo =R.drawable.eleven_5;
+                }
+                Glide
+                        .with(mContext)
+                        .load(photo)
+                        .into(holder.gu_img);
+
+                break;
+            case 7 :
+                holder.gu_img.getLayoutParams().width =140;
+                holder.gu_img.getLayoutParams().height =85;
 
                 holder.gu_name.setText("영등포.동작");
                 holder.percent.setText(""+getPercent(chk_cnt, 5)+"%");
@@ -295,23 +243,75 @@ public class AnalysisAdapter extends RecyclerView.Adapter<AnlaysisViewHolder> {
 
                 break;
 
+            case 8 :
+                holder.gu_img.getLayoutParams().width =140;
+                holder.gu_img.getLayoutParams().height =94;
+
+                holder.gu_name.setText("서대문.은평");
+
+                holder.percent.setText(""+getPercent(chk_cnt, 5)+"%");
+
+                if(getImgNum(getPercent(chk_cnt, 5)) == 1){
+                    photo = R.drawable.one_1;
+                }else if( getImgNum(getPercent(chk_cnt, 5)) == 2 ){
+                    photo =R.drawable.one_2;
+                }else if(getImgNum(getPercent(chk_cnt, 5)) == 3){
+                    photo =R.drawable.one_3;
+                }else if(getImgNum(getPercent(chk_cnt, 5)) == 4){
+                    photo =R.drawable.one_4;
+                }else{
+                    photo =R.drawable.one_5;
+                }
+                Glide
+                        .with(mContext)
+                        .load(photo)
+                        .into(holder.gu_img);
+
+                break;
+
+            case 9 :
+                holder.gu_img.getLayoutParams().width =140;
+                holder.gu_img.getLayoutParams().height =94;
+
+
+                holder.gu_name.setText("중랑.광진");
+                holder.percent.setText(""+getPercent(chk_cnt, 5)+"%");
+
+                if(getImgNum(getPercent(chk_cnt, 5)) == 1){
+                    photo = R.drawable.six_1;
+                }else if( getImgNum(getPercent(chk_cnt, 5)) == 2 ){
+                    photo =R.drawable.six_2;
+                }else if(getImgNum(getPercent(chk_cnt, 5)) == 3){
+                    photo =R.drawable.six_3;
+                }else if(getImgNum(getPercent(chk_cnt, 5)) == 4){
+                    photo =R.drawable.six_4;
+                }else{
+                    photo =R.drawable.six_5;
+                }
+                Glide
+                        .with(mContext)
+                        .load(photo)
+                        .into(holder.gu_img);
+
+                break;
+
             case 10 :
                 holder.gu_img.getLayoutParams().width = 140;
                 holder.gu_img.getLayoutParams().height = 68;
 
-                holder.gu_name.setText("강서.양천.구로");
+                holder.gu_name.setText("강동.도봉.노원");
                 holder.percent.setText(""+getPercent(chk_cnt, 5)+"%");
 
                 if(getImgNum(getPercent(chk_cnt, 5)) == 1){
-                    photo = R.drawable.eleven_1;
+                    photo = R.drawable.five_1;
                 }else if( getImgNum(getPercent(chk_cnt, 5)) == 2 ){
-                    photo =R.drawable.eleven_2;
+                    photo =R.drawable.five_2;
                 }else if(getImgNum(getPercent(chk_cnt, 5)) == 3){
-                    photo =R.drawable.eleven_3;
+                    photo =R.drawable.five_3;
                 }else if(getImgNum(getPercent(chk_cnt, 5)) == 4){
-                    photo =R.drawable.eleven_4;
+                    photo =R.drawable.five_4;
                 }else{
-                    photo =R.drawable.eleven_5;
+                    photo =R.drawable.five_5;
                 }
                 Glide
                         .with(mContext)
