@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
 
     <RelativeLayout
+        android:background="#ffffff"
         android:id="@+id/visited_rl"
         android:layout_alignParentBottom="true"
         android:paddingBottom="16dp"
@@ -46,26 +49,27 @@
             android:layout_toRightOf="@+id/visited_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <!--<TextView-->
+            <!--android:textColor="#9e9e9e"-->
+            <!--android:layout_marginRight="9dp"-->
+            <!--android:layout_toRightOf="@+id/visited_cnt"-->
+            <!--android:layout_below="@id/location_name"-->
+            <!--android:textSize="13sp"-->
+            <!--android:text="댓글"-->
+            <!--android:id="@+id/location_reply"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+        <!--<TextView-->
+            <!--android:layout_toRightOf="@+id/location_reply"-->
+            <!--android:layout_below="@id/location_name"-->
+            <!--android:textColor="#000000"-->
+            <!--android:textSize="13sp"-->
+            <!--android:text="163"-->
+            <!--android:id="@+id/reply_cnt"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
         <TextView
-            android:textColor="#9e9e9e"
-            android:layout_marginRight="9dp"
-            android:layout_toRightOf="@+id/visited_cnt"
-            android:layout_below="@id/location_name"
-            android:textSize="13sp"
-            android:text="댓글"
-            android:id="@+id/location_reply"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_toRightOf="@+id/location_reply"
-            android:layout_below="@id/location_name"
-            android:textColor="#000000"
-            android:textSize="13sp"
-            android:text="163"
-            android:id="@+id/reply_cnt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
+            android:id="@+id/visited_cate_gu"
             android:textColor="#9e9e9e"
             android:layout_marginTop="14dp"
             android:layout_toRightOf="@+id/visited_img"

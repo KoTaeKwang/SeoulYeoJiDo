@@ -159,9 +159,9 @@ public class CheckinPopup extends Activity implements View.OnClickListener {
 
 
                         Map<String, Object> chekindb = new HashMap<>();
-
+                        chekindb.put("category","");
                         chekindb.put("guNumber", guNumber);
-                        chekindb.put("data", dates);
+                        chekindb.put("date", dates);
                         chekindb.put("img", url);
                         chekindb.put("lat", lat);
                         chekindb.put("lon", lon);

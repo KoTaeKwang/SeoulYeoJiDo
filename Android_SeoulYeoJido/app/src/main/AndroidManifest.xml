@@ -83,11 +83,14 @@
         <activity android:name=".FindPwActivity" />
         <activity android:name=".ChangePw" />
         <activity android:name=".StartActivity">
-        <!--    <intent-filter>
+
+            <!--
+                <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".DetailPage_YJ.DetailMapsActivity"
@@ -102,8 +105,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+        <activity android:name=".OtherSet"></activity>
     </application>
 
 </manifest>

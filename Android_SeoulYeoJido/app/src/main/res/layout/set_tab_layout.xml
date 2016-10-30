@@ -45,7 +45,7 @@
                         android:id="@+id/down_name"
                         android:layout_marginBottom="12dp"
                         android:layout_centerHorizontal="true"
-                        android:text="myname"
+                        android:text=""
                         android:textSize="16sp"
                         android:textColor="#000000"
                         android:textAlignment="center"

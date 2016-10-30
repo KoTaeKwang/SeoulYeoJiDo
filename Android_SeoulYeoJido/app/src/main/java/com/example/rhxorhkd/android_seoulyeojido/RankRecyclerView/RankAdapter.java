@@ -19,7 +19,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.rhxorhkd.android_seoulyeojido.MainActivity;
 import com.example.rhxorhkd.android_seoulyeojido.Model.RankItem;
+import com.example.rhxorhkd.android_seoulyeojido.OtherSet;
 import com.example.rhxorhkd.android_seoulyeojido.R;
+import com.example.rhxorhkd.android_seoulyeojido.rank;
 import com.example.rhxorhkd.android_seoulyeojido.set;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -98,33 +100,24 @@ public class RankAdapter extends RecyclerView.Adapter<RankViewHolder>{
         return list.size();
     }
 
-    public void clickEvent(int position, View view) {
+    public void clickEvent(int position) {
         RankItem item = list.get(position);
 
         auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         if(user.getUid().toString().equals(list.get(position).getEct())){
-            Toast.makeText(mContext, "내랭킹클릭", Toast.LENGTH_SHORT).show();
-
-            Intent intent = new Intent(view.getContext(), MainActivity.class);
-            intent.putExtra("tabChange", "3");
-            mContext.startActivity(intent);
-
+            if(mContext instanceof rank){
+                (((rank) mContext)).goMypage();
+            }
 
         }else{
-            Intent i = new Intent(this.mContext, set.class);
+            Intent i = new Intent(this.mContext, OtherSet.class);
             i.putExtra("name", item.getNickname());
             i.putExtra("profile", item.getImg());
             i.putExtra("uid", item.getEct());
             i.putExtra("cnt", item.getChk_cnt());
             this.mContext.startActivity(i);
         }
-
-
-
-
-
-
 
     }
 }

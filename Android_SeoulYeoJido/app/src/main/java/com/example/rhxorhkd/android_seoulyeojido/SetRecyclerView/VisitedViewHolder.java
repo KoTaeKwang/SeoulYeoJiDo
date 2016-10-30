@@ -16,7 +16,7 @@ public class VisitedViewHolder extends RecyclerView.ViewHolder implements View.O
     final View mView;
     final ImageView photo;
     final TextView name;
-    final TextView cnt;
+    final TextView cnt, cate_guName;
 
     private VisitedAdapter visitedAdapter;
 
@@ -26,8 +26,12 @@ public class VisitedViewHolder extends RecyclerView.ViewHolder implements View.O
         photo = (ImageView)itemView.findViewById(R.id.visited_img);
         name = (TextView)itemView.findViewById(R.id.visited_name);
         cnt = (TextView)itemView.findViewById(R.id.visited_cnt);
+        cate_guName = (TextView)itemView.findViewById(R.id.visited_cate_gu);
 
     }
+
+
+
 
     @Override
     public void onClick(View view) {
