@@ -107,6 +107,7 @@ public class home extends AppCompatActivity {
     Request request;
     int guNumber_1, guNumber_2, guNumber_3, guNumber_4, guNumber_5, guNumber_6, guNumber_7,
             guNumber_8, guNumber_9, guNumber_10, guNumber_11;
+    LinearLayout hometitle;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -137,6 +138,7 @@ public class home extends AppCompatActivity {
         actionBar.setCustomView(R.layout.hometitle);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
+
 
         imageinit();  //이미지 로드 , 리스너 추가
 
@@ -254,6 +256,25 @@ public class home extends AppCompatActivity {
                     }).setNegativeButton("취소",null).show();
 
         }
+
+
+        actionBar.getCustomView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firstListGetData getData = new firstListGetData(); //전체 리스트 가져오기
+                String result = null;
+                try {
+                    result = getData.execute().get();
+                    JSONObject object = new JSONObject(result);
+                    JSONArray jsonArray = object.getJSONArray("location");
+                    listInit(jsonArray);
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            }
+        });
 
     }
 //1.은평 1   ,  2.마포 4   3.종로 21   4.성북 1  5.강북 1    6. 중랑0    7.송파 2   8. 서초3   9.관악 0  10.영등포  5,  11.강서 0
