@@ -101,7 +101,6 @@
         <activity
             android:name=".DetailPage_YJ.CheckinmapActivity"
             android:label="@string/title_activity_checkinmap" />
-        <activity android:name=".customprogressdialog" />
         <activity android:name=".LaunchSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -111,5 +110,6 @@
         </activity>
         <activity android:name=".OtherSet"></activity>
     </application>
+
 
 </manifest>
