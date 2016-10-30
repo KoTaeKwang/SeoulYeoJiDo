@@ -35,6 +35,7 @@ import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ.DetailActivity;
+import com.google.android.gms.ads.formats.NativeAd;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -69,6 +70,8 @@ public class home extends AppCompatActivity {
     private DatabaseReference ref;
     private FirebaseUser user;
 
+
+    ImageView actionbarlogo;
     ImageView mapview1; //맵 이미지
     ImageView mapview2;
     ImageView mapview3;
@@ -138,6 +141,8 @@ public class home extends AppCompatActivity {
         actionBar.setCustomView(R.layout.hometitle);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
+        actionbarlogo = (ImageView)findViewById(R.id.actionBarLogo);
+        Glide.with(this).load(R.drawable.logo).into(actionbarlogo);
 
 
         imageinit();  //이미지 로드 , 리스너 추가
@@ -177,6 +182,7 @@ public class home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                actionbarchanged(Integer.parseInt("0"));
             }
         });
 
@@ -662,6 +668,7 @@ public class home extends AppCompatActivity {
             guListGetData getData = new guListGetData();
             String result = null;
             try{
+                actionbarchanged(Integer.parseInt(guNum));
                 result = getData.execute(guNum).get();
                 jsonobject = new JSONObject(result);
                 jsonarray = jsonobject.getJSONArray("location");
@@ -698,7 +705,33 @@ public class home extends AppCompatActivity {
     }
 
     public void actionbarchanged(int gunum){
-
+         actionbarlogo = (ImageView)findViewById(R.id.actionBarLogo);
+        //       Glide.with(this).load(R.drawable.map_one_1).into(mapview1);
+        Log.d("list","gunum : "+gunum);
+        if(gunum==1){
+            Glide.with(this).load(R.drawable.logo_one).into(actionbarlogo);
+        }else if(gunum==2){
+            Glide.with(this).load(R.drawable.logo_two).into(actionbarlogo);
+        }else if(gunum==3){
+            Glide.with(this).load(R.drawable.logo_three).into(actionbarlogo);
+        }else if(gunum==4){
+            Glide.with(this).load(R.drawable.logo_four).into(actionbarlogo);
+        }else if(gunum==5){
+            Glide.with(this).load(R.drawable.logo_five).into(actionbarlogo);
+        }else if(gunum==6){
+            Glide.with(this).load(R.drawable.logo_six).into(actionbarlogo);
+        }else if(gunum==7){
+            Glide.with(this).load(R.drawable.logo_seven).into(actionbarlogo);
+        }else if(gunum==8){
+            Glide.with(this).load(R.drawable.logo_eight).into(actionbarlogo);
+        }else if(gunum==9){
+            Glide.with(this).load(R.drawable.logo_nine).into(actionbarlogo);
+        }else if(gunum==10){
+            Glide.with(this).load(R.drawable.logo_ten).into(actionbarlogo);
+        }else if(gunum==11){
+            Glide.with(this).load(R.drawable.logo_eleven).into(actionbarlogo);
+        }else
+           Glide.with(this).load(R.drawable.logo).into(actionbarlogo);
     }
 
     public void imageinit(){
@@ -962,6 +995,7 @@ public class home extends AppCompatActivity {
         if (mLayout != null &&
                 (mLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED || mLayout.getPanelState() == SlidingUpPanelLayout.PanelState.ANCHORED)) { //펼쳐있을때 back 누르면 닫히는거
             mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+            actionbarchanged(Integer.parseInt("0"));
         } else {
             super.onBackPressed();
         }
@@ -1048,7 +1082,8 @@ public class home extends AppCompatActivity {
                 if(newText!=null){
                 sadapter.filter(newText);
                 Log.d("text",""+newText);
-                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);}
+                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                  }
                 return false;
             }
 
