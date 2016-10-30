@@ -47,8 +47,8 @@ public class AnalysisAdapter extends RecyclerView.Adapter<AnlaysisViewHolder> {
         int photo;
         switch (position){
             case 0 :
-                holder.gu_img.getLayoutParams().width =140;
-                holder.gu_img.getLayoutParams().height =117;
+                holder.gu_img.getLayoutParams().width =420;
+                holder.gu_img.getLayoutParams().height =351;
 
                 holder.gu_name.setText("중구.종로");
                 holder.percent.setText(""+getPercent(chk_cnt, 21)+"%");
@@ -69,8 +69,8 @@ public class AnalysisAdapter extends RecyclerView.Adapter<AnlaysisViewHolder> {
                     .into(holder.gu_img);
                 break;
             case 1 :
-                holder.gu_img.getLayoutParams().width =140;
-                holder.gu_img.getLayoutParams().height =117;
+                holder.gu_img.getLayoutParams().width =420;
+                holder.gu_img.getLayoutParams().height =351;
 
                 holder.gu_name.setText("성북.동대문.성동");
                 holder.percent.setText(""+getPercent(chk_cnt, 5)+"%");
@@ -94,8 +94,8 @@ public class AnalysisAdapter extends RecyclerView.Adapter<AnlaysisViewHolder> {
 
 
             case 2 :
-                holder.gu_img.getLayoutParams().width =140;
-                holder.gu_img.getLayoutParams().height =98;
+                holder.gu_img.getLayoutParams().width =420;
+                holder.gu_img.getLayoutParams().height =294;
 
 
                 holder.gu_name.setText("서초.강남");
@@ -118,8 +118,8 @@ public class AnalysisAdapter extends RecyclerView.Adapter<AnlaysisViewHolder> {
                         .into(holder.gu_img);
                 break;
             case 3 :
-                holder.gu_img.getLayoutParams().width =140;
-                holder.gu_img.getLayoutParams().height =98;
+                holder.gu_img.getLayoutParams().width =420;
+                holder.gu_img.getLayoutParams().height =294;
 
 
                 holder.gu_name.setText("송파.강동");
@@ -143,8 +143,8 @@ public class AnalysisAdapter extends RecyclerView.Adapter<AnlaysisViewHolder> {
                 break;
 
             case 4 :
-                holder.gu_img.getLayoutParams().width =140;
-                holder.gu_img.getLayoutParams().height =90;
+                holder.gu_img.getLayoutParams().width =420;
+                holder.gu_img.getLayoutParams().height =270;
 
                 holder.gu_name.setText("마포.용산");
                 holder.percent.setText(""+getPercent(chk_cnt, 5)+"%");
@@ -168,8 +168,8 @@ public class AnalysisAdapter extends RecyclerView.Adapter<AnlaysisViewHolder> {
 
 
             case 5 :
-                holder.gu_img.getLayoutParams().width =140;
-                holder.gu_img.getLayoutParams().height =90;
+                holder.gu_img.getLayoutParams().width =420;
+                holder.gu_img.getLayoutParams().height =270;
 
                 holder.gu_name.setText("관악.금천");
 
@@ -195,8 +195,8 @@ public class AnalysisAdapter extends RecyclerView.Adapter<AnlaysisViewHolder> {
 
 
             case 6 :
-                holder.gu_img.getLayoutParams().width =140;
-                holder.gu_img.getLayoutParams().height =85;
+                holder.gu_img.getLayoutParams().width =420;
+                holder.gu_img.getLayoutParams().height =255;
 
                 holder.gu_name.setText("강서.양천.구로");
                 holder.percent.setText(""+getPercent(chk_cnt, 5)+"%");
@@ -219,8 +219,8 @@ public class AnalysisAdapter extends RecyclerView.Adapter<AnlaysisViewHolder> {
 
                 break;
             case 7 :
-                holder.gu_img.getLayoutParams().width =140;
-                holder.gu_img.getLayoutParams().height =85;
+                holder.gu_img.getLayoutParams().width =420;
+                holder.gu_img.getLayoutParams().height =255;
 
                 holder.gu_name.setText("영등포.동작");
                 holder.percent.setText(""+getPercent(chk_cnt, 5)+"%");
@@ -244,8 +244,8 @@ public class AnalysisAdapter extends RecyclerView.Adapter<AnlaysisViewHolder> {
                 break;
 
             case 8 :
-                holder.gu_img.getLayoutParams().width =140;
-                holder.gu_img.getLayoutParams().height =94;
+                holder.gu_img.getLayoutParams().width =420;
+                holder.gu_img.getLayoutParams().height =282;
 
                 holder.gu_name.setText("서대문.은평");
 
@@ -270,8 +270,8 @@ public class AnalysisAdapter extends RecyclerView.Adapter<AnlaysisViewHolder> {
                 break;
 
             case 9 :
-                holder.gu_img.getLayoutParams().width =140;
-                holder.gu_img.getLayoutParams().height =94;
+                holder.gu_img.getLayoutParams().width =420;
+                holder.gu_img.getLayoutParams().height =282;
 
 
                 holder.gu_name.setText("중랑.광진");
@@ -296,8 +296,8 @@ public class AnalysisAdapter extends RecyclerView.Adapter<AnlaysisViewHolder> {
                 break;
 
             case 10 :
-                holder.gu_img.getLayoutParams().width = 140;
-                holder.gu_img.getLayoutParams().height = 68;
+                holder.gu_img.getLayoutParams().width = 420;
+                holder.gu_img.getLayoutParams().height = 204;
 
                 holder.gu_name.setText("강동.도봉.노원");
                 holder.percent.setText(""+getPercent(chk_cnt, 5)+"%");

@@ -70,8 +70,8 @@ public class VisitedFragment extends Fragment implements View.OnClickListener{
                 final String photo = ""+data.child("img").getValue();
                 final String title = ""+data.getKey();
 //                String cnt = ;
-                final String cate = "랜드마크";//""+data.child("category").getValue();
-                final String guName = "은평구";//getGuName(Integer.parseInt(""+data.child("guNumber").getValue()));
+                final String cate = ""+data.child("category").getValue();
+                final String guName = ""+getGuName(Integer.parseInt(""+data.child("guNumber").getValue()));
                 ref.addValueEventListener(new ValueEventListener() {
                     int chk_cnt = 0;
                     @Override
@@ -112,8 +112,28 @@ public class VisitedFragment extends Fragment implements View.OnClickListener{
         return v;
     }
     public String getGuName(int guNumber){
-        if (guNumber ==1 ){
-            return "은평";
+        if (guNumber == 1 ){
+            return "서대문·은평구";
+        }else if(guNumber == 2){
+            return "마포·용산구";
+        }else if(guNumber == 3){
+            return "중구·종로구";
+        }else if(guNumber == 4){
+            return "성북·동대문·성동구";
+        }else if(guNumber == 5){
+            return "강북·도봉·노원구";
+        }else if(guNumber == 6){
+            return "중량·광진구";
+        }else if(guNumber == 7){
+            return "송파·강동구";
+        }else if(guNumber == 8){
+            return "서초·강남구";
+        }else if(guNumber == 9){
+            return "관악·금천구";
+        }else if(guNumber == 10){
+            return "영등포·동작구";
+        }else if(guNumber == 11){
+            return "강서·양천·구로구";
         }else{
             return "";
         }

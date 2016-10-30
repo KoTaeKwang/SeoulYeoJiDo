@@ -80,8 +80,8 @@ public class AnalysisFragment extends Fragment {
             @Override
             public void onChildAdded(DataSnapshot data, String s) {
 
-
                 if(data.child("guNumber") != null) {
+
 
                     index = Integer.parseInt("" + data.child("guNumber").getValue());
                     if(index == 1){
