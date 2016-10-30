@@ -41,6 +41,10 @@ public class GpsInfo extends Service implements LocationListener {
         initLocationService(context);
     }
 
+
+
+
+
     /**
      * Sets up location service after permissions is granted
      */

@@ -25,6 +25,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.rhxorhkd.android_seoulyeojido.R;
@@ -269,8 +270,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_detail);
 
 //상태바 제거
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
         url = null;
@@ -292,7 +292,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 // 뒤로 가기 버튼
-        ImageView back_btn = (ImageView) findViewById(R.id.back_btn1);
+        ImageView back_btn = (ImageView) findViewById(R.id.back_white);
         back_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -300,8 +300,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
 
-        CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitleEnabled(false);
 
         TextView loca_title1 = (TextView)findViewById(R.id.loca_title);
@@ -324,29 +323,50 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         imgTel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + number));
-                startActivity(intent);
+                if(weburl==null) {
+                    new AlertDialog.Builder(DetailActivity.this)
+                            .setMessage("관련 홈페이지가 없습니다")
+                            .setNegativeButton("확인",null).show();
+                }else{
+                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + number));
+                    startActivity(intent);
+                }
             }
         });
 
 
         imgMap.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-                Intent mapintent = new Intent(DetailActivity.this, DetailMapsActivity.class);
-                mapintent.putExtra("title", locationTitle);
-                mapintent.putExtra("latitude", lat);
-                mapintent.putExtra("longitude", lon);
-                Log.d("intent", "la: " + lat);
-                startActivity(mapintent);
+                if(weburl==null) {
+                    new AlertDialog.Builder(DetailActivity.this)
+                            .setMessage("해당 위치 정보가 없습니다.")
+                            .setNegativeButton("확인",null).show();
+                }else{
+                    Intent mapintent = new Intent(DetailActivity.this, DetailMapsActivity.class);
+                    mapintent.putExtra("title", locationTitle);
+                    mapintent.putExtra("latitude", lat);
+                    mapintent.putExtra("longitude", lon);
+                    Log.d("intent", "la: " + lat);
+                    startActivity(mapintent);
+                }
             }
         });
+
 
         imgURL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(weburl));
-                startActivity(intent);
+                if(weburl==null) {
+                    new AlertDialog.Builder(DetailActivity.this)
+                            .setMessage("관련 홈페이지가 없습니다")
+                            .setNegativeButton("확인",null).show();
+                }else{
+                    if(!weburl.contains("http://")){
+                        weburl = "http://"+ weburl;
+                    }
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(weburl));
+                    startActivity(intent);
+                }
             }
         });
 
