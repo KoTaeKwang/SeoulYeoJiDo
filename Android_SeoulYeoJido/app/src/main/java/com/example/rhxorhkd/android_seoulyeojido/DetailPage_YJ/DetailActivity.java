@@ -43,6 +43,10 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,6 +64,11 @@ import okhttp3.Response;
 
 
 public class DetailActivity extends AppCompatActivity implements View.OnClickListener {
+    private DatabaseReference ref;
+    private FirebaseAuth auth;
+    private FirebaseDatabase db;
+    String uid;
+    JSONArray locationarray;
     private GpsInfo gps;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -261,8 +270,9 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -407,15 +417,30 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
 //유저 체크인시 플로팅버튼 색칠
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseDatabase.getInstance();
+        ref = db.getReference("member");
+
+        FirebaseUser user = auth.getCurrentUser();
+        uid = user.getUid();
+        Log.d("list", "uid-->" + uid);
+
+
         showCheckin showCheckin = new showCheckin();
         try{
-            Log.d("list", "aaa" + locationTitle);
-            result = showCheckin.execute(locationTitle).get();
+            Log.d("list", "fff" + locationTitle);
+            result = showCheckin.execute(uid).get();
             object = new JSONObject(result);
-            number = object.getString("loca_tel");
+            locationarray = object.getJSONArray("location");
 
-            for(int i=0; i<object.length(); i++){
-                if(locationTitle.equals(object.getString("loca_name"))){
+//            Log.d("result", "locationTitle-->" + locationTitle);
+//            Log.d("list", "object-->" + object);
+//            Log.d("list", "object.getString(loca_name)-->" +locationarray.getJSONObject(0));
+//            Log.d("list", "locationarray.length()-->" +locationarray.length());
+
+
+            for(int i=0; i<locationarray.length(); i++){
+                if(locationTitle.equals(locationarray.getJSONObject(i).getString("loca_name"))){
                     fab.setSelected(true);
                 }
             }
@@ -475,20 +500,17 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
            //         setContentView(R.layout.activity_logo);
         } else {
             new AlertDialog.Builder(DetailActivity.this)
-                    .setMessage("'인터넷 연결을 체크해주세요")
+                    .setMessage("인터넷 연결을 체크해주세요")
                     .setPositiveButton("설정", new DialogInterface.OnClickListener() { //설정 버튼 누를때
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS); //설정페이지 이동
+                            Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS); //설정페이지 이동
                             startActivity(intent);
                         }
                     }).setNegativeButton("취소",null).show();
-
             //Log.i("연결 안 됨" , "연결이 다시 한번 확인해주세요);
         }
     }
-
-
 
 //        /**
 //         * 댓글 리사이클뷰

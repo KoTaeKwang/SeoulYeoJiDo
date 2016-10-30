@@ -227,7 +227,7 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
             return;
         }
         mMap.setMyLocationEnabled(true);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 13));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
 //        mMap.addMarker(new MarkerOptions()
 //                .title("현재 위치")
 //                .snippet("innoaus.")
