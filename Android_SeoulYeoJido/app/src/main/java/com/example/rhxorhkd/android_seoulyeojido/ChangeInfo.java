@@ -69,7 +69,6 @@ public class ChangeInfo extends AppCompatActivity implements View.OnClickListene
         storageReference = storage.getReferenceFromUrl("gs://seoulmap-db7e1.appspot.com");
 
 
-
         findViewById(R.id.chage_back).setOnClickListener(this);
         findViewById(R.id.change_img).setOnClickListener(this);
         findViewById(R.id.logout).setOnClickListener(this);

@@ -202,7 +202,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_toRightOf="@+id/img_icphoto"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/cheese_4" />
+                     />
 
                 <ImageView
                     android:id="@+id/img_photo2"

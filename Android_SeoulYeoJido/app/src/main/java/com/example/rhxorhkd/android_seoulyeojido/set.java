@@ -76,6 +76,8 @@ public class set extends AppCompatActivity implements View.OnClickListener{
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+//        viewPager.getChildAt(0).setBackgroundResource(R.color.black);
+//        viewPager.getChildAt(1).setBackgroundResource(R.color.black);
 
         findViewById(R.id.gotoMap).setOnClickListener(this);
 

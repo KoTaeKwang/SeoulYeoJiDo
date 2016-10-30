@@ -86,6 +86,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     ListFragment listFragment;
     String url;
     DetailRecyclerAdapter detailRecyclerAdapter;
+    boolean checked=false;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -427,6 +428,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             for(int i=0; i<locationarray.length(); i++){
                 if(locationTitle.equals(locationarray.getJSONObject(i).getString("loca_name"))){
                     fab.setSelected(true);
+                    checked=true;
                 }
             }
         }catch (Exception e){
@@ -446,12 +448,13 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                     e.printStackTrace();
                 }
 
-
+                if(!checked){
                 Intent intent = new Intent(getApplicationContext(), CheckinPopup.class);
                 intent.putExtra("result", result); //result 가 0 이면 실패 , 1이면 성공
                 intent.putExtra("title", locationTitle);
 
                 startActivity(intent);
+                }
             }
         });
 

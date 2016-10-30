@@ -50,6 +50,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import okhttp3.MediaType;
@@ -65,7 +66,7 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
     String uid;
     JSONArray locationarray;
     JSONObject object;
-    int markercheck[] = new int[100];
+    ArrayList<String> markercheck = new ArrayList<>();
     private Marker m;
     RelativeLayout relativeLayout;
 
@@ -105,7 +106,8 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
     private TextView showreviewcounttext;
     private TextView showcategorygutext;
     private ImageView showphotoimage;
-
+    SupportMapFragment mapFragment;
+    RelativeLayout locationdetail;
     public class firstListGetData extends AsyncTask<String, Void, String>{
         @Override
         protected String doInBackground(String... params) {
@@ -129,10 +131,10 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkinmap);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+     mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
+        locationdetail = (RelativeLayout)findViewById(R.id.location_detail);
         showtitletext =(TextView)findViewById(R.id.location_name);
         Log.d("list","categorygu : "+showcategorygu);
         showcategorygutext = (TextView)findViewById(R.id.checkin_categu);
@@ -230,7 +232,7 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
         Bitmap b = bitmapdraw1.getBitmap();
         Bitmap noCheck = bitmapdraw2.getBitmap();
 
-        Bitmap noChecksmallMarker = Bitmap.createScaledBitmap(noCheck, width, height, false);
+        final Bitmap noChecksmallMarker = Bitmap.createScaledBitmap(noCheck, width, height, false);
         final Bitmap CheckedsmallMarker = Bitmap.createScaledBitmap(b, width, height, false);
 
         LatLng myLocation = new LatLng(latitude, longitude);
@@ -303,16 +305,18 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
             @Override
             public void onDataChange(DataSnapshot data) {
                 for (DataSnapshot post: data.getChildren()) {
-                    m.remove();
+                  //  Log.d("what",post.toString());
 
+                   // m.remove();
                     Marker checked = mMap.addMarker(new MarkerOptions()
                             .position(new LatLng(Double.valueOf(""+post.child("lat").getValue()).doubleValue(), Double.valueOf(""+post.child("lon").getValue()).doubleValue()))
                             .title(""+post.getKey())
                             .icon(BitmapDescriptorFactory.fromBitmap(CheckedsmallMarker))
                     );
-                    String num = checked.getId().substring(1);
-                    Log.d("what","-->"+num);
-                    markercheck[Integer.parseInt(num)]=1;
+                  //  Log.d("what",checked.toString());
+                    markercheck.add(post.getKey());
+                    //String num = checked.getId().substring(1);
+                   // Log.d("what","-->"+num);
                 }
             }
             @Override
@@ -346,6 +350,7 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
             @Override
             public boolean onMarkerClick(Marker marker) {
 
+                marker.setIcon(BitmapDescriptorFactory.fromBitmap(CheckedsmallMarker));
                 tv1.setText(marker.getTitle());
                 showlocainfo(marker.getTitle());
                 showcheckincounttext.setText(showcheckincount);
@@ -370,7 +375,9 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
 
                // if(m.getId)
                 String num = marker.getId().substring(1);
-                if(markercheck[Integer.parseInt(num)]==0){
+                Log.d("what","<---"+num);
+                if(!markercheck.contains(showtitle)){
+                    marker.setIcon(BitmapDescriptorFactory.fromBitmap(noChecksmallMarker));
                 Intent intentSubActivity = new Intent(CheckinmapActivity.this, CheckinPopup.class);
                 intentSubActivity.putExtra("position", marker.getPosition());
                 intentSubActivity.putExtra("title", marker.getTitle());
@@ -392,6 +399,16 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
                 //Intent intent = new Intent(getApplicationContext(),DetailActivity.class);
                 //intent.putExtra("name",showtitle);
                 //startActivity(intent);
+            }
+        });
+
+        locationdetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getApplicationContext(),DetailActivity.class);
+                intent.putExtra("name",showtitle);
+                startActivity(intent);
             }
         });
     }

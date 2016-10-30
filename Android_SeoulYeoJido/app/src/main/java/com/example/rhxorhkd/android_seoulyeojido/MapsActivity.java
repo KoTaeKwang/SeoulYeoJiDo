@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ.DetailActivity;
 import com.example.rhxorhkd.android_seoulyeojido.Model.VisitedItem;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -59,6 +60,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         map_bottom_img = (ImageView)findViewById(R.id.map_bottom_img);
 
         findViewById(R.id.map_back).setOnClickListener(this);
+        RelativeLayout rl = (RelativeLayout)findViewById(R.id.location_detail);
+        rl.setOnClickListener(this);
 
     }
 
@@ -184,6 +187,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         switch(view.getId()){
             case R.id.map_back :
                 finish();
+                break;
+            case  R.id.location_detail :
+                Intent intent = new Intent(MapsActivity.this, DetailActivity.class);
+                intent.putExtra("name", title.getText().toString());
+                startActivity(intent);
+
                 break;
             default: break;
         }
