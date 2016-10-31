@@ -1,5 +1,6 @@
 package com.example.rhxorhkd.android_seoulyeojido;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -11,9 +12,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.rhxorhkd.android_seoulyeojido.DetailPage_YJ.DetailActivity;
+import com.example.rhxorhkd.android_seoulyeojido.Model.VisitedItem;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -22,13 +27,21 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener{
 
     private GoogleMap mMap;
     private RelativeLayout rl;
-    private ImageView iv;
-    private TextView tv1, tv2, tv3, tv4;
+    private ImageView map_bottom_img;
+    private TextView title, checkin_cnt, location_name, marker_cate_gu;
+
+    private FirebaseDatabase db;
+    private DatabaseReference ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +53,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
         rl = (RelativeLayout) findViewById(R.id.location_detail);
         rl.setVisibility(View.GONE);
-        tv1 = (TextView)findViewById(R.id.location_name);
-        findViewById(R.id.map_back).setOnClickListener(this);
+        title = (TextView)findViewById(R.id.location_name);
+        checkin_cnt = (TextView)findViewById(R.id.checkin_cnt);
+        marker_cate_gu = (TextView)findViewById(R.id.marker_cate_gu);
 
+        map_bottom_img = (ImageView)findViewById(R.id.map_bottom_img);
+
+        findViewById(R.id.map_back).setOnClickListener(this);
+        RelativeLayout rl = (RelativeLayout)findViewById(R.id.location_detail);
+        rl.setOnClickListener(this);
 
     }
 
@@ -62,53 +81,87 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         int height = 126;
-        int width = 120;
+        int width = 90;
         BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.after_check_in);
         Bitmap b = bitmapdraw.getBitmap();
-        Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+        final Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
 
-        // Add a marker in Sydney and move the camera
-        LatLng kb = new LatLng(37.577837, 126.976869);
-        LatLng sd = new LatLng(37.476777, 126.981783);
-        LatLng ds = new LatLng(37.565776, 126.975163);
-        LatLng tg = new LatLng(37.558283, 126.978028);
-        LatLng md = new LatLng(37.560829, 126.986418);
-        mMap.addMarker(new MarkerOptions()
-                .position(kb)
-                .title("경북궁 ")
-                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
+        db = FirebaseDatabase.getInstance();
+        ref = db.getReference("member");
 
-        );
-        mMap.addMarker(new MarkerOptions()
-                .position(sd)
-                .title("사당역 ")
-                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
+        Intent intent = getIntent();
+            String uid = intent.getStringExtra("uid");
 
-        );
-        mMap.addMarker(new MarkerOptions()
-                .position(ds)
-                .title("덕수궁 ")
-                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
+            ref.child(uid+"/checkin").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot data) {
+                    for (DataSnapshot post: data.getChildren()) {
 
-        );
-        mMap.addMarker(new MarkerOptions()
-                .position(md)
-                .title("명동 ")
-                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
+                        mMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(Double.valueOf(""+post.child("lat").getValue()).doubleValue(), Double.valueOf(""+post.child("lon").getValue()).doubleValue()))
+                                .title(""+post.getKey())
+                                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
+                        );
+                    }
 
-        );
-        mMap.addMarker(new MarkerOptions()
-                .position(tg)
-                .title("퇴계로 ")
-                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
+                }
 
-        );
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.53501414281699,126.98524095118046), 12));
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public boolean onMarkerClick(Marker marker) {
-                tv1.setText(marker.getTitle());
+            public boolean onMarkerClick(final Marker marker) {
+                title.setText(marker.getTitle());
+
+                Intent i = getIntent();
+                String uid = i.getStringExtra("uid");
+                ref.child(uid+"/checkin").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot data) {
+                        if(data.child(marker.getTitle()).exists()){
+                            Glide.with(MapsActivity.this).load(""+data.child(marker.getTitle()).child("img").getValue()).into(map_bottom_img);
+
+                            marker_cate_gu.setText(""+data.child(marker.getTitle()).child("category").getValue()+" · 영등포");
+//                            marker_cate_gu.setText(""+data.child(marker.getTitle()).child("category").getValue()+"·"+Integer.parseInt(""+data.child(marker.getTitle()).child("guNumber").getValue()));
+                            ref.addValueEventListener(new ValueEventListener() {
+                                int chk_cnt = 0;
+                                @Override
+                                public void onDataChange(DataSnapshot cnt) {
+                                    for (DataSnapshot post: cnt.getChildren()) {
+                                        if(post.child("checkin") != null){
+                                            if(post.child("checkin").child(marker.getTitle()).exists()){
+                                                chk_cnt++;
+                                            }
+                                        }
+                                    }
+                                    checkin_cnt.setText(""+chk_cnt);
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+//
+//
+//
 
                 rl.setVisibility(View.VISIBLE);
                 return false;
@@ -122,11 +175,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 rl.setVisibility(View.GONE);
             }
         });
+    }
 
-//        mMap.setMyLocationEnabled(true);
-
-
-
+    public String getGuName(int guNumber){
+        return "";
     }
 
 
@@ -135,6 +187,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         switch(view.getId()){
             case R.id.map_back :
                 finish();
+                break;
+            case  R.id.location_detail :
+                Intent intent = new Intent(MapsActivity.this, DetailActivity.class);
+                intent.putExtra("name", title.getText().toString());
+                startActivity(intent);
+
                 break;
             default: break;
         }

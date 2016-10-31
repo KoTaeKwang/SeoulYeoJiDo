@@ -41,6 +41,10 @@ public class GpsInfo extends Service implements LocationListener {
         initLocationService(context);
     }
 
+
+
+
+
     /**
      * Sets up location service after permissions is granted
      */
@@ -79,6 +83,8 @@ public class GpsInfo extends Service implements LocationListener {
                     if (locationManager != null) {
                         location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                         //updateCoordinates();
+                        lat = location.getLatitude();
+                        lon = location.getLongitude();
                     }
                 }//end if
 
@@ -88,6 +94,8 @@ public class GpsInfo extends Service implements LocationListener {
                     if (locationManager != null) {
                         location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                         //updateCoordinates();
+                        lat = location.getLatitude();
+                        lon = location.getLongitude();
                     }
                 }
             }

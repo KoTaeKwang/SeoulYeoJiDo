@@ -37,7 +37,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkViewHolder> {
         VisitedItem item = list.get(position);
 //        holder.photo.setImageURI();
         holder.cnt.setText(item.getCnt());
-        holder.name.setText(item.getName());
+//        holder.name.setText(item.getName());
     }
 
     @Override

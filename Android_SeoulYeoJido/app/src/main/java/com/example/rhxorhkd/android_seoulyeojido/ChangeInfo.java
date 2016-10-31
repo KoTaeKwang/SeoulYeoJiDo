@@ -55,6 +55,11 @@ public class ChangeInfo extends AppCompatActivity implements View.OnClickListene
         ActionBar ab = getSupportActionBar();
         ab.hide();
 
+        iv1 = (ImageView)findViewById(R.id.change_img);
+        background = (ImageView)findViewById(R.id.change_info_back);
+        nickName = (EditText)findViewById(R.id.change_nickname);
+
+        Glide.with(this).load(R.drawable.loginactivity).into(background);
 
 
         auth = FirebaseAuth.getInstance();
@@ -63,14 +68,12 @@ public class ChangeInfo extends AppCompatActivity implements View.OnClickListene
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReferenceFromUrl("gs://seoulmap-db7e1.appspot.com");
 
-        iv1 = (ImageView)findViewById(R.id.change_img);
-        background = (ImageView)findViewById(R.id.change_info_back);
-        nickName = (EditText)findViewById(R.id.change_nickname);
+
         findViewById(R.id.chage_back).setOnClickListener(this);
         findViewById(R.id.change_img).setOnClickListener(this);
         findViewById(R.id.logout).setOnClickListener(this);
 
-        Glide.with(this).load(R.drawable.loginactivity).into(background);
+
 
         FirebaseUser user = auth.getCurrentUser();
         Ref.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -98,6 +101,7 @@ public class ChangeInfo extends AppCompatActivity implements View.OnClickListene
 
 
     }
+
 
     public static int REQ_CODE_SELECT_IMAGE = 100;
 

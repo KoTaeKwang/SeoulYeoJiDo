@@ -46,10 +46,6 @@ public class set extends AppCompatActivity implements View.OnClickListener{
     private ImageView iv, iv2;
     private TextView tv, tv2;
 
-    private static String total_checkin ="0";
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +76,8 @@ public class set extends AppCompatActivity implements View.OnClickListener{
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+//        viewPager.getChildAt(0).setBackgroundResource(R.color.black);
+//        viewPager.getChildAt(1).setBackgroundResource(R.color.black);
 
         findViewById(R.id.gotoMap).setOnClickListener(this);
 
@@ -89,7 +87,7 @@ public class set extends AppCompatActivity implements View.OnClickListener{
         tv2 = (TextView)findViewById(R.id.up_name);
 
         Intent i = getIntent();
-        if(i.getStringExtra("uid") == null){//탭으로 본 마이페이지
+        if(user.getUid() != null){//탭으로 본 마이페이지
             findViewById(R.id.my_profile_img).setOnClickListener(this);//
             iv2.setImageDrawable(null);//백버튼 없애기
 
@@ -142,64 +140,7 @@ public class set extends AppCompatActivity implements View.OnClickListener{
                 public void onCancelled(DatabaseError databaseError) {}
             });
 
-        }else{//랭킹에서 넘어온경우
-            findViewById(R.id.back_btn).setOnClickListener(this);
-            tv.setText(i.getStringExtra("name"));
-//            total_checkin = i.getStringExtra("cnt");
-
-            Glide.with(this).load(i.getStringExtra("profile")).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv){
-                @Override
-                protected void setResource(Bitmap resource) {
-                    super.setResource(resource);
-                    RoundedBitmapDrawable circularBitmapDrawable =
-                            RoundedBitmapDrawableFactory.create(this.getView().getResources(), resource);
-                    circularBitmapDrawable.setCircular(true);
-                    iv.setImageDrawable(circularBitmapDrawable);
-                }
-            });
-
-            ref.child(i.getStringExtra("uid")).child("checkin").addChildEventListener(new ChildEventListener() {
-                int guNumber_1, guNumber_2, guNumber_3, guNumber_4, guNumber_5, guNumber_6, guNumber_7,
-                        guNumber_8, guNumber_9, guNumber_10, guNumber_11;
-                int cnt = 0;
-
-                @Override
-                public void onChildAdded(DataSnapshot data, String s) {
-                    cnt++;
-
-
-
-//
-//                    }
-                    if(cnt == data.getChildrenCount()){
-//                        total_checkin = ""+data.getChildrenCount();
-                    }
-                }
-
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
         }
-
-
 
     }
 
@@ -211,7 +152,10 @@ public class set extends AppCompatActivity implements View.OnClickListener{
                 finish();
                 break;
             case R.id.gotoMap :
-                startActivity(new Intent(this, MapsActivity.class));
+                FirebaseUser user = auth.getCurrentUser();
+                Intent intent = new Intent(this, MapsActivity.class);
+                intent.putExtra("uid", user.getUid());
+                startActivity(intent);
                 break;
             case R.id.my_profile_img :
                 Intent i = new Intent(this, ChangeInfo.class);
@@ -252,8 +196,8 @@ public class set extends AppCompatActivity implements View.OnClickListener{
                     return  "나의 서울";
                 case 1 :
                     return "체크인";
-                case 2 :
-                    return "담은 서울";
+//                case 2 :
+//                    return "담은 서울";
                 default:
                     return "";
             }

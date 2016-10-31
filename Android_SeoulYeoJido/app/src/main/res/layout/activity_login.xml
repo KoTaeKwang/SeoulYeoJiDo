@@ -14,12 +14,11 @@
         android:layout_height="match_parent" />
 
     <ImageView
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="16dp"
+
         android:background="@drawable/back"
         android:id="@+id/login_btn_back"
-        android:layout_width="18dp"
-        android:layout_height="18dp" />
+        android:layout_width="56dp"
+        android:layout_height="56dp" />
     
     <ImageView
         android:layout_marginTop="130dp"
@@ -30,6 +29,7 @@
 
 
     <EditText
+        android:singleLine="true"
         android:layout_marginTop="30dp"
         android:background="@drawable/blank"
         android:textColor="#9e9e9e"
@@ -44,6 +44,7 @@
         android:id="@+id/email" />
 
     <EditText
+        android:singleLine="true"
         android:background="@drawable/blank"
         android:textSize="11sp"
         android:padding="8dp"

@@ -28,7 +28,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
         iv1 = (ImageView)findViewById(R.id.start_background);
 
-        Glide.with(this).load(R.drawable.start_activity).into(iv1);
+        Glide.with(this).load(R.drawable.start_activity).skipMemoryCache(true).into(iv1);
 
         ActionBar ab = getSupportActionBar();
         ab.hide();
@@ -76,5 +76,15 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 break;
             default: break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        moveTaskToBack(true);
+
+        finish();
+
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 }

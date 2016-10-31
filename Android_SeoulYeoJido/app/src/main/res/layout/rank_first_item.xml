@@ -11,6 +11,7 @@
         android:layout_height="1dp">
     </View>
 
+
     <RelativeLayout
         android:paddingLeft="16dp"
         android:background="#ffffff"
@@ -20,7 +21,7 @@
 
         <TextView
             android:id="@+id/rank_order"
-            android:text="1"
+            android:text=""
             android:textSize="13sp"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
@@ -78,13 +79,30 @@
             <!--android:layout_width="60dp"-->
             <!--android:layout_height="18dp" />-->
 
-        <ImageView
-            android:layout_width="21dp"
-            android:layout_height="21dp"
-            app:srcCompat="@drawable/rank_one"
-            android:id="@+id/medal"
-            android:layout_below="@+id/plain_username"
-            android:layout_alignRight="@+id/first_profile_img"/>
+        <!--<ImageView-->
+            <!--android:layout_width="21dp"-->
+            <!--android:layout_height="21dp"-->
+            <!--app:srcCompat="@drawable/rank_one"-->
+            <!--android:id="@+id/medal"-->
+            <!--android:layout_below="@+id/plain_username"-->
+            <!--android:layout_alignRight="@+id/first_profile_img"-->
+            <!--android:layout_alignEnd="@+id/first_profile_img" />-->
+
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="58dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/first_profile_img"
+            android:layout_alignEnd="@+id/first_profile_img">
+            <ImageView
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                app:srcCompat="@drawable/rank_one"
+                android:id="@+id/medal"/>
+
+        </RelativeLayout>
 
 
     </RelativeLayout>

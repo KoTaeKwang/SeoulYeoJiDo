@@ -18,13 +18,13 @@
 
     <!-- MAIN CONTENT -->
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         >
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/_1sdp"
             android:background="#d7d7d7"/>
 
 
@@ -40,173 +40,116 @@
                 android:layout_height="match_parent">
             </ListView>
         </LinearLayout>
+        <!--@dimen/_27sdp"-->
 
     <RelativeLayout
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_height="@dimen/_300sdp"
         android:id="@+id/map"
-        android:background="#ffffff"
-       >
-        <ImageView
-            android:layout_width="63dp"
-            android:layout_height="63dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="46dp"
-            android:id="@+id/mapone"/>
+        android:background="#ffffff">
 
         <ImageView
-            android:layout_width="63dp"
-            android:layout_height="63dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="46dp"
-            android:id="@+id/maptempone"/>
+            android:layout_width="@dimen/_51sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_43sdp"
+            android:layout_marginLeft="@dimen/_42sdp"
+            android:id="@+id/mapone"
+            android:background="@drawable/maponeclick"/>
+
 
         <ImageView
-            android:layout_width="81dp"
-            android:layout_height="57dp"
-            android:layout_marginLeft="98dp"
-            android:layout_marginTop="120dp"
-            android:id="@+id/maptwo"/>
+            android:layout_width="@dimen/_66sdp"
+            android:layout_height="@dimen/_54sdp"
+            android:layout_marginLeft="@dimen/_80sdp"
+            android:layout_marginTop="@dimen/_95sdp"
+            android:id="@+id/maptwo"
+            android:background="@drawable/maptwoclick"/>
+
 
         <ImageView
-            android:layout_width="81dp"
-            android:layout_height="57dp"
-            android:layout_marginLeft="98dp"
-            android:layout_marginTop="120dp"
-            android:id="@+id/maptemptwo"/>
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_57sdp"
+            android:layout_marginLeft="@dimen/_156sdp"
+            android:layout_marginTop="@dimen/_82sdp"
+            android:id="@+id/mapfour"
+            android:background="@drawable/mapfourclick"/>
 
-        <ImageView
-            android:layout_width="63dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="184dp"
-            android:layout_marginTop="92dp"
-            android:id="@+id/mapfour"/>
 
-        <ImageView
-            android:layout_width="63dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="184dp"
-            android:layout_marginTop="92dp"
-            android:id="@+id/maptempfour"/>
         
         <ImageView
-            android:layout_width="63dp"
-            android:layout_height="63dp"
-            android:layout_marginLeft="118dp"
-            android:layout_marginTop="55dp"
-            android:id="@+id/mapthree"/>
-
-        <ImageView
-            android:layout_width="63dp"
-            android:layout_height="63dp"
-            android:layout_marginLeft="118dp"
-            android:layout_marginTop="55dp"
-            android:id="@+id/maptempthree"/>
-
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="63dp"
-            android:layout_marginTop="22dp"
-            android:layout_marginLeft="192dp"
-            android:id="@+id/mapfive"/>
-
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="63dp"
-            android:layout_marginTop="22dp"
-            android:layout_marginLeft="192dp"
-            android:id="@+id/maptempfive"/>
-
-        <ImageView
-            android:layout_width="63dp"
-            android:layout_height="63dp"
-            android:layout_marginLeft="254dp"
-            android:layout_marginTop="85dp"
-            android:id="@+id/mapsix"/>
-
-        <ImageView
-            android:layout_width="63dp"
-            android:layout_height="63dp"
-            android:layout_marginLeft="254dp"
-            android:layout_marginTop="85dp"
-            android:id="@+id/maptempsix"/>
-
-        <ImageView
-            android:layout_width="74dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="270dp"
-               android:layout_marginTop="185dp"
-            android:id="@+id/mapseven"/>
-
-        <ImageView
-            android:layout_width="74dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="270dp"
-            android:layout_marginTop="185dp"
-            android:id="@+id/maptempseven"/>
+            android:layout_width="@dimen/_52sdp"
+            android:layout_height="@dimen/_52sdp"
+            android:layout_marginLeft="@dimen/_103sdp"
+            android:layout_marginTop="@dimen/_45sdp"
+            android:id="@+id/mapthree"
+            android:background="@drawable/mapthreeclick"/>
 
 
         <ImageView
-            android:layout_width="74dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="192dp"
-            android:layout_marginTop="208dp"
-            android:id="@+id/mapeight"/>
-
-        <ImageView
-            android:layout_width="74dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="192dp"
-            android:layout_marginTop="208dp"
-            android:id="@+id/maptempeight"/>
-        <ImageView
-            android:layout_width="82dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="132dp"
-            android:layout_marginTop="273dp"
-            android:id="@+id/mapnine"/>
-
-        <ImageView
-            android:layout_width="82dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="132dp"
-            android:layout_marginTop="273dp"
-            android:id="@+id/maptempnine"/>
+            android:layout_width="@dimen/_57sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_19sdp"
+            android:layout_marginLeft="@dimen/_165sdp"
+            android:id="@+id/mapfive"
+            android:background="@drawable/mapfiveclick"/>
 
 
         <ImageView
-            android:layout_width="74dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="101dp"
-            android:layout_marginTop="209dp"
-            android:id="@+id/mapten"/>
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginLeft="@dimen/_215sdp"
+            android:layout_marginTop="@dimen/_75sdp"
+            android:id="@+id/mapsix"
+            android:background="@drawable/mapsixclick"/>
+
 
         <ImageView
-            android:layout_width="74dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="101dp"
-            android:layout_marginTop="209dp"
-            android:id="@+id/maptempten"/>
+            android:layout_width="@dimen/_61sdp"
+            android:layout_height="@dimen/_47sdp"
+            android:layout_marginLeft="@dimen/_223sdp"
+               android:layout_marginTop="@dimen/_156sdp"
+            android:id="@+id/mapseven"
+            android:background="@drawable/mapsevenclick"/>
 
         <ImageView
-            android:layout_width="74dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="209dp"
-            android:id="@+id/mapeleven"/>
+            android:layout_width="@dimen/_61sdp"
+            android:layout_height="@dimen/_47sdp"
+            android:layout_marginLeft="@dimen/_157sdp"
+            android:layout_marginTop="@dimen/_173sdp"
+            android:id="@+id/mapeight"
+            android:background="@drawable/mapeightclick"/>
 
         <ImageView
-            android:layout_width="74dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="209dp"
-            android:id="@+id/maptempeleven"/>
+            android:layout_width="@dimen/_69sdp"
+            android:layout_height="@dimen/_47sdp"
+            android:layout_marginLeft="@dimen/_112sdp"
+            android:layout_marginTop="@dimen/_227sdp"
+            android:id="@+id/mapnine"
+            android:background="@drawable/mapnineclick"/>
+
+
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/mapriver" />
+            android:layout_width="@dimen/_61sdp"
+            android:layout_height="@dimen/_47sdp"
+            android:layout_marginLeft="@dimen/_88sdp"
+            android:layout_marginTop="@dimen/_173sdp"
+            android:id="@+id/mapten"
+            android:background="@drawable/maptenclick"/>
+
+        <ImageView
+            android:layout_width="@dimen/_61sdp"
+            android:layout_height="@dimen/_47sdp"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_172sdp"
+            android:id="@+id/mapeleven"
+            android:background="@drawable/mapelevenclick"/>
+
+        <ImageView
+            android:layout_width="@dimen/_360sdp"
+            android:layout_height="@dimen/_360sdp"
+            android:id="@+id/mapriver"/>
 
     </RelativeLayout>
 
@@ -235,10 +178,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="13sp"
-            android:text="명소 카테고리"/>
+            android:text="명소 카테고리"
+            android:textColor="#ff000000"/>
         <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_height="123dp"
             >
             <LinearLayout
                 android:layout_marginTop="16dp"
@@ -358,7 +302,8 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp">
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="40dp">
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
