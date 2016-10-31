@@ -147,7 +147,7 @@ public class DetailMapsActivity extends FragmentActivity implements OnMapReadyCa
         protected String doInBackground(String... params) {
 
             Request request = new Request.Builder()
-                    .url("http://211.189.20.136:4389/ko/showloca")
+                    .url("http://52.78.32.50:3000/ko/showloca")
                     .build();
             try {
                 Response response = client.newCall(request).execute();

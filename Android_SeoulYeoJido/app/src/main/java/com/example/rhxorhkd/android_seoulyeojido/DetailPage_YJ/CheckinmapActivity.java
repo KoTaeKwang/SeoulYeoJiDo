@@ -183,7 +183,7 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
         protected String doInBackground(String... params) {
 
             Request request = new Request.Builder()
-                    .url("http://211.189.20.136:4389/ko/showloca")
+                    .url("http://52.78.32.50:3000/ko/showloca")
                     .build();
             try {
                 Response response = client.newCall(request).execute();
@@ -533,7 +533,7 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
             }
             RequestBody posData = RequestBody.create(JSON, json.toString());
             request = new Request.Builder()
-                    .url("http://211.189.20.136:4389/ko/showCheckin")
+                    .url("http://52.78.32.50:3000/ko/showCheckin")
                     .post(posData)
                     .build();
             try {
@@ -561,7 +561,7 @@ public class CheckinmapActivity extends FragmentActivity implements OnMapReadyCa
             }
             RequestBody posData = RequestBody.create(JSON, json.toString());
             request = new Request.Builder()
-                    .url("http://211.189.20.136:4389/ko/checkin")
+                    .url("http://52.78.32.50:3000/ko/checkin")
                     .post(posData)
                     .build();
             try {

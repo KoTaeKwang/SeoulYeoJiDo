@@ -952,7 +952,7 @@ public class home extends AppCompatActivity {
         protected String doInBackground(String... params) {
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url("http://211.189.20.136:4389/ko/showloca")
+                    .url("http://52.78.32.50:3000/ko/showloca")
                     .build();
 
             try{
@@ -977,7 +977,7 @@ public class home extends AppCompatActivity {
             }
             RequestBody posData = RequestBody.create(JSON,json.toString());
             request = new Request.Builder()
-                    .url("http://211.189.20.136:4389/ko/searchLocaAddress")
+                    .url("http://52.78.32.50:3000/ko/searchLocaAddress")
                     .post(posData)
                     .build();
             try{
@@ -1000,7 +1000,7 @@ public class home extends AppCompatActivity {
                     .build();
 
             request = new Request.Builder()
-                    .url("http://211.189.20.136:4389/ko/showGuLoca")
+                    .url("http://52.78.32.50:3000/ko/showGuLoca")
                     .post(posData)
                     .build();
             try{
@@ -1023,7 +1023,7 @@ public class home extends AppCompatActivity {
                     .build();
 
             request = new Request.Builder()
-                    .url("http://211.189.20.136:4389/ko/showCategoryLoca")
+                    .url("http://52.78.32.50:3000/ko/showCategoryLoca")
                     .post(posData)
                     .build();
             try{

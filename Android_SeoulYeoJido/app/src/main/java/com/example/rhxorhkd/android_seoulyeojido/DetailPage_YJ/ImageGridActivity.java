@@ -92,7 +92,7 @@ public class ImageGridActivity extends AppCompatActivity {
             }
             RequestBody posData = RequestBody.create(JSON, json.toString());
             request = new Request.Builder()
-                    .url("http://211.189.20.136:4389/ko/showDetailLoca")
+                    .url("http://52.78.32.50:3000/ko/showDetailLoca")
                     .post(posData)
                     .build();
             try {
