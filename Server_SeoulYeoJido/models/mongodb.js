@@ -381,6 +381,11 @@ exports.showDetailLoca = function(data,callback){
 				obj.loca_photo=arr
 			})
 		}
+		obj.loca_categorynum =0;
+		if(result.loca_category[0]!=null){
+		obj.loca_categorynum = result.loca_category[0].loca_categorynum;
+		category(obj);
+		}
 		obj.loca_name = result.loca_name;
 		obj.loca_address = result.loca_address;
 		obj.loca_latitude = result.loca_latitude;
