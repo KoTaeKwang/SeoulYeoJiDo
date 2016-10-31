@@ -325,7 +325,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             public void onClick(View v) {
                 if(weburl==null) {
                     new AlertDialog.Builder(DetailActivity.this)
-                            .setMessage("관련 홈페이지가 없습니다")
+                            .setMessage("관련 전화번호가 없습니다")
                             .setNegativeButton("확인",null).show();
                 }else{
                     Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + number));
