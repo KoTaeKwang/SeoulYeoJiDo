@@ -19,16 +19,16 @@ import java.util.List;
  * Created by 병윤 on 2016-10-30.
  */
 
-public class OtherVisitedAdapter extends RecyclerView.Adapter<OtherVisitedViewHolder> {
+    public class OtherVisitedAdapter extends RecyclerView.Adapter<OtherVisitedViewHolder> {
 
-    private Context mContext;
-    private List<VisitedItem> list;
+        private Context mContext;
+        private List<VisitedItem> list;
 
 
-    public OtherVisitedAdapter(Context context, ArrayList<VisitedItem> list) {
-        this.list = list;
-        this.mContext = context;
-    }
+        public OtherVisitedAdapter(Context context, ArrayList<VisitedItem> list) {
+            this.list = list;
+            this.mContext = context;
+        }
 
 
     @Override

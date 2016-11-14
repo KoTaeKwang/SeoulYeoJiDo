@@ -67,7 +67,9 @@ public class rank extends AppCompatActivity implements View.OnClickListener {
 
         final Comparator<RankItem> sort = new Comparator<RankItem>() {
             public int compare(RankItem r1, RankItem r2) {
-                return r1.getChk_cnt().compareTo(r2.getChk_cnt())>0 ? -1: 1;
+                int a = Integer.parseInt(r1.getChk_cnt());
+                int b = Integer.parseInt(r2.getChk_cnt());
+                return a > b ? -1: 1;
             }
         };
 

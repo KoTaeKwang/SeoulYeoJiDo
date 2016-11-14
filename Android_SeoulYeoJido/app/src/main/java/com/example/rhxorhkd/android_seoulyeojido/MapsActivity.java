@@ -129,8 +129,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         if(data.child(marker.getTitle()).exists()){
                             Glide.with(MapsActivity.this).load(""+data.child(marker.getTitle()).child("img").getValue()).into(map_bottom_img);
 
-                            marker_cate_gu.setText(""+data.child(marker.getTitle()).child("category").getValue()+" · 영등포");
-//                            marker_cate_gu.setText(""+data.child(marker.getTitle()).child("category").getValue()+"·"+Integer.parseInt(""+data.child(marker.getTitle()).child("guNumber").getValue()));
+//                            marker_cate_gu.setText(""+data.child(marker.getTitle()).child("category").getValue()+" · 영등포");
+                            marker_cate_gu.setText(""+data.child(marker.getTitle()).child("category").getValue()+" · "+getGuName(Integer.parseInt(""+data.child(marker.getTitle()).child("guNumber").getValue())));
                             ref.addValueEventListener(new ValueEventListener() {
                                 int chk_cnt = 0;
                                 @Override
@@ -178,7 +178,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public String getGuName(int guNumber){
-        return "";
+        switch (guNumber){
+            case  1 :
+                return "은평·서대문구";
+            case  2 :
+                return "마포·용산구";
+            case  3 :
+                return "종로·중구";
+            case  4 :
+                return "성북·동대문·성동구";
+            case  5 :
+                return "강북·도봉·노원구";
+            case  6 :
+                return "중랑·광진구";
+            case  7 :
+                return "송파·강동구";
+            case  8 :
+                return "서초·강남구";
+            case  9 :
+                return "관악·금천구";
+            case  10 :
+                return "영등포·동작구";
+            case  11:
+                return "강서·양천·구로구";
+            default: return "";
+        }
+
     }
 
 

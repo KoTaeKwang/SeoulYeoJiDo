@@ -67,9 +67,51 @@ public class OtherAnalysisFragment extends Fragment {
 
 
                 if(data.child("guNumber") != null) {
-                    index = Integer.parseInt("" + data.child("guNumber").getValue())-1;
-                    chk_cnt = list.get(index);
-                    list.set(index, chk_cnt+1);
+
+
+                    index = Integer.parseInt("" + data.child("guNumber").getValue());
+                    if(index == 1){
+                        chk_cnt = list.get(8);
+                        list.set(8, chk_cnt+1);
+                    }
+                    else if(index == 2){
+                        chk_cnt = list.get(4);
+                        list.set(4, chk_cnt+1);
+                    }else if(index == 3){
+                        chk_cnt = list.get(0);
+                        list.set(0, chk_cnt+1);
+                    }else if(index == 4){
+                        chk_cnt = list.get(1);
+                        list.set(1, chk_cnt+1);
+                    }
+                    else if(index == 5){
+                        chk_cnt = list.get(10);
+                        list.set(10, chk_cnt+1);
+                    }
+                    else if(index == 6){
+                        chk_cnt = list.get(9);
+                        list.set(9, chk_cnt+1);
+                    }
+                    else if(index == 7){
+                        chk_cnt = list.get(3);
+                        list.set(3, chk_cnt+1);
+                    }
+                    else if(index == 8){
+                        chk_cnt = list.get(2);
+                        list.set(2, chk_cnt+1);
+                    }
+                    else if(index == 9){
+                        chk_cnt = list.get(5);
+                        list.set(5, chk_cnt+1);
+                    }
+                    else if(index == 10){
+                        chk_cnt = list.get(7);
+                        list.set(7, chk_cnt+1);
+                    }else if(index == 11){
+                        chk_cnt = list.get(6);
+                        list.set(6, chk_cnt+1);
+                    }
+
                     mAdapter.notifyDataSetChanged();
                 }
             }

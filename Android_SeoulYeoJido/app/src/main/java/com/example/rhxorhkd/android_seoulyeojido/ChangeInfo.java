@@ -17,15 +17,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.example.rhxorhkd.android_seoulyeojido.RankRecyclerView.RankAdapter;
 import com.example.rhxorhkd.android_seoulyeojido.Validator.NickNameValidator;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -61,7 +58,6 @@ public class ChangeInfo extends AppCompatActivity implements View.OnClickListene
 
         Glide.with(this).load(R.drawable.loginactivity).into(background);
 
-
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         Ref = db.getReference("member");
@@ -72,8 +68,6 @@ public class ChangeInfo extends AppCompatActivity implements View.OnClickListene
         findViewById(R.id.chage_back).setOnClickListener(this);
         findViewById(R.id.change_img).setOnClickListener(this);
         findViewById(R.id.logout).setOnClickListener(this);
-
-
 
         FirebaseUser user = auth.getCurrentUser();
         Ref.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -93,15 +87,9 @@ public class ChangeInfo extends AppCompatActivity implements View.OnClickListene
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
-
-
-
     }
-
 
     public static int REQ_CODE_SELECT_IMAGE = 100;
 
@@ -165,7 +153,6 @@ public class ChangeInfo extends AppCompatActivity implements View.OnClickListene
 //                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
 //                                .setPhotoUri(downloadUrl)
 //                                .build();
-
 //                        user.updateProfile(profileUpdates)
 //                                .addOnCompleteListener(new OnCompleteListener<Void>() {
 //                                    @Override

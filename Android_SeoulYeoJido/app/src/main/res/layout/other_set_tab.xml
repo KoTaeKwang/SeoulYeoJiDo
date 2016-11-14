@@ -107,7 +107,9 @@
             android:id="@+id/other_tl_tab"
             android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"/>
+            android:layout_height="?android:attr/actionBarSize"
+            app:tabIndicatorColor="@color/black"
+            />
 
     </android.support.design.widget.AppBarLayout>
 

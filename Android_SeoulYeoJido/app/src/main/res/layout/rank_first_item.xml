@@ -42,9 +42,11 @@
             android:text="박정복"
             android:layout_marginLeft="98dp"
             android:textColor="#000000"
+            android:ellipsize="marquee"
+            android:singleLine="true"
             android:layout_centerVertical="true"
             android:textSize="13sp"
-            android:layout_width="70dp"
+            android:layout_width="210dp"
             android:layout_height="wrap_content" />
 
 

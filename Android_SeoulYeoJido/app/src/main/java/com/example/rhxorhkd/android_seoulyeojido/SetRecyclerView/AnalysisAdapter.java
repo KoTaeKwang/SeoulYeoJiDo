@@ -299,7 +299,7 @@ public class AnalysisAdapter extends RecyclerView.Adapter<AnlaysisViewHolder> {
                 holder.gu_img.getLayoutParams().width = 420;
                 holder.gu_img.getLayoutParams().height = 204;
 
-                holder.gu_name.setText("강동.도봉.노원");
+                holder.gu_name.setText("강북.도봉.노원");
                 holder.percent.setText(""+getPercent(chk_cnt, 5)+"%");
 
                 if(getImgNum(getPercent(chk_cnt, 5)) == 1){
