@@ -54,6 +54,7 @@ public class RankAdapter extends RecyclerView.Adapter<RankViewHolder>{
     public void onBindViewHolder(final RankViewHolder holder, int position) {
         RankItem item = list.get(position);
         holder.visited_cnt.setText(item.getChk_cnt());
+        holder.visited_cnt.setTextColor(0xFF9e9e9e);
 
 
         if(position == 0){
@@ -82,7 +83,8 @@ public class RankAdapter extends RecyclerView.Adapter<RankViewHolder>{
         }
         holder.rank.setText(""+(position+1));
         holder.nickname.setText(item.getNickname());
-        holder.nickname.setLines(1);
+
+//        holder.nickname.setLines(1);
 
         Glide.with(mContext).load(item.getImg()).asBitmap().centerCrop().into(new BitmapImageViewTarget(holder.profile){
             @Override
